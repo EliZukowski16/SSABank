@@ -1,0 +1,7 @@
+15:10:11.440 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
+15:14:41.289 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
+15:14:43.070 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
+15:16:28.046 [http-nio-8080-exec-7] DEBUG org.ssa.ironyard.bank.controller.SSABankRestController - Returning List of Customers
+15:16:58.407 [http-nio-8080-exec-9] INFO  org.ssa.ironyard.bank.controller.SSABankRestController - Returning Single Customer
+15:19:03.537 [http-nio-8080-exec-1] DEBUG org.ssa.ironyard.bank.controller.SSABankRestController - Returning List of Customers
+15:20:10.702 [http-nio-8080-exec-5] DEBUG org.ssa.ironyard.bank.controller.SSABankRestController - Returning List of Accounts for Customer ID: 1
