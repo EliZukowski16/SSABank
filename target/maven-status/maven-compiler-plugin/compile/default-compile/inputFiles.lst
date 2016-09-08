@@ -5,5 +5,7 @@ C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\service\Ac
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\model\Customer.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\controller\SSABankRestController.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\model\AbstractDomainObject.java
+C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\controller\AccountRestController.java
+C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\controller\CustomerRestController.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\model\DomainObject.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\BankStarter.java
