@@ -160,9 +160,9 @@ li a {
 	
 	function sendEdit() {
 		$.ajax({
-		    type: "GET",
+		    type: "PUT",
 		    url: "./customers/" + document.getElementById("cid").innerHTML + "/edit",
-		    contentType: "application/json",
+		    dataType: "json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
 		});
 
@@ -178,7 +178,7 @@ li a {
 	
 	function sendAdd() {
 		$.ajax({
-		    type: "GET",
+		    type: "POST",
 		    url: "./customers/",
 		    contentType: "application/json",
 		    data: {"firstName": document.getElementById("cfnameA").value, "lastName": document.getElementById("clnameA").value}
