@@ -1,10 +1,10 @@
-package org.ssa.ironyard.account.model;
+package org.ssa.ironyard.bank.model;
 
 import java.math.BigDecimal;
 
-import org.ssa.ironyard.customer.model.Customer;
-import org.ssa.ironyard.model.AbstractDomainObject;
-import org.ssa.ironyard.model.DomainObject;
+import org.ssa.ironyard.bank.model.Customer;
+import org.ssa.ironyard.bank.model.AbstractDomainObject;
+import org.ssa.ironyard.bank.model.DomainObject;
 
 public class Account extends AbstractDomainObject implements DomainObject
 {
