@@ -2,6 +2,7 @@ package org.ssa.ironyard.bank.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Customer> read() {
 		List<Customer> customers = new ArrayList<>();
 		customers.addAll(customerDao.read());
-		return customers;
+		return customers.stream()
+                .sorted((c1, c2) -> c1.getFirstName().compareTo(c2.getFirstName()))
+                .sorted((c1, c2) -> c1.getLastName().compareTo(c2.getLastName())).collect(Collectors.toList());
 	}
 
 	@Override

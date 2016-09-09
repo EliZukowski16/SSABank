@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.ssa.ironyard.bank.model.Customer;
 import org.ssa.ironyard.bank.service.CustomerService;
 
-
 @RestController
 @RequestMapping("/ssa-bank")
 public class CustomerRestController
@@ -34,11 +33,8 @@ public class CustomerRestController
     {
         LOGGER.info("Returning List of Customers");
 
-        List<Customer> allCustomers = customerService.read().stream()
-                .sorted((c1,c2) -> c1.getFirstName().compareTo(c2.getFirstName()))
-                .sorted((c1, c2) -> c1.getLastName().compareTo(c2.getLastName()))
-                .collect(Collectors.toList());;
-        
+        List<Customer> allCustomers = customerService.read();
+
         for (Customer c : allCustomers)
         {
             LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", c.getId().toString(), c.getFirstName(),
@@ -79,13 +75,13 @@ public class CustomerRestController
         return ResponseEntity.ok(addedCustomer);
 
     }
-    
+
     @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Customer> editCustomer(HttpServletRequest request, @PathVariable String customerID)
     {
         LOGGER.info("Editing Single Customer with ID: {}", customerID);
-        
+
         Integer id = Integer.parseInt(request.getParameter("id"));
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");

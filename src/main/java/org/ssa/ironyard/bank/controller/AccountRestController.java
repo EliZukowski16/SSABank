@@ -29,7 +29,7 @@ public class AccountRestController
     
     static Logger LOGGER = LogManager.getLogger(AccountRestController.class);
     
-    @RequestMapping("/accounts")
+    @RequestMapping(value = "/accounts", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Account>> allAccounts(@PathVariable String customerID)
     {
@@ -60,7 +60,7 @@ public class AccountRestController
         return ResponseEntity.ok(account);
     }
 
-    @RequestMapping(value = "/accounts/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/accounts", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Account> addAccount(HttpServletRequest request, @PathVariable String customerID)
     {
