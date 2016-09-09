@@ -1,42 +1,16 @@
-package org.ssa.ironyard.bank.service;
+package org.ssa.ironyard.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-import org.ssa.ironyard.bank.model.Account;
+import org.ssa.ironyard.account.model.Account;
 
-@Component
-public class AccountService
-{
+public interface AccountService {
 
-    public List<Account> readUser(int userID)
-    {
-        return null;
-    }
-
-    public Account read(int accountID)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public Account insert(Account account)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public Account deposit(int accountID, BigDecimal amount)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public Account withdraw(int accountID, BigDecimal amount)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
+    public List<Account> readUser(int userID);
+    public Account read(int accountID);
+    public Account insert(Account account);
+    public Account deposit(int accountID, BigDecimal amount);
+    public Account withdraw(int accountID, BigDecimal amount);
+	
 }

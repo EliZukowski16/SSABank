@@ -1,29 +1,13 @@
-package org.ssa.ironyard.bank.service;
+package org.ssa.ironyard.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-import org.ssa.ironyard.bank.model.Customer;
+import org.ssa.ironyard.customer.model.Customer;
 
+public interface CustomerService {
 
-@Component
-public class CustomerService
-{
-
-    public List<Customer> read()
-    {
-        return new ArrayList<Customer>();
-    }
-
-    public Customer read(int customerID)
-    {
-        return null;
-    }
-
-    public Customer insert(Customer customer)
-    {
-        return null;
-    }
-
+	public List<Customer> read();
+	public Customer read(int customerID);
+	public Customer insert(Customer customer);
+	
 }
