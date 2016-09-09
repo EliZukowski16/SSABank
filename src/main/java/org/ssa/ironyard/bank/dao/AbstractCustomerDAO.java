@@ -1,4 +1,4 @@
-package org.ssa.ironyard.customer.dao;
+package org.ssa.ironyard.bank.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
