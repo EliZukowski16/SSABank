@@ -161,11 +161,11 @@ li a {
 	function sendEdit() {
 		$.ajax({
 		    type: "PUT",
-		    url: "./customers/" + document.getElementById("cid").innerHTML + "/edit",
+		    url: "./customers/" + document.getElementById("cid").innerHTML,
 		    dataType: "json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
 		});
-
+		location.reload(true);
 	}
 
 	function displayAdd() {
@@ -180,7 +180,7 @@ li a {
 		$.ajax({
 		    type: "POST",
 		    url: "./customers/",
-		    contentType: "application/json",
+		    dataType: "json",
 		    data: {"firstName": document.getElementById("cfnameA").value, "lastName": document.getElementById("clnameA").value}
 		});
 		location.reload(true);
