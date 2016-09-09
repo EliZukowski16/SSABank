@@ -1,13 +1,17 @@
-package org.ssa.ironyard.Service;
+package org.ssa.ironyard.bank.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ssa.ironyard.customer.dao.CustomerDAO;
-import org.ssa.ironyard.customer.model.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.ssa.ironyard.bank.dao.CustomerDAO;
+import org.ssa.ironyard.bank.model.Customer;
 
+@Component
 public class CustomerServiceImpl implements CustomerService {
 
+    @Autowired
 	CustomerDAO customerDao;
 	
 	@Override

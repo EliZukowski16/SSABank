@@ -1,8 +1,8 @@
-package org.ssa.ironyard.Service;
+package org.ssa.ironyard.bank.service;
 
 import java.util.List;
 
-import org.ssa.ironyard.customer.model.Customer;
+import org.ssa.ironyard.bank.model.Customer;
 
 public interface CustomerService {
 

@@ -72,16 +72,11 @@ li a {
 	display: block;
 	color: black;
 	padding: 14px 16px;
-	text-align: center;
+	text-align: left;
 	text-decoration: none;
 	border: solid black 1px;
 	text-decoration: none;
-}
-
-.customerTable {
-	width: 50%;
-	border: solid 2px gray;
-	border-style: hidden;
+	font-size: large;
 }
 
 .customerTable th {
@@ -89,17 +84,15 @@ li a {
 }
 </style>
 
-<script src="jquery-3.1.0.min.js"></script>
+<script src="/jquery-3.1.0.min.js"></script>
 
 <script type="text/javascript">
 
 //get json
-<!--
 	var myjson;
-	$.getJSON("http://127.0.0.1:8080/horizon-update", function(json){
+	$.getJSON("/ssa-bank/customers", function(json){
     	myjson = json;
 	});
--->
 
 	var myList = [ {
 		"id" : 1,
@@ -122,49 +115,54 @@ li a {
 		"first" : "tim",
 		"last" : "brooks"
 	} ];
+	
+	jQuery.fn.sort = function() {  
+	    return this.pushStack( [].sort.apply( this, arguments ), []);  
+	};
+
+	function sortLastName(a,b){  
+	     if (a.last == b.last){
+	       return 0;
+	     }
+	     return a.last> b.last ? 1 : -1;  
+	 };  
+	  function sortLastNameDesc(a,b){  
+	     return sortLastName(a,b) * -1;  
+	 };
+	 
+	 var sorted=$(myjson).sort(sortLastName);	
+	
 
 function buildHtmlTable() {
 		
 		document.getElementById('listSection').style.display = 'block';
 		
-		var Table = document.getElementById("customerList");
-		Table.innerHTML = "";
-
-		var columns = addAllColumnHeaders(myList);
-
-		for (var i = 0; i < myList.length; i++) {
-			var row$ = $('<tr/>');
-			for (var colIndex = 0; colIndex < columns.length; colIndex++) {
-				var cellValue = myList[i][columns[colIndex]];
-
-				if (cellValue == null) {
-					cellValue = "";
-				}
-
-				row$.append($('<td/>').html(cellValue));
-			}
-			$("#customerList").append(row$);
+		var List = document.getElementById("customerList");
+		List.innerHTML = "";
+		
+		for (var i = 0; i < sorted.length; i++) {
+			var rowC = '<li>';
+			rowC += '<a class="';
+			rowC += 'todo';
+			rowC += '" href="javascript:;"';
+			rowC += 'onclick="toCdetail('
+			rowC += 'sorted[i].id'
+			rowC += ')">'
+			rowC += sorted[i].lastName;
+			rowC += ',&nbsp;&nbsp;&nbsp;';
+			rowC += sorted[i].firstName;
+			rowC += '</a>'
+			rowC += '</li>';
+			
+			$("#customerList").append(rowC);
 		}
+}
+
+	function toCdetail(id)
+	{
+		
 	}
 
-	function addAllColumnHeaders(myList) {
-		var columnSet = [];
-		var headerTr$ = $('<tr/>');
-
-		for (var i = 0; i < myList.length; i++) {
-			var rowHash = myList[i];
-			for ( var key in rowHash) {
-				if ($.inArray(key, columnSet) == -1) {
-					columnSet.push(key);
-					headerTr$.append($('<th/>').html(key));
-				}
-			}
-		}
-		$("#customerList").append(headerTr$);
-
-		return columnSet;
-	}
-	
 	function buildDetail() {
 		document.getElementById("detailSection").style.display = "block";
 		document.getElementById("cid").innerHTML = "";
@@ -175,6 +173,7 @@ function buildHtmlTable() {
 	window.onload = function hide() {
 		document.getElementById("listSection").style.display = "none";
 		document.getElementById("detailSection").style.display = "none";
+		document.getElementById("editSection").style.display = "none";
 	}
 
 </script>
@@ -198,8 +197,8 @@ function buildHtmlTable() {
 
 	<section id="listSection" class="list-section">
 
-		<table id="customerList" class="customerTable" border="1">
-		</table>
+		<ul id="customerList" class="customerList" border="1">
+		</ul>
 
 	</section>
 
@@ -210,7 +209,7 @@ function buildHtmlTable() {
 
 	
 	
-	<section id="detailSection" class="detail-section">
+	<section id="editSection" class="edit-Section">
 	
 		<form action="POST">
 		Customer ID: <span id="cid"></span><br><br>

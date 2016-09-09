@@ -1,9 +1,9 @@
-package org.ssa.ironyard.Service;
+package org.ssa.ironyard.bank.service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.ssa.ironyard.account.model.Account;
+import org.ssa.ironyard.bank.model.Account;
 
 public interface AccountService {
 
