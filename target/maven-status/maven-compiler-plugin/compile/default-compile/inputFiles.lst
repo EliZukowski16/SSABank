@@ -12,7 +12,6 @@ C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\service\Cu
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\service\AccountService.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\model\Customer.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\dao\CustomerDAO.java
-C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\controller\SSABankRestController.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\model\AbstractDomainObject.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\dao\AccountORM.java
 C:\Users\admin\workspace\SSA-Bank\src\main\java\org\ssa\ironyard\bank\dao\DAO.java
