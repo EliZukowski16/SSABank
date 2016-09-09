@@ -89,53 +89,14 @@ li a {
 <script type="text/javascript">
 
 //get json
-	var myjson;
-	$.getJSON("/ssa-bank/customers", function(json){
-    	myjson = json;
-	});
-
-	var myList = [ {
-		"id" : 1,
-		"first" : "bobby",
-		"last" : "fisher"
-	}, {
-		"id" : 2,
-		"first" : "sue",
-		"last" : "smith"
-	}, {
-		"id" : 3,
-		"first" : "rick",
-		"last" : "brown"
-	}, {
-		"id" : 4,
-		"first" : "cathy",
-		"last" : "stevenson"
-	}, {
-		"id" : 5,
-		"first" : "tim",
-		"last" : "brooks"
-	} ];
 	
-	jQuery.fn.sort = function() {  
-	    return this.pushStack( [].sort.apply( this, arguments ), []);  
-	};
-
-	function sortLastName(a,b){  
-	     if (a.last == b.last){
-	       return 0;
-	     }
-	     return a.last> b.last ? 1 : -1;  
-	 };  
-	  function sortLastNameDesc(a,b){  
-	     return sortLastName(a,b) * -1;  
-	 };
-	 
-	 var sorted=$(myjson).sort(sortLastName);	
+	$(document).ready(fuction(){
+		$.getJSON("ssa-bank/customers", function(customers);
+	}
 	
-
-function buildHtmlTable() {
-		
-		document.getElementById('listSection').style.display = 'block';
+	function customers(response)
+	{
+		var sorted=$(response).sort(sortLastName);
 		
 		var List = document.getElementById("customerList");
 		List.innerHTML = "";
@@ -156,6 +117,28 @@ function buildHtmlTable() {
 			
 			$("#customerList").append(rowC);
 		}
+	}
+	
+	jQuery.fn.sort = function() {  
+	    return this.pushStack( [].sort.apply( this, arguments ), []);  
+	};
+
+	function sortLastName(a,b){  
+	     if (a.last == b.last){
+	       return 0;
+	     }
+	     return a.last> b.last ? 1 : -1;  
+	 };  
+	  function sortLastNameDesc(a,b){  
+	     return sortLastName(a,b) * -1;  
+	 };
+	 
+	 var sorted=$(myjson).sort(sortLastName);	
+	
+
+function buildHtmlTable() {
+		
+		document.getElementById('listSection').style.display = 'block';		}
 }
 
 	function toCdetail(id)
