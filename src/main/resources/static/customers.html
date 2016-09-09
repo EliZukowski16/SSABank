@@ -160,12 +160,12 @@ li a {
 	
 	function sendEdit() {
 		$.ajax({
-		    type: "PUT",
+		    type: "POST",
 		    url: "./customers/" + document.getElementById("cid").innerHTML,
 		    contentType: "application/json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
 		});
-		
+		location.reload(true);
 	}
 
 	function displayAdd() {
@@ -175,7 +175,16 @@ li a {
 		document.getElementById('detailSection').style.display = 'none';
 		document.getElementById('editSection').style.display = 'none';
 	}
-
+	
+	function sendAdd() {
+		$.ajax({
+		    type: "POST",
+		    url: "./customers/",
+		    contentType: "application/json",
+		    data: {"firstName": document.getElementById("cfnameA").value, "lastName": document.getElementById("clnameA").value}
+		});
+		location.reload(true);
+	}
 	
 </script>
 
@@ -187,9 +196,7 @@ li a {
 			<li class="menuitem"><a href="javascript:;"
 				title="Customers List" onclick="displayList()">List</a></li>
 			<li class="menuitem"><a href="javascript:;" title="Add Customer"
-				onclick="buildDetail">Add</a></li>
-			<li class="menuitem"><a href="/customers/edit"
-				title="Edit Customer">Edit</a></li>
+				onclick="displayAdd()">Add</a></li>
 		</ul>
 		<span class="SSAhead">SSA-Bank</span>
 	</section>
@@ -206,7 +213,15 @@ li a {
 	</section>
 
 	<section id="addSection" class="add-section" style="display: none;">
+		<br> <br>
+		First Name: <input id="cfnameA" type="text" value=""></input><br> <br>
+			
+		Last Name: <input id="clnameA" type="text" value=""></input><br> <br>
 
+		<button id="caddsubmit" onclick="sendAdd()">Submit Edit</button> <br> <br>
+		
+		
+		
 	</section>
 
 	<section id="detailSection" class="detail-Section"
