@@ -1,52 +1,21 @@
-14:14:10.400 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
-14:14:12.136 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
-14:14:19.355 [http-nio-8080-exec-2] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
-14:14:24.832 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-14:14:28.997 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-14:14:38.129 [http-nio-8080-exec-8] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
-14:19:32.390 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
-14:19:34.371 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
-14:19:43.284 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
-14:19:45.922 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-14:19:47.622 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-14:19:50.951 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
-14:19:50.951 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - 
-14:24:02.971 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
-14:24:05.015 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
-14:24:09.771 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
-14:24:11.887 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-14:24:13.598 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-14:24:18.296 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
-14:24:18.296 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: null and last name: null
-14:26:06.433 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
-14:26:08.383 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
-14:26:15.080 [http-nio-8080-exec-1] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-14:26:16.272 [http-nio-8080-exec-2] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-14:26:21.086 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
-14:26:21.086 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: null and last name: null
-14:30:44.696 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
-14:34:25.646 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
-14:38:11.664 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
-15:00:51.887 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
-15:00:54.321 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-15:00:55.282 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-15:00:58.546 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
-15:00:58.546 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: null and last name: null
-15:07:32.068 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
-15:07:34.116 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-15:07:35.054 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-15:07:37.709 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
-15:07:37.709 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: null and last name: null
-15:11:45.423 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
-15:11:48.616 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-15:11:51.244 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
-15:12:04.760 [http-nio-8080-exec-8] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
-15:12:04.761 [http-nio-8080-exec-8] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - null
-15:12:04.761 [http-nio-8080-exec-8] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: john and last name: doe
-15:12:04.840 [http-nio-8080-exec-8] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Cust ID: 113, First Name: john, Last Name: doe
-15:15:45.600 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
-15:15:49.917 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 169
-15:15:52.571 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 169
-15:16:02.054 [http-nio-8080-exec-10] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 169
-15:16:02.054 [http-nio-8080-exec-10] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - java.util.Collections$3@2e818273
-15:16:02.055 [http-nio-8080-exec-10] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: null and last name: null
+15:55:18.072 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+15:55:28.281 [http-nio-8080-exec-10] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+15:55:31.832 [http-nio-8080-exec-1] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 169
+15:55:33.255 [http-nio-8080-exec-2] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 169
+15:55:37.159 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 169
+15:55:37.160 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - firstName
+15:55:37.160 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - lastName
+15:55:37.160 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: Martha and last name: Ale
+15:55:37.325 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Cust ID: 169, First Name: Martha, Last Name: Ale
+15:55:43.826 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+15:57:50.590 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+15:57:53.666 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 169
+15:57:55.410 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 169
+15:57:59.903 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 169
+15:57:59.904 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - firstName
+15:57:59.904 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - lastName
+15:57:59.904 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: Mar and last name: Ale
+15:58:00.002 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Cust ID: 169, First Name: Mar, Last Name: Ale
+15:58:00.058 [http-nio-8080-exec-9] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+15:58:06.431 [http-nio-8080-exec-10] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: a, Last Name: a
+15:58:06.581 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers

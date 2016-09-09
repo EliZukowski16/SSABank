@@ -1,5 +1,6 @@
 package org.ssa.ironyard.bank.controller;
 
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,18 +76,22 @@ public class CustomerRestController
 
     }
 
-    @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.POST)
+    @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<Customer> editCustomer(HttpServletRequest request, @PathVariable String customerID)
+    public ResponseEntity<Customer> editCustomer(@PathVariable String customerID, HttpServletRequest request)
     {
         LOGGER.info("Editing Single Customer with ID: {}", customerID);
 
         Integer id = Integer.parseInt(customerID);
         
-        String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
+        String firstName = request.getParameter("firstName");
+        Enumeration<String> parameters = request.getParameterNames();
         
-        LOGGER.info(request.getParameterNames());
+        while(parameters.hasMoreElements())
+        {
+            LOGGER.info(parameters.nextElement());
+        }
         
         LOGGER.info("Got first name: {} and last name: {}", firstName, lastName);
 

@@ -24,14 +24,12 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account read(int accountID) {
-		accountDao.read(accountID);
-		return null;
+		return accountDao.read(accountID);
 	}
 
 	@Override
 	public Account insert(Account account) {
-		accountDao.insert(account);
-		return null;
+		return accountDao.insert(account);
 	}
 
 	@Override

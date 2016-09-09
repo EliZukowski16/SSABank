@@ -13,7 +13,10 @@
     	<Logger name="org.ssa.ironyard.bank" level="debug" additivity="false">
     		<AppenderRef ref="log-file" />
     	</Logger>
-        <Root level="error">
+    	<Logger name="org.springframework.web" level="debug" additivity="false">
+    		<AppenderRef ref="log-file" />
+    	</Logger>
+        <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
