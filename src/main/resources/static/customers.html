@@ -158,14 +158,18 @@ li a {
 		}
 	}
 	
+	function loadAccounts(){
+		window.location.replace("./accounts/" + document.getElementById("cidE").innerHTML);
+	}
+	
 	function sendEdit() {
 		$.ajax({
 		    type: "PUT",
 		    url: "./customers/" + document.getElementById("cid").innerHTML,
 		    dataType: "json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
-		});
-		location.reload(true);
+		})
+		.done(toDetail);
 	}
 
 	function displayAdd() {
@@ -182,8 +186,8 @@ li a {
 		    url: "./customers/",
 		    dataType: "json",
 		    data: {"firstName": document.getElementById("cfnameA").value, "lastName": document.getElementById("clnameA").value}
-		});
-		location.reload(true);
+		})
+		.done(toDetail);
 	}
 	
 </script>
@@ -230,8 +234,10 @@ li a {
 			Customer ID: <span id="cid"></span><br> <br> First Name: <span
 				id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
 					<br>
-					
+			
 			<button id="ceditsubmit" onclick="displayEdit()">Edit Customer</button> <br> <br>
+			
+			<button id="showAccounts" onclick="loadAccounts()">Show Accounts</button> <br> <br>
 
 	</section>
 
