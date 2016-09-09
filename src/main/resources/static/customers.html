@@ -92,49 +92,31 @@ li a {
 	
 	$(document).ready(function()
 	{
-		$.getJSON("/customers", customers);
+		$.getJSON("./customers", customers);
 	});
 	
 	function customers(response)
 	{
-		var sorted=$(response).sort(sortLastName);
-		
 		var List = document.getElementById("customerList");
 		List.innerHTML = "";
 		
-		for (var i = 0; i < sorted.length; i++) {
+		for (var i = 0; i < response.length; i++) {
 			var rowC = '<li>';
 			rowC += '<a class="';
 			rowC += 'todo';
 			rowC += '" href="javascript:;"';
 			rowC += 'onclick="toCdetail('
-			rowC += 'sorted[i].id'
+			rowC += 'response[i].id'
 			rowC += ')">'
-			rowC += sorted[i].lastName;
+			rowC += response[i].lastName;
 			rowC += ',&nbsp;&nbsp;&nbsp;';
-			rowC += sorted[i].firstName;
+			rowC += response[i].firstName;
 			rowC += '</a>'
 			rowC += '</li>';
 			
 			$("#customerList").append(rowC);
 		}
-	}
-	
-	jQuery.fn.sort = function() {  
-	    return this.pushStack( [].sort.apply( this, arguments ), []);  
-	};
-
-	function sortLastName(a,b){  
-	     if (a.last == b.last){
-	       return 0;
-	     }
-	     return a.last> b.last ? 1 : -1;  
-	 };  
-	  function sortLastNameDesc(a,b){  
-	     return sortLastName(a,b) * -1;  
-	 };
-	 
-	 var sorted=$(myjson).sort(sortLastName);	
+	}	
 	
 
 function buildHtmlTable() {
@@ -152,12 +134,6 @@ function buildHtmlTable() {
 		document.getElementById("cid").innerHTML = "";
 		document.getElementById("cfname").innerHTML = "";
 		document.getElementById("clname").innerHTML = "";
-	}
-	
-	window.onload = function hide() {
-		document.getElementById("listSection").style.display = "none";
-		document.getElementById("detailSection").style.display = "none";
-		document.getElementById("editSection").style.display = "none";
 	}
 
 </script>

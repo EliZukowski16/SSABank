@@ -35,8 +35,8 @@ public class CustomerRestController
         LOGGER.info("Returning List of Customers");
 
         List<Customer> allCustomers = customerService.read().stream()
-                .sorted((c1, c2) -> c1.getLastName().compareTo(c2.getLastName()))
                 .sorted((c1,c2) -> c1.getFirstName().compareTo(c2.getFirstName()))
+                .sorted((c1, c2) -> c1.getLastName().compareTo(c2.getLastName()))
                 .collect(Collectors.toList());;
         
         for (Customer c : allCustomers)
