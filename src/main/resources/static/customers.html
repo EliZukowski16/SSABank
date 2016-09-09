@@ -136,10 +136,36 @@ li a {
 
 		function customerDetail(response) {
 			document.getElementById("cid").innerHTML = response.id;
-			document.getElementById("cfname").innerHTML = response.lastName;
-			document.getElementById("clname").innerHTML = response.firstName;
+			document.getElementById("cfname").innerHTML = response.firstName;
+			document.getElementById("clname").innerHTML = response.lastName;
 		}
 
+	}
+	
+	function displayEdit() {
+		document.getElementById('editSection').style.display = 'block';
+		document.getElementById('addSection').style.display = 'none';
+		document.getElementById('listSection').style.display = 'none';
+		document.getElementById('detailSection').style.display = 'none';
+
+		
+		$.getJSON("./customers/" + document.getElementById("cid").innerHTML, customerEdit);
+
+		function customerEdit(response) {
+			document.getElementById("cidE").innerHTML = response.id;
+			document.getElementById("cfnameE").value = response.firstName;
+			document.getElementById("clnameE").value = response.lastName;
+		}
+	}
+	
+	function sendEdit() {
+		$.ajax({
+		    type: "PUT",
+		    url: "./customers/" + document.getElementById("cid").innerHTML,
+		    contentType: "application/json",
+		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
+		});
+		
 	}
 
 	function displayAdd() {
@@ -148,14 +174,6 @@ li a {
 		document.getElementById('listSection').style.display = 'none';
 		document.getElementById('detailSection').style.display = 'none';
 		document.getElementById('editSection').style.display = 'none';
-	}
-	
-	function displayEdit(id) {
-
-		document.getElementById('editSection').style.display = 'block';
-		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('listSection').style.display = 'none';
-		document.getElementById('detailSection').style.display = 'none';
 	}
 
 	
@@ -197,18 +215,21 @@ li a {
 			Customer ID: <span id="cid"></span><br> <br> First Name: <span
 				id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
 					<br>
+					
+			<button id="ceditsubmit" onclick="displayEdit()">Edit Customer</button> <br> <br>
 
 	</section>
 
 	<section id="editSection" class="edit-Section" style="display: none;">
 
 		<form action="POST">
-			Customer ID: <span id="cid"></span><br> <br> First Name: <span
-				id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
-					<br>
+			Customer ID: <span id="cidE"></span><br><br> 
+			
+			First Name: <input id="cfnameE" type="text" value=""></input><br> <br>
+			
+			Last Name: <input id="clnameE" type="text" value=""></input><br> <br>
 
-					<button id="cnewsubmit" type="submit">test</button>
-					<button id="ceditsubmit" type="submit">test</button> <br> <br>
+					<button id="ceditsubmit" onclick="sendEdit()">Submit Edit</button> <br> <br>
 		</form>
 
 	</section>
