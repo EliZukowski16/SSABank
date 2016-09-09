@@ -79,5 +79,23 @@ public class CustomerRestController
         return ResponseEntity.ok(addedCustomer);
 
     }
+    
+    @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity<Customer> editCustomer(HttpServletRequest request, @PathVariable String customerID)
+    {
+        LOGGER.info("Editing Single Customer with ID: {}", customerID);
+        
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+
+        Customer customer = customerService.edit(new Customer(id, firstName, lastName));
+
+        LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
+                customer.getLastName());
+
+        return ResponseEntity.ok(customer);
+    }
 
 }
