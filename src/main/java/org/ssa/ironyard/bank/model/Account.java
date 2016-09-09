@@ -1,6 +1,10 @@
-package org.ssa.ironyard.bank.model;
+package org.ssa.ironyard.account.model;
 
 import java.math.BigDecimal;
+
+import org.ssa.ironyard.customer.model.Customer;
+import org.ssa.ironyard.model.AbstractDomainObject;
+import org.ssa.ironyard.model.DomainObject;
 
 public class Account extends AbstractDomainObject implements DomainObject
 {
@@ -88,6 +92,12 @@ public class Account extends AbstractDomainObject implements DomainObject
         this.balance = balance;
     }
 
+    public void adjustBalance(String typeOfAdjst, BigDecimal amount){
+    	if(typeOfAdjst.equals("deposit"))
+    		balance.add(amount);
+    	if (typeOfAdjst.equals("withdraw"))
+    		balance.subtract(amount);
+    }
     @Override
     public int hashCode()
     {

@@ -23,14 +23,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer read(int customerID) {
-		
+		customerDao.read(customerID);
 		return null;
 	}
 
 	@Override
 	public Customer insert(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		return customerDao.insert(customer);
 	}
 
 }

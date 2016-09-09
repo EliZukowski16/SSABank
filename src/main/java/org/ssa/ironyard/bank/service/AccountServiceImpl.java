@@ -24,26 +24,28 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account read(int accountID) {
-	
+		accountDao.read(accountID);
 		return null;
 	}
 
 	@Override
 	public Account insert(Account account) {
-		// TODO Auto-generated method stub
+		accountDao.insert(account);
 		return null;
 	}
 
 	@Override
 	public Account deposit(int accountID, BigDecimal amount) {
-		// TODO Auto-generated method stub
-		return null;
+		Account a1 = accountDao.read(accountID);
+		a1.adjustBalance("deposit", amount);
+		return accountDao.update(a1);
 	}
 
 	@Override
 	public Account withdraw(int accountID, BigDecimal amount) {
-		// TODO Auto-generated method stub
-		return null;
+		Account a1 = accountDao.read(accountID);
+		a1.adjustBalance("withdraw", amount);
+		return accountDao.update(a1);
 	}
 
 }
