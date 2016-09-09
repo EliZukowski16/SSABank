@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>SSA-Bank</title>
+
+<style type="text/css">
+.menu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+
+.menuitem {
+	float: left;
+	width: 25%
+}
+
+li.menuitem a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+	background-color: blue;
+	color: white;
+}
+
+.SSAhead {
+	display: block;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+	color: white;
+	font-size: 4em;
+	width: 100%;
+	text-align: center;
+}
+
+.list-section {
+	display: inherit;
+}
+
+.customerlist {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.customerEntry {
+	display: block;
+	float: left;
+	width: 80%;
+	background-color: silver;
+	text-align: left;
+}
+
+.customerEdit {
+	display: block;
+	background-color: silver;
+	text-align: left;
+}
+
+li a {
+	display: block;
+	color: black;
+	padding: 14px 16px;
+	text-align: center;
+	text-decoration: none;
+	border: solid black 1px;
+	text-decoration: none;
+}
+
+.customerTable {
+	width: 50%;
+	border: solid 2px gray;
+	border-style: hidden;
+}
+
+.customerTable th {
+	background-color: silver;
+}
+</style>
+
+<script src="jquery-3.1.0.min.js"></script>
+
+<script type="text/javascript">
+
+//get json
+<!--
+	var myjson;
+	$.getJSON("http://127.0.0.1:8080/horizon-update", function(json){
+    	myjson = json;
+	});
+-->
+
+	var myList = [ {
+		"id" : 1,
+		"first" : "bobby",
+		"last" : "fisher"
+	}, {
+		"id" : 2,
+		"first" : "sue",
+		"last" : "smith"
+	}, {
+		"id" : 3,
+		"first" : "rick",
+		"last" : "brown"
+	}, {
+		"id" : 4,
+		"first" : "cathy",
+		"last" : "stevenson"
+	}, {
+		"id" : 5,
+		"first" : "tim",
+		"last" : "brooks"
+	} ];
+
+function buildHtmlTable() {
+		
+		document.getElementById('listSection').style.display = 'block';
+		
+		var Table = document.getElementById("customerList");
+		Table.innerHTML = "";
+
+		var columns = addAllColumnHeaders(myList);
+
+		for (var i = 0; i < myList.length; i++) {
+			var row$ = $('<tr/>');
+			for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+				var cellValue = myList[i][columns[colIndex]];
+
+				if (cellValue == null) {
+					cellValue = "";
+				}
+
+				row$.append($('<td/>').html(cellValue));
+			}
+			$("#customerList").append(row$);
+		}
+	}
+
+	function addAllColumnHeaders(myList) {
+		var columnSet = [];
+		var headerTr$ = $('<tr/>');
+
+		for (var i = 0; i < myList.length; i++) {
+			var rowHash = myList[i];
+			for ( var key in rowHash) {
+				if ($.inArray(key, columnSet) == -1) {
+					columnSet.push(key);
+					headerTr$.append($('<th/>').html(key));
+				}
+			}
+		}
+		$("#customerList").append(headerTr$);
+
+		return columnSet;
+	}
+	
+	function buildDetail() {
+		document.getElementById("detailSection").style.display = "block";
+		document.getElementById("cid").innerHTML = "";
+		document.getElementById("cfname").innerHTML = "";
+		document.getElementById("clname").innerHTML = "";
+	}
+	
+	window.onload = function hide() {
+		document.getElementById("listSection").style.display = "none";
+		document.getElementById("detailSection").style.display = "none";
+	}
+
+</script>
+
+</head>
+
+<header>
+	<section>
+		<ul class="menu">
+			<li class="menuitem"><a href="javascript:;" title="Customers List" onclick="buildHtmlTable()">List</a></li>
+			<li class="menuitem"><a href="javascript:;" title="Add Customer" onclick="buildDetail">Add</a></li>
+			<li class="menuitem"><a href="/customers/edit"
+				title="Edit Customer">Edit</a></li>
+		</ul>
+		<span class="SSAhead">SSA-Bank</span>
+	</section>
+
+</header>
+
+<body>
+
+	<section id="listSection" class="list-section">
+
+		<table id="customerList" class="customerTable" border="1">
+		</table>
+
+	</section>
+
+	<section id="detailSection" class="detail-section">
+	
+	
+	</section>
+
+	
+	
+	<section id="detailSection" class="detail-section">
+	
+		<form action="POST">
+		Customer ID: <span id="cid"></span><br><br>
+		First Name: <input type="text" size="50" id="cfname"></input><br><br>
+		Last Name: <input type="text" size="50" id="clname"></input><br><br>
+	
+	<button id="cnewsubmit" type="submit">test</button>	
+	<button id="ceditsubmit" type="submit">test</button><br><br>
+	
+	</form>
+	
+	</section>
+
+</body>
+
+<footer> </footer>
+
+</html>
