@@ -160,7 +160,7 @@ li a {
 	
 	function sendEdit() {
 		$.ajax({
-		    type: "GET",
+		    type: "POST",
 		    url: "./customers/" + document.getElementById("cid").innerHTML + "/edit",
 		    contentType: "application/json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
