@@ -512,3 +512,5 @@
 10:20:51.903 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Cust ID: 72, First Name: Wayne, Last Name: Butler
 10:20:51.903 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Cust ID: 55, First Name: Wayne, Last Name: Diaz
 10:20:51.903 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Cust ID: 79, First Name: Willie, Last Name: Frazier
+10:41:12.612 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
+10:41:14.409 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
