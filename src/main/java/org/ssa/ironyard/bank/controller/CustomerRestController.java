@@ -1,6 +1,7 @@
 package org.ssa.ironyard.bank.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.ssa.ironyard.bank.model.Customer;
 import org.ssa.ironyard.bank.service.CustomerService;
 
+
 @RestController
 @RequestMapping("/ssa-bank")
 public class CustomerRestController
@@ -24,18 +26,19 @@ public class CustomerRestController
     @Autowired
     CustomerService customerService;
 
-
-
     static Logger LOGGER = LogManager.getLogger(CustomerRestController.class);
 
-    @RequestMapping(value = "/customers")
+    @RequestMapping(value = "/customers", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Customer>> allCustomers()
     {
         LOGGER.info("Returning List of Customers");
 
-        List<Customer> allCustomers = customerService.read();
-
+        List<Customer> allCustomers = customerService.read().stream()
+                .sorted((c1, c2) -> c1.getLastName().compareTo(c2.getLastName()))
+                .sorted((c1,c2) -> c1.getFirstName().compareTo(c2.getFirstName()))
+                .collect(Collectors.toList());;
+        
         for (Customer c : allCustomers)
         {
             LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", c.getId().toString(), c.getFirstName(),
@@ -59,7 +62,7 @@ public class CustomerRestController
         return ResponseEntity.ok(customer);
     }
 
-    @RequestMapping(value = "/customers/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/customers", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Customer> addCustomer(HttpServletRequest request)
     {

@@ -14,7 +14,6 @@ public class CustomerService
     public List<Customer> read()
     {
         return new ArrayList<Customer>();
-        
     }
 
     public Customer read(int customerID)
