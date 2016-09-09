@@ -90,9 +90,10 @@ li a {
 
 //get json
 	
-	$(document).ready(fuction(){
-		$.getJSON("ssa-bank/customers", function(customers);
-	}
+	$(document).ready(function()
+	{
+		$.getJSON("ssa-bank/customers", customers);
+	});
 	
 	function customers(response)
 	{
@@ -139,7 +140,7 @@ li a {
 function buildHtmlTable() {
 		
 		document.getElementById('listSection').style.display = 'block';		}
-}
+
 
 	function toCdetail(id)
 	{
