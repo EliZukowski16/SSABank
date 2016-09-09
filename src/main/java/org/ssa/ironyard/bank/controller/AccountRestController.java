@@ -39,7 +39,7 @@ public class AccountRestController
 
         for (Account a : customersAccounts)
         {
-            LOGGER.info("Acc ID: {}, Cust ID: {}, Account: {}, Balance: {}", a.getId().toString(),
+            LOGGER.trace("Acc ID: {}, Cust ID: {}, Account: {}, Balance: {}", a.getId().toString(),
                     a.getCustomer().getId(), a.getType(), a.getBalance());
         }
 
@@ -54,7 +54,7 @@ public class AccountRestController
 
         Account account = accountService.read(Integer.parseInt(accountID));
 
-        LOGGER.info("Acc ID: {}, Cust ID: {}, Account: {}, Balance: {}", account.getId().toString(),
+        LOGGER.trace("Acc ID: {}, Cust ID: {}, Account: {}, Balance: {}", account.getId().toString(),
                 account.getCustomer().getId(), account.getType(), account.getBalance());
 
         return ResponseEntity.ok(account);
@@ -72,7 +72,7 @@ public class AccountRestController
 
         Account addedAccount = accountService.insert(new Account(new Customer(custID, null, null), type, balance));
 
-        LOGGER.info("Added Accont to Database - Acct ID: {}, Cust ID: {}, Account: {}, Balance: {}",
+        LOGGER.trace("Added Account to Database - Acct ID: {}, Cust ID: {}, Account: {}, Balance: {}",
                 addedAccount.getId(), addedAccount.getCustomer().getId(), addedAccount.getType(),
                 addedAccount.getBalance());
 

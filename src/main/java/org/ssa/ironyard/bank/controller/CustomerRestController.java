@@ -37,7 +37,7 @@ public class CustomerRestController
 
         for (Customer c : allCustomers)
         {
-            LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", c.getId().toString(), c.getFirstName(),
+            LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", c.getId().toString(), c.getFirstName(),
                     c.getLastName());
         }
 
@@ -52,7 +52,7 @@ public class CustomerRestController
 
         Customer customer = customerService.read(Integer.parseInt(customerID));
 
-        LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
+        LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
                 customer.getLastName());
 
         return ResponseEntity.ok(customer);
@@ -69,7 +69,7 @@ public class CustomerRestController
 
         Customer addedCustomer = customerService.insert(new Customer(firstName, lastName));
 
-        LOGGER.info("Added Customer to Database - Cust ID: {}, First Name: {}, Last Name:{}", addedCustomer.getId(),
+        LOGGER.trace("Added Customer to Database - Cust ID: {}, First Name: {}, Last Name:{}", addedCustomer.getId(),
                 addedCustomer.getFirstName(), addedCustomer.getLastName());
 
         return ResponseEntity.ok(addedCustomer);
@@ -88,7 +88,7 @@ public class CustomerRestController
 
         Customer customer = customerService.edit(new Customer(id, firstName, lastName));
 
-        LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
+        LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
                 customer.getLastName());
 
         return ResponseEntity.ok(customer);

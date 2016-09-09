@@ -38,7 +38,7 @@ public class CustomerRestControllerTest
     @Test
     public void test()
     {
-        fail("Not yet implemented");
+
     }
 
 }

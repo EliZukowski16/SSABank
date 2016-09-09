@@ -10,7 +10,7 @@
     </Appenders>
     <Loggers>
     <!-- trace, debug, info, warn, error, fatal -->
-    	<Logger name="org.ssa.ironyard" level="trace" additivity="false">
+    	<Logger name="org.ssa.ironyard.bank" level="debug" additivity="false">
     		<AppenderRef ref="log-file" />
     	</Logger>
         <Root level="error">
