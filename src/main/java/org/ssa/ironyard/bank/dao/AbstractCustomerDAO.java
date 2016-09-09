@@ -10,12 +10,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.ssa.ironyard.account.orm.AccountORM;
-import org.ssa.ironyard.customer.model.Customer;
-import org.ssa.ironyard.customer.orm.CustomerORM;
-import org.ssa.ironyard.customer.orm.CustomerORMImpl;
-import org.ssa.ironyard.dao.AbstractDAO;
-import org.ssa.ironyard.orm.ORM;
+import org.ssa.ironyard.bank.model.Customer;
 
 public abstract class AbstractCustomerDAO extends AbstractDAO<Customer> implements CustomerDAO
 {
