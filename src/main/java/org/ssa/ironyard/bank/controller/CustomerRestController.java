@@ -76,7 +76,7 @@ public class CustomerRestController
 
     }
 
-    @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.POST)
+    @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Customer> editCustomer(HttpServletRequest request, @PathVariable String customerID)
     {
