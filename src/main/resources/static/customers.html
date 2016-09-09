@@ -115,15 +115,12 @@ li a {
 
 			$("#customerList").append(rowC);
 		}
+		document.getElementById('listSection').style.display = 'block';
 	}
 
 	function displayList() {
 
-		document.getElementById('listSection').style.display = 'block';
-		document.getElementById('detailSection').style.display = 'none';
-		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('editSection').style.display = 'none';
-		
+		location.reload(true);
 	}
 
 	function displayDetail(id) {
