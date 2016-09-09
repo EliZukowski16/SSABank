@@ -64,3 +64,17 @@
 14:04:48.134 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
 14:04:59.886 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
 14:05:03.553 [http-nio-8080-exec-1] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+14:07:30.876 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
+14:07:32.639 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
+14:07:35.811 [http-nio-8080-exec-2] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+14:07:40.285 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 206
+14:07:42.983 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 206
+14:09:35.245 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
+14:09:37.024 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
+14:09:44.057 [http-nio-8080-exec-1] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
+14:09:45.992 [http-nio-8080-exec-2] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
+14:09:50.190 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 113
+14:09:59.831 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+14:10:02.792 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+14:10:05.639 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113
+14:10:06.906 [http-nio-8080-exec-8] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 113

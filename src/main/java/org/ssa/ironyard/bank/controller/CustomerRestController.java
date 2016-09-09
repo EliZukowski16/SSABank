@@ -82,7 +82,7 @@ public class CustomerRestController
     {
         LOGGER.info("Editing Single Customer with ID: {}", customerID);
 
-        Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer id = Integer.parseInt(customerID);
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
 
