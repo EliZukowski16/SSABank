@@ -160,11 +160,12 @@ li a {
 	
 	function sendEdit() {
 		$.ajax({
-		    type: "POST",
-		    url: "./customers/" + document.getElementById("cid").innerHTML,
+		    type: "GET",
+		    url: "./customers/" + document.getElementById("cid").innerHTML + "/edit",
 		    contentType: "application/json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
 		});
+
 	}
 
 	function displayAdd() {
@@ -182,6 +183,7 @@ li a {
 		    contentType: "application/json",
 		    data: {"firstName": document.getElementById("cfnameA").value, "lastName": document.getElementById("clnameA").value}
 		});
+		location.reload(true);
 	}
 	
 </script>
