@@ -1,33 +1,35 @@
 package org.ssa.ironyard.bank.controller;
 
-import static org.junit.Assert.*;
-
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.test.web.servlet.MockMvc;
+import org.ssa.ironyard.bank.service.CustomerService;
 
 public class CustomerRestControllerTest
 {
-
     
+    CustomerService cs;
+    CustomerRestController controller;
 
     @BeforeClass
-    public static void setUpBeforeClass() throws Exception
+    public static void setUpBeforeClass()
     {
 
     }
 
     @AfterClass
-    public static void tearDownAfterClass() throws Exception
+    public static void tearDownAfterClass()
     {
     }
 
     @Before
-    public void setUp() throws Exception
+    public void setUp()
     {
+        this.cs = EasyMock.createNiceMock(CustomerService.class);
+        this.controller = new CustomerRestController();
     }
 
     @After

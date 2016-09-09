@@ -26,8 +26,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer read(int customerID) {
-		customerDao.read(customerID);
-		return null;
+		return customerDao.read(customerID);
 	}
 
 	@Override
