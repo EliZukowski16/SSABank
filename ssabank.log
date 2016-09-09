@@ -20,3 +20,16 @@
 13:19:26.395 [http-nio-8080-exec-1] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
 13:19:26.580 [http-nio-8080-exec-2] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
 13:19:31.520 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 343
+13:31:46.599 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
+13:31:48.426 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
+13:32:29.273 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
+13:32:31.026 [main] DEBUG org.ssa.ironyard.bank.config.DataSourceConfiguration - YEAH ANnotation based processing is working
+13:32:37.698 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+13:32:37.949 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+13:32:44.150 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 101
+13:32:55.463 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+13:33:33.227 [http-nio-8080-exec-10] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 106
+13:33:37.546 [http-nio-8080-exec-1] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 110
+13:33:40.046 [http-nio-8080-exec-2] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 115
+13:33:44.167 [http-nio-8080-exec-4] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 126
+13:33:47.429 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 129

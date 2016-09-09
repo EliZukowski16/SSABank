@@ -86,7 +86,7 @@ public class CustomerRestController
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
 
-        Customer customer = customerService.edit(new Customer(id, firstName, lastName));
+        Customer customer = customerService.update(new Customer(id, firstName, lastName));
 
         LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
                 customer.getLastName());
