@@ -49,9 +49,11 @@ li a:hover {
 
 .customerlist {
 	list-style-type: none;
+	list-style: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	margin: 0;
 }
 
 .customerEntry {
@@ -87,55 +89,76 @@ li a {
 <script src="/jquery-3.1.0.min.js"></script>
 
 <script type="text/javascript">
+	//get json
 
-//get json
-	
-	$(document).ready(function()
-	{
+	$(document).ready(function() {
 		$.getJSON("./customers", customers);
 	});
-	
-	function customers(response)
-	{
+
+	function customers(response) {
 		var List = document.getElementById("customerList");
 		List.innerHTML = "";
-		
+
 		for (var i = 0; i < response.length; i++) {
 			var rowC = '<li>';
 			rowC += '<a class="';
 			rowC += 'todo';
 			rowC += '" href="javascript:;"';
-			rowC += 'onclick="toCdetail('
-			rowC += 'response[i].id'
-			rowC += ')">'
+			rowC += 'onclick="displayDetail(';
+			rowC += response[i].id;
+			rowC += ')">';
 			rowC += response[i].lastName;
 			rowC += ',&nbsp;&nbsp;&nbsp;';
 			rowC += response[i].firstName;
-			rowC += '</a>'
+			rowC += '</a>';
 			rowC += '</li>';
-			
+
 			$("#customerList").append(rowC);
 		}
-	}	
+	}
+
+	function displayList() {
+
+		document.getElementById('listSection').style.display = 'block';
+		document.getElementById('detailSection').style.display = 'none';
+		document.getElementById('addSection').style.display = 'none';
+		document.getElementById('editSection').style.display = 'none';
+		
+	}
+
+	function displayDetail(id) {
+		document.getElementById('detailSection').style.display = 'block';
+		document.getElementById('listSection').style.display = 'none';
+		document.getElementById('addSection').style.display = 'none';
+		document.getElementById('editSection').style.display = 'none';
+
+		$.getJSON("./customers/" + id, customerDetail);
+
+		function customerDetail(response) {
+			document.getElementById("cid").innerHTML = response.id;
+			document.getElementById("cfname").innerHTML = response.lastName;
+			document.getElementById("clname").innerHTML = response.firstName;
+		}
+
+	}
+
+	function displayAdd() {
+
+		document.getElementById('addSection').style.display = 'block';
+		document.getElementById('listSection').style.display = 'none';
+		document.getElementById('detailSection').style.display = 'none';
+		document.getElementById('editSection').style.display = 'none';
+	}
 	
+	function displayEdit(id) {
 
-function buildHtmlTable() {
-		
-		document.getElementById('listSection').style.display = 'block';		}
-
-
-	function toCdetail(id)
-	{
-		
+		document.getElementById('editSection').style.display = 'block';
+		document.getElementById('addSection').style.display = 'none';
+		document.getElementById('listSection').style.display = 'none';
+		document.getElementById('detailSection').style.display = 'none';
 	}
 
-	function buildDetail() {
-		document.getElementById("detailSection").style.display = "block";
-		document.getElementById("cid").innerHTML = "";
-		document.getElementById("cfname").innerHTML = "";
-		document.getElementById("clname").innerHTML = "";
-	}
-
+	
 </script>
 
 </head>
@@ -143,8 +166,10 @@ function buildHtmlTable() {
 <header>
 	<section>
 		<ul class="menu">
-			<li class="menuitem"><a href="javascript:;" title="Customers List" onclick="buildHtmlTable()">List</a></li>
-			<li class="menuitem"><a href="javascript:;" title="Add Customer" onclick="buildDetail">Add</a></li>
+			<li class="menuitem"><a href="javascript:;"
+				title="Customers List" onclick="displayList()">List</a></li>
+			<li class="menuitem"><a href="javascript:;" title="Add Customer"
+				onclick="buildDetail">Add</a></li>
 			<li class="menuitem"><a href="/customers/edit"
 				title="Edit Customer">Edit</a></li>
 		</ul>
@@ -155,32 +180,37 @@ function buildHtmlTable() {
 
 <body>
 
-	<section id="listSection" class="list-section">
+	<section id="listSection" class="list-section" style="display: none;">
 
-		<ul id="customerList" class="customerList" border="1">
+		<ul id="customerList" class="customerList">
 		</ul>
 
 	</section>
 
-	<section id="detailSection" class="detail-section">
-	
-	
+	<section id="addSection" class="add-section" style="display: none;">
+
 	</section>
 
-	
-	
-	<section id="editSection" class="edit-Section">
-	
+	<section id="detailSection" class="detail-Section"
+		style="display: none;">
+
+			Customer ID: <span id="cid"></span><br> <br> First Name: <span
+				id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
+					<br>
+
+	</section>
+
+	<section id="editSection" class="edit-Section" style="display: none;">
+
 		<form action="POST">
-		Customer ID: <span id="cid"></span><br><br>
-		First Name: <input type="text" size="50" id="cfname"></input><br><br>
-		Last Name: <input type="text" size="50" id="clname"></input><br><br>
-	
-	<button id="cnewsubmit" type="submit">test</button>	
-	<button id="ceditsubmit" type="submit">test</button><br><br>
-	
-	</form>
-	
+			Customer ID: <span id="cid"></span><br> <br> First Name: <span
+				id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
+					<br>
+
+					<button id="cnewsubmit" type="submit">test</button>
+					<button id="ceditsubmit" type="submit">test</button> <br> <br>
+		</form>
+
 	</section>
 
 </body>
