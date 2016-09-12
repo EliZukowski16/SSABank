@@ -93,8 +93,13 @@ li a {
 
 	$(document).ready(function() {
 		var customerID = localStorage.getItem('customerID');
-		$.getJSON("./ssa-bank/customers/" + customerID + "/accounts", accounts);
+		$.getJSON("./customers/" + customerID + "/accounts", accounts);
 	});
+	
+	function loadCustomerAccounts() {
+		var customerID = localStorage.getItem('customerID');
+		$.getJSON("./customers/" + customerID + "/accounts", accounts);
+	}
 	
 	function accounts(response) {
 		var List = document.getElementById("accountsList");
@@ -117,7 +122,8 @@ li a {
 			$("#accountsList").append(rowC);
 		}
 		
-		document.getElementById('listSection').style.display = 'block';
+		displayList();
+		//document.getElementById('listSection').style.display = 'block';
 	
 	}
 
@@ -137,12 +143,12 @@ li a {
 		document.getElementById('addSection').style.display = 'none';
 		document.getElementById('editSection').style.display = 'none';
 
-		$.getJSON("./customers/" + id, customerDetail);
+		$.getJSON("./customers/" + localStorage.getItem('customerID') + "/accounts/" + id, customerDetail);
 
 		function customerDetail(response) {
-			document.getElementById("cid").innerHTML = response.id;
-			document.getElementById("cfname").innerHTML = response.firstName;
-			document.getElementById("clname").innerHTML = response.lastName;
+			document.getElementById("accid").innerHTML = response.id;
+			document.getElementById("acctype").innerHTML = response.type;
+			document.getElementById("accbalance").innerHTML = response.balance;
 		}
 
 	}
@@ -241,13 +247,13 @@ li a {
 	<section id="detailSection" class="detail-Section"
 		style="display: none;">
 
-			Customer ID: <span id="cid"></span><br> <br> First Name: <span
-				id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
+			Account ID: <span id="accid"></span><br> <br> Account Type: <span
+				id="acctype"></span><br> <br> Balance: <span id="accbalance"></span><br>
 					<br>
 			
 			<button id="ceditsubmit" onclick="displayEdit()">Edit Customer</button> <br> <br>
 			
-			<button id="showAccounts" onclick="loadAccounts()">Show Accounts</button> <br> <br>
+			<button id="showAccounts" onclick="loadCustomerAccounts()">Show Accounts</button> <br> <br>
 
 	</section>
 

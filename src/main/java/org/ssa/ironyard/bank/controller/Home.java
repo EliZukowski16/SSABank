@@ -12,5 +12,11 @@ public class Home
     {
         return "/customers.html";
     }
+    
+    @RequestMapping(value = "/accounts")
+    public String accounts()
+    {
+        return "/accounts.html";
+    }
 
 }
