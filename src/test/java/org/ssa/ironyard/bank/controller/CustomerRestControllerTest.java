@@ -155,8 +155,6 @@ public class CustomerRestControllerTest
         assertEquals("Mike", customer.getBody().getFirstName());
         assertEquals("Jones", customer.getBody().getLastName());
         assertEquals(true, customer.getBody().isLoaded());
-        
-        
     }
 
 }
