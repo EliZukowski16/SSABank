@@ -50,7 +50,7 @@ public class AccountRestController
     @ResponseBody
     public ResponseEntity<Account> getCustomerAccount(@PathVariable String customerID, @PathVariable String accountID)
     {
-        LOGGER.info("Returning Single Account with ID: {} for Customer with ID: {}", customerID, accountID);
+        LOGGER.info("Returning Single Account with ID: {} and Customer with ID: {}", accountID, customerID);
 
         Account account = accountService.read(Integer.parseInt(accountID));
 
