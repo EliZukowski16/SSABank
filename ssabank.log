@@ -2773,3 +2773,100 @@
 15:49:08.757 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.AccountRestController - Returning List of Accounts for Customer ID: 200
 15:49:14.527 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
 15:49:16.227 [http-nio-8080-exec-10] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:18:26.211 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:18:26.242 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:18:26.242 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:19:19.387 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:19:19.403 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: Joh, Last Name: Smith
+16:19:19.403 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:24:38.373 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:24:38.404 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: Joh, Last Name: Smith
+16:24:38.404 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:25:22.952 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:25:22.967 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: null, Last Name: null
+16:25:22.967 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:28:44.223 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:28:44.254 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:28:44.254 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:28:52.956 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:28:52.972 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: Joh, Last Name: Smith
+16:28:52.972 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:28:58.394 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:28:58.410 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:28:58.410 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:30:56.165 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:30:56.177 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:30:56.177 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:31:53.320 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:31:53.351 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:31:53.351 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:35:36.901 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:35:36.932 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:35:36.932 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:38:02.934 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:38:02.966 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:38:02.966 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:39:04.659 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:39:04.680 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:39:04.685 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:39:15.889 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:39:15.920 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:39:15.920 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:39:41.640 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:39:41.663 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:39:41.666 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:39:51.031 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:39:51.047 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:39:51.047 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:40:04.031 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:40:04.047 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:40:04.047 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:40:29.312 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:40:29.327 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:40:29.327 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:42:53.221 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:42:53.221 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:43:08.111 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:43:08.127 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:43:08.142 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:43:45.518 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:43:45.549 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:43:45.549 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:45:01.099 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:45:01.130 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:45:01.130 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:53:42.218 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 1
+16:53:42.219 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - firstName
+16:53:42.219 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - lastName
+16:53:42.219 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: Mike and last name: Jones
+16:53:42.219 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:53:42.219 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:53:42.219 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:54:52.343 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 1
+16:54:52.343 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - firstName
+16:54:52.343 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - lastName
+16:54:52.343 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: Mike and last name: Jones
+16:54:52.343 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:54:52.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:54:52.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:55:25.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 1
+16:55:25.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - firstName
+16:55:25.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - lastName
+16:55:25.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: Mike and last name: Jones
+16:55:25.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:55:25.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:55:25.359 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:55:55.959 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 1
+16:55:55.959 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - firstName
+16:55:55.959 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - lastName
+16:55:55.959 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: Mike and last name: Jones
+16:55:55.959 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:55:55.959 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:55:55.959 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+16:56:33.127 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Editing Single Customer with ID: 1
+16:56:33.127 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - firstName
+16:56:33.127 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - lastName
+16:56:33.127 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Got first name: Mike and last name: Jones
+16:56:33.127 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+16:56:33.127 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Adding Single Customer - First Name: John, Last Name: Smith
+16:56:33.127 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers

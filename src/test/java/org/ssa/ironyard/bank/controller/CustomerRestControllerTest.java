@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockServletConfig;
 import org.ssa.ironyard.bank.model.Customer;
 import org.ssa.ironyard.bank.service.CustomerService;
@@ -67,7 +68,7 @@ public class CustomerRestControllerTest
     @Before
     public void setUp()
     {
-        cs = EasyMock.createNiceMock(CustomerServiceImpl.class);
+        cs = EasyMock.niceMock(CustomerServiceImpl.class);
         this.controller = new CustomerRestController(this.cs);
     }
 
@@ -75,8 +76,8 @@ public class CustomerRestControllerTest
     @Test
     public void viewAllCustomersTest()
     {
-        EasyMock.expect(this.cs.read()).andReturn(allCustomers);
-        EasyMock.replay(this.cs);
+        EasyMock.expect(cs.read()).andReturn(allCustomers);
+        EasyMock.replay(cs);
         
         ResponseEntity<List<Customer>> customers = this.controller.allCustomers();
         
@@ -103,8 +104,8 @@ public class CustomerRestControllerTest
     @Test
     public void getSingleCustomerTest()
     {
-        EasyMock.expect(this.cs.read(1)).andReturn(allCustomers.get(0));
-        EasyMock.replay(this.cs);
+        EasyMock.expect(cs.read(1)).andReturn(allCustomers.get(0));
+        EasyMock.replay(cs);
         
         ResponseEntity<Customer> customer = this.controller.getCustomer("1");
         
@@ -114,14 +115,48 @@ public class CustomerRestControllerTest
     @Test 
     public void addingCustomerTest()
     {
-        Customer testCustomerLoaded = new Customer(1, "John", "Smith", true);
-        Customer testCustomerNotLoaded = new Customer(null, "John", "Smith", false);
+        MockHttpServletRequest mock = new MockHttpServletRequest();
+        mock.addParameter("firstName", "John");
+        mock.addParameter("lastName", "Smith");
         
-        EasyMock.expect(this.cs.insert(testCustomerNotLoaded)).andReturn(testCustomerLoaded);
+        Customer testCustomerLoaded = new Customer(1, mock.getParameter("firstName"), mock.getParameter("lastName"), true);
+        Customer testCustomerNotLoaded = new Customer("John", "Smith");
+        
+        EasyMock.expect(cs.insert(testCustomerNotLoaded)).andReturn(testCustomerLoaded);
         EasyMock.replay(cs);
         
+        ResponseEntity<Customer> customer = this.controller.addCustomer(mock);
         
-//        ResponseEntity<Customer> customer = this.controller.addCustomer()
+        assertTrue(testCustomerLoaded.deeplyEquals(customer.getBody()));
+        assertEquals(1, (int) customer.getBody().getId());
+        assertEquals("John", customer.getBody().getFirstName());
+        assertEquals("Smith", customer.getBody().getLastName());
+        assertEquals(true, customer.getBody().isLoaded());
+        
+    }
+    
+    @Test
+    public void updatingCustomerTest()
+    {
+        MockHttpServletRequest mock = new MockHttpServletRequest();
+        mock.addParameter("firstName", "Mike");
+        mock.addParameter("lastName", "Jones");
+        
+        Customer testCustomerNotUpdated = new Customer(1, mock.getParameter("firstName"), mock.getParameter("lastName"));
+        Customer testCustomerUpdated = new Customer(1, mock.getParameter("firstName"), mock.getParameter("lastName"), true);
+        
+        EasyMock.expect(cs.update(testCustomerNotUpdated)).andReturn(testCustomerUpdated);
+        EasyMock.replay(cs);
+        
+        ResponseEntity<Customer> customer = this.controller.editCustomer("1", mock);
+        
+        assertTrue(testCustomerUpdated.deeplyEquals(customer.getBody()));
+        assertEquals(1, (int) customer.getBody().getId());
+        assertEquals("Mike", customer.getBody().getFirstName());
+        assertEquals("Jones", customer.getBody().getLastName());
+        assertEquals(true, customer.getBody().isLoaded());
+        
+        
     }
 
 }

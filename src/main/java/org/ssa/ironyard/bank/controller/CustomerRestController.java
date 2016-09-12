@@ -103,8 +103,8 @@ public class CustomerRestController
 
         Customer customer = customerService.update(new Customer(id, firstName, lastName));
 
-        LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
-                customer.getLastName());
+//        LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
+//                customer.getLastName());
 
         return ResponseEntity.ok(customer);
     }
