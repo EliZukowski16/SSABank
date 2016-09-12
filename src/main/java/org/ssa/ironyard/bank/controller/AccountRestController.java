@@ -80,7 +80,7 @@ public class AccountRestController
 
     }
 
-    @RequestMapping(value = "/accounts/{accountID}/{transaction}", method = RequestMethod.POST)
+    @RequestMapping(value = "/accounts/{accountID}/{transaction}", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Account> performTransaction(HttpServletRequest request, @PathVariable String transaction, @PathVariable String accountID, @PathVariable String customerID)
     {

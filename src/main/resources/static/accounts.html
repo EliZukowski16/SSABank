@@ -213,7 +213,7 @@ li a {
 	function sendWithdraw(){
 		$.ajax({
 		    type: "PUT",
-		    url: "./ssa-bank/customers/" + localStorage.getItem('customerID') + "/accounts/" + document.getElementById("accid").innerHTML + "/withdraw",
+		    url: "./customers/" + localStorage.getItem('customerID') + "/accounts/" + document.getElementById("accid").innerHTML + "/withdraw",
 		    dataType: "json",
 		    data: {"id": document.getElementById("accid").innerHTML, "balance": document.getElementById("acctype").innerHTML, "amount": document.getElementById("withdrawValue").value}
 		

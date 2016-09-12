@@ -95,6 +95,7 @@ public class Account extends AbstractDomainObject implements DomainObject
     public void adjustBalance(String typeOfAdjst, BigDecimal amount){
     	if(typeOfAdjst.equals("deposit"))
     		balance.add(amount);
+    	
     	if (typeOfAdjst.equals("withdraw"))
     		balance.subtract(amount);
     }
