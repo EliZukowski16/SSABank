@@ -156,12 +156,12 @@ li a {
 		document.getElementById('detailSection').style.display = 'none';
 
 		
-		$.getJSON("./customers/" + document.getElementById("cid").innerHTML, customerEdit);
+		$.getJSON("./customers/" + localStorage.getItem('customerID') + "/accounts/" + document.getElementById("accid").innerHTML, customerEdit);
 
 		function customerEdit(response) {
-			document.getElementById("cidE").innerHTML = response.id;
-			document.getElementById("cfnameE").value = response.firstName;
-			document.getElementById("clnameE").value = response.lastName;
+			document.getElementById("accid").innerHTML = response.id;
+			document.getElementById("acctype").innerHTML = response.type;
+			document.getElementById("accbalance").innerHTML = response.balance;
 		}
 	}
 	
@@ -209,7 +209,7 @@ li a {
 	function withdraw(){
 		$.ajax({
 		    type: "PUT",
-		    url: "./ssa-bank/customers/" + customerID + "/accounts/" + document.getElementById("cid").innerHTML + "/withdraw",
+		    url: "./ssa-bank/customers/" + localStorage.getItem('customerID') + "/accounts/" + document.getElementById("cid").innerHTML + "/withdraw",
 		    dataType: "json",
 		    data: {"id": document.getElementById("accid").innerHTML, "balance": document.getElementById("acctype").innerHTML, "amount": document.getElementById("withdrawValue").value}
 		
