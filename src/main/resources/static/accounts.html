@@ -211,7 +211,7 @@ li a {
 		    type: "PUT",
 		    url: "./ssa-bank/customers/" + customerID + "/accounts/" + document.getElementById("cid").innerHTML + "/withdraw",
 		    dataType: "json",
-		    data: {"id": document.getElementById("accid").innerHTML, "balance": document.getElementById("acctype").value, , "amount": document.getElementById("withdrawValue").value}
+		    data: {"id": document.getElementById("accid").innerHTML, "balance": document.getElementById("acctype").innerHTML, "amount": document.getElementById("withdrawValue").value}
 		
 		})
 		.done(toDetail);
