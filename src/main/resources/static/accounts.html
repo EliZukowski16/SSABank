@@ -207,6 +207,10 @@ li a {
 	}
 	
 	function withdraw(){
+		document.getElementById('withdrawSection').style.display = 'block';
+	}
+	
+	function sendWithdraw(){
 		$.ajax({
 		    type: "PUT",
 		    url: "./ssa-bank/customers/" + localStorage.getItem('customerID') + "/accounts/" + document.getElementById("accid").innerHTML + "/withdraw",
