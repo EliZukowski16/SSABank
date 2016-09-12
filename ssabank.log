@@ -2762,3 +2762,14 @@
 15:46:25.637 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
 15:46:30.575 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 200
 15:46:31.971 [http-nio-8080-exec-6] INFO  org.ssa.ironyard.bank.controller.AccountRestController - Returning List of Accounts for Customer ID: 200
+15:48:45.733 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 1
+15:48:45.741 [main] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+15:48:50.038 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting application ssa-bank
+15:48:50.406 [main] INFO  org.ssa.ironyard.bank.BankStarter - Starting BankStarter on PC23 with PID 7468 (C:\Users\admin\workspace\SSA-Bank\target\classes started by admin in C:\Users\admin\workspace\SSA-Bank)
+15:48:50.407 [main] INFO  org.ssa.ironyard.bank.BankStarter - No active profile set, falling back to default profiles: default
+15:48:53.446 [main] INFO  org.ssa.ironyard.bank.BankStarter - Started BankStarter in 3.331 seconds (JVM running for 5.667)
+15:48:55.816 [http-nio-8080-exec-2] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+15:49:07.457 [http-nio-8080-exec-3] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning Single Customer with ID: 200
+15:49:08.757 [http-nio-8080-exec-5] INFO  org.ssa.ironyard.bank.controller.AccountRestController - Returning List of Accounts for Customer ID: 200
+15:49:14.527 [http-nio-8080-exec-7] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
+15:49:16.227 [http-nio-8080-exec-10] INFO  org.ssa.ironyard.bank.controller.CustomerRestController - Returning List of Customers
