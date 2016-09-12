@@ -3,10 +3,12 @@ package org.ssa.ironyard.bank.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
 import org.ssa.ironyard.bank.model.Account;
 import org.ssa.ironyard.bank.model.Account.AccountType;
 import org.ssa.ironyard.bank.model.Customer;
 
+@Component
 public class AccountORMEager implements AccountORM
 {
 

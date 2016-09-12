@@ -9,11 +9,14 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.ssa.ironyard.bank.model.Account;
-import org.ssa.ironyard.bank.dao.AccountORMEager;
 
+@Component
 public class AccountDAOEager extends AbstractAccountDAO implements AccountDAO
 {
+    @Autowired
     public AccountDAOEager(DataSource datasource)
     {
         super(datasource, new AccountORMEager());

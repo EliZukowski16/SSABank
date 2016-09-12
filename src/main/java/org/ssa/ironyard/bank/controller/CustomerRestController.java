@@ -27,6 +27,12 @@ public class CustomerRestController
 
     static Logger LOGGER = LogManager.getLogger(CustomerRestController.class);
 
+    public CustomerRestController(CustomerService cs)
+    {
+        this.customerService = cs;
+    }
+
+
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Customer>> allCustomers()

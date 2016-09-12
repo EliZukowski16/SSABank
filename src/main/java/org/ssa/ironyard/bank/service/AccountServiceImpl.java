@@ -7,18 +7,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ssa.ironyard.bank.dao.AccountDAO;
+import org.ssa.ironyard.bank.dao.AccountDAOEager;
 import org.ssa.ironyard.bank.model.Account;
 
 @Component
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-	AccountDAO accountDao;
+	AccountDAOEager accountDao;
 	
 	@Override
 	public List<Account> readUser(int userID) {
 		List<Account> accounts = new ArrayList<>();
-		accounts.add(accountDao.read(userID));
+		accounts.addAll(accountDao.readUser(userID));
 		return accounts;
 	}
 

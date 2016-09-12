@@ -93,9 +93,9 @@ li a {
 
 	$(document).ready(function() {
 		var customerID = localStorage.getItem('customerID');
-		$.getJSON("./customers/" + customerID + "/accounts", accounts);
+		$.getJSON("./ssa-bank/customers/" + customerID + "/accounts", accounts);
 	});
-
+	
 	function accounts(response) {
 		var List = document.getElementById("accountsList");
 		List.innerHTML = "";
@@ -116,7 +116,11 @@ li a {
 
 			$("#accountsList").append(rowC);
 		}
+		
+		document.getElementById('listSection').style.display = 'block';
+	
 	}
+
 
 	function displayList() {
 
@@ -160,7 +164,7 @@ li a {
 	}
 	
 	function loadAccounts(){
-		window.location.replace("./accounts/" + document.getElementById("cidE").innerHTML);
+		window.location.replace("./accounts/" + document.getElementById("cid").innerHTML);
 	}
 	
 	function sendEdit() {

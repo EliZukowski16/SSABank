@@ -13,9 +13,6 @@
     	<Logger name="org.ssa.ironyard.bank" level="info" additivity="false">
     		<AppenderRef ref="log-file" />
     	</Logger>
-    	<Logger name="org.springframework.web" level="info" additivity="false">
-    		<AppenderRef ref="log-file" />
-    	</Logger>
         <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>
