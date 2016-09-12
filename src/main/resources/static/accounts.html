@@ -47,7 +47,7 @@ li a:hover {
 	display: inherit;
 }
 
-.customerlist {
+.accountslist {
 	list-style-type: none;
 	list-style: none;
 	margin: 0;
@@ -92,11 +92,12 @@ li a {
 	//get json
 
 	$(document).ready(function() {
-		$.getJSON("./customers", customers);
+		var customerID = localStorage.getItem('customerID');
+		$.getJSON("./accounts", accounts);
 	});
 
-	function customers(response) {
-		var List = document.getElementById("customerList");
+	function accounts(response) {
+		var List = document.getElementById("accountsList");
 		List.innerHTML = "";
 
 		for (var i = 0; i < response.length; i++) {
@@ -107,20 +108,23 @@ li a {
 			rowC += 'onclick="displayDetail(';
 			rowC += response[i].id;
 			rowC += ')">';
-			rowC += response[i].lastName;
+			rowC += response[i].type;
 			rowC += ',&nbsp;&nbsp;&nbsp;';
-			rowC += response[i].firstName;
+			rowC += response[i].balance;
 			rowC += '</a>';
 			rowC += '</li>';
 
-			$("#customerList").append(rowC);
+			$("#accountsList").append(rowC);
 		}
-		document.getElementById('listSection').style.display = 'block';
 	}
 
 	function displayList() {
 
-		location.reload(true);
+		document.getElementById('listSection').style.display = 'block';
+		document.getElementById('detailSection').style.display = 'none';
+		document.getElementById('addSection').style.display = 'none';
+		document.getElementById('editSection').style.display = 'none';
+		
 	}
 
 	function displayDetail(id) {
@@ -156,8 +160,7 @@ li a {
 	}
 	
 	function loadAccounts(){
-		localStorage.setItem('customerID', document.getElementById("cidE").innerHTML);
-		window.location.replace("./accounts.html");
+		window.location.replace("./accounts/" + document.getElementById("cidE").innerHTML);
 	}
 	
 	function sendEdit() {
@@ -166,6 +169,7 @@ li a {
 		    url: "./customers/" + document.getElementById("cid").innerHTML,
 		    dataType: "json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
+		
 		})
 		.done(toDetail);
 	}
@@ -213,7 +217,7 @@ li a {
 
 	<section id="listSection" class="list-section" style="display: none;">
 
-		<ul id="customerList" class="customerList">
+		<ul id="accountsList" class="accountsList">
 		</ul>
 
 	</section>
