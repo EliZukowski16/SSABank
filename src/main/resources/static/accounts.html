@@ -137,7 +137,7 @@ li a {
 		document.getElementById('detailSection').style.display = 'block';
 		document.getElementById('listSection').style.display = 'none';
 		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('editSection').style.display = 'none';
+		document.getElementById('transactionsSection').style.display = 'none';
 
 		$.getJSON("./customers/" + localStorage.getItem('customerID') + "/accounts/" + id, customerDetail);
 
@@ -149,8 +149,8 @@ li a {
 
 	}
 	
-	function displayEdit() {
-		document.getElementById('editSection').style.display = 'block';
+	function transactions()() {
+		document.getElementById('transactionsSection').style.display = 'block';
 		document.getElementById('addSection').style.display = 'none';
 		document.getElementById('listSection').style.display = 'none';
 		document.getElementById('detailSection').style.display = 'none';
@@ -185,7 +185,7 @@ li a {
 		document.getElementById('addSection').style.display = 'block';
 		document.getElementById('listSection').style.display = 'none';
 		document.getElementById('detailSection').style.display = 'none';
-		document.getElementById('editSection').style.display = 'none';
+		document.getElementById('transactionsSection').style.display = 'none';
 	}
 	
 	function sendAdd() {
@@ -206,6 +206,17 @@ li a {
 		window.location.assign("/ssa-bank/");
 	}
 	
+	function withdraw(){
+		$.ajax({
+		    type: "PUT",
+		    url: "./ssa-bank/customers/" + customerID + "/accounts/" + document.getElementById("cid").innerHTML + "/withdraw",
+		    dataType: "json",
+		    data: {"id": document.getElementById("accid").innerHTML, "balance": document.getElementById("acctype").value, , "amount": document.getElementById("withdrawValue").value}
+		
+		})
+		.done(toDetail);
+	}
+	
 </script>
 
 </head>
@@ -214,7 +225,7 @@ li a {
 	<section>
 		<ul class="menu">
 			<li class="menuitem"><a href="javascript:;"
-				title="to customers" onclick="backToCustomers()">List</a></li>
+				title="to customers" onclick="backToCustomers()">Customers</a></li>
 			<li class="menuitem"><a href="javascript:;"
 				title="Customers List" onclick="displayList()">List</a></li>
 			<li class="menuitem"><a href="javascript:;" title="Add Customer"
@@ -253,19 +264,29 @@ li a {
 				id="acctype"></span><br> <br> Balance: <span id="accbalance"></span><br>
 					<br>
 			
-			<button id="ceditsubmit" onclick="displayEdit()">Edit Customer</button> <br> <br>
+			<button id="transactions" onclick="transactions()">Transactions</button> <br> <br>
 
 	</section>
 
-	<section id="editSection" class="edit-Section" style="display: none;">
+	<section id="transactionsSection" class="transactions-Section" style="display: none;">
 	
-			Customer ID: <span id="cidE"></span><br><br> 
+			Account ID: <span id="accid"></span><br> <br> Account Type: <span
+				id="acctype"></span><br> <br> Balance: <span id="accbalance"></span><br>
+					<br>
+					
+			<button id="withdraw" onclick="withdraw()">Withdraw</button> <br> <br>
 			
-			First Name: <input id="cfnameE" type="text" value=""></input><br> <br>
+			<button id="deposit" onclick="deposit()">Deposit</button> <br> <br>
 			
-			Last Name: <input id="clnameE" type="text" value=""></input><br> <br>
-
-					<button id="ceditsubmit" onclick="sendEdit()">Submit Edit</button> <br> <br>
+			
+			<section id="withdrawSection" class="withdraw-Section" style="display: none;">
+			Withdraw Amount: <input id="withdrawValue" type="text" value=""></input><br><br>
+			<button id="withdrawSubmit" onclick="sendWithdraw()">Submit Withdraw</button>
+							
+			</section>
+			
+			
+			
 
 	</section>
 
