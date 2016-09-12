@@ -43,17 +43,11 @@ li a:hover {
 	text-align: center;
 }
 
-.list-section {
-	display: inherit;
-}
-
 .accountslist {
 	list-style-type: none;
-	list-style: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	margin: 0;
 }
 
 .customerEntry {
@@ -81,9 +75,6 @@ li a {
 	font-size: large;
 }
 
-.customerTable th {
-	background-color: silver;
-}
 </style>
 
 <script src="/jquery-3.1.0.min.js"></script>
@@ -101,7 +92,7 @@ li a {
 		List.innerHTML = "";
 
 		for (var i = 0; i < response.length; i++) {
-			var rowC = '<li>';
+			var rowC = '<li class="accountslist">';
 			rowC += '<a class="';
 			rowC += 'todo';
 			rowC += '" href="javascript:;"';
@@ -272,9 +263,9 @@ li a {
 
 <body>
 
-	<section id="listSection" class="list-section" style="display: none;">
+	<section id="listSection" style="display: none;">
 
-		<ul id="accountsList" class="accountsList">
+		<ul id = "accountsList" class="accountslist" >
 		</ul>
 
 	</section>

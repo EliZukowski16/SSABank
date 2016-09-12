@@ -40,18 +40,18 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account deposit(int accountID, BigDecimal amount) {
 		Account a1 = accountDao.read(accountID);
-		LOGGER.info(a1.getId());
+		LOGGER.info("Performing deposit on Account {}",a1.getId());
 		a1.adjustBalance("deposit", amount);
-		LOGGER.info(a1.getBalance());
+		LOGGER.info("New balance is {}", a1.getBalance());
 		return accountDao.update(a1);
 	}
 
 	@Override
 	public Account withdraw(int accountID, BigDecimal amount) {
 		Account a1 = accountDao.read(accountID);
-		LOGGER.info(a1.getId());
+		LOGGER.info("Performing withdraw on Account {}",a1.getId());
 		a1.adjustBalance("withdraw", amount);
-	    LOGGER.info(a1.getBalance());
+	    LOGGER.info("New balance is {}",a1.getBalance());
 		return accountDao.update(a1);
 	}
 
