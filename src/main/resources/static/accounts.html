@@ -96,11 +96,6 @@ li a {
 		$.getJSON("./customers/" + customerID + "/accounts", accounts);
 	});
 	
-	function loadCustomerAccounts() {
-		var customerID = localStorage.getItem('customerID');
-		$.getJSON("./customers/" + customerID + "/accounts", accounts);
-	}
-	
 	function accounts(response) {
 		var List = document.getElementById("accountsList");
 		List.innerHTML = "";
@@ -122,18 +117,19 @@ li a {
 			$("#accountsList").append(rowC);
 		}
 		
-		displayList();
-		//document.getElementById('listSection').style.display = 'block';
+		//displayList();
+		document.getElementById('listSection').style.display = 'block';
 	
 	}
 
 
 	function displayList() {
 
-		document.getElementById('listSection').style.display = 'block';
-		document.getElementById('detailSection').style.display = 'none';
-		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('editSection').style.display = 'none';
+		location.reload(true);
+		//document.getElementById('listSection').style.display = 'block';
+		//document.getElementById('detailSection').style.display = 'none';
+		//document.getElementById('addSection').style.display = 'none';
+		//document.getElementById('editSection').style.display = 'none';
 		
 	}
 
@@ -206,6 +202,10 @@ li a {
 		displayDetail(response.id);
 	}
 	
+	function backToCustomers(){
+		window.location.assign("/ssa-bank/");
+	}
+	
 </script>
 
 </head>
@@ -213,6 +213,8 @@ li a {
 <header>
 	<section>
 		<ul class="menu">
+			<li class="menuitem"><a href="javascript:;"
+				title="to customers" onclick="backToCustomers()">List</a></li>
 			<li class="menuitem"><a href="javascript:;"
 				title="Customers List" onclick="displayList()">List</a></li>
 			<li class="menuitem"><a href="javascript:;" title="Add Customer"
@@ -252,8 +254,6 @@ li a {
 					<br>
 			
 			<button id="ceditsubmit" onclick="displayEdit()">Edit Customer</button> <br> <br>
-			
-			<button id="showAccounts" onclick="loadCustomerAccounts()">Show Accounts</button> <br> <br>
 
 	</section>
 
