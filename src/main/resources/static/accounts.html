@@ -195,6 +195,9 @@ li a {
 		document.getElementById('addSection').style.display = 'none';
 		document.getElementById('listSection').style.display = 'none';
 		document.getElementById('detailSection').style.display = 'none';
+		document.getElementById('withdrawSection').style.display = 'none';
+		document.getElementById('depositSection').style.display = 'none';
+		document.getElementById('transactionButtons').style.display = 'block';
 
 		
 		$.getJSON("./customers/" + localStorage.getItem('customerID') + "/accounts/" + document.getElementById("accid").innerHTML, toTransactions);
