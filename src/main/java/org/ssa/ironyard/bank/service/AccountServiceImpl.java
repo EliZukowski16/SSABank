@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.ssa.ironyard.bank.dao.AccountDAO;
 import org.ssa.ironyard.bank.dao.AccountDAOEager;
 import org.ssa.ironyard.bank.model.Account;
@@ -21,6 +22,7 @@ public class AccountServiceImpl implements AccountService {
 	AccountDAOEager accountDao;
 	
 	@Override
+	@Transactional
 	public List<Account> readUser(int userID) {
 		List<Account> accounts = new ArrayList<>();
 		accounts.addAll(accountDao.readUser(userID));
@@ -28,16 +30,19 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	@Transactional
 	public Account read(int accountID) {
 		return accountDao.read(accountID);
 	}
 
 	@Override
+	@Transactional
 	public Account insert(Account account) {
 		return accountDao.insert(account);
 	}
 
 	@Override
+	@Transactional
 	public Account deposit(int accountID, BigDecimal amount) {
 		Account a1 = accountDao.read(accountID);
 		LOGGER.info("Performing deposit on Account {}",a1.getId());
@@ -47,6 +52,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	@Transactional
 	public Account withdraw(int accountID, BigDecimal amount) {
 		Account a1 = accountDao.read(accountID);
 		LOGGER.info("Performing withdraw on Account {}",a1.getId());

@@ -18,5 +18,4 @@ public class Home
     {
         return "/accounts.html";
     }
-
 }

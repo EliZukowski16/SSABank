@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.ssa.ironyard.bank.dao.CustomerDAO;
 import org.ssa.ironyard.bank.model.Customer;
 
@@ -16,6 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
 	CustomerDAO customerDao;
 	
 	@Override
+	@Transactional
 	public List<Customer> read() {
 		List<Customer> customers = new ArrayList<>();
 		customers.addAll(customerDao.read());
@@ -26,17 +28,20 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional
 	public Customer read(int customerID) {
 		return customerDao.read(customerID);
 	}
 
 	@Override
+	@Transactional
 	public Customer insert(Customer customer) {
 		return customerDao.insert(customer);
 	}
 
 
 	@Override
+	@Transactional
 	public Customer update(Customer customer) {
 		return customerDao.update(customer);
 	}
