@@ -78,19 +78,29 @@ public class CustomerRestController
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Customer> addCustomer(HttpServletRequest request)
+    public ResponseEntity<Map<String,Object>> addCustomer(HttpServletRequest request)
     {
+        Map<String, Object> customerMap = new HashMap<>();
+        
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
 
         LOGGER.info("Adding Single Customer - First Name: {}, Last Name: {}", firstName, lastName);
 
-        Customer addedCustomer = customerService.insert(new Customer(firstName, lastName));
+        Customer customer = customerService.insert(new Customer(firstName, lastName));
 
-        LOGGER.trace("Added Customer to Database - Cust ID: {}, First Name: {}, Last Name:{}", addedCustomer.getId(),
-                addedCustomer.getFirstName(), addedCustomer.getLastName());
-
-        return ResponseEntity.ok(addedCustomer);
+        if (customer != null)
+        {
+            LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(),
+                    customer.getFirstName(), customer.getLastName());
+            customerMap.put("success", customer);
+        }
+        else
+        {
+            customerMap.put("error", new Customer(null, firstName, lastName));
+            LOGGER.info("Customer could not be added");
+        }
+        return ResponseEntity.ok(customerMap);
 
     }
 
@@ -119,7 +129,7 @@ public class CustomerRestController
         }
         else
         {
-            customerMap.put("error", customerID);
+            customerMap.put("error", new Customer(id, firstName, lastName));
             LOGGER.info("Customer with ID: {} could not be updated", customerID);
         }
         return ResponseEntity.ok(customerMap);

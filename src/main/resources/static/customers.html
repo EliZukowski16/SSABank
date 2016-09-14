@@ -112,6 +112,19 @@ li a {
 .closeError {
 	float: right;
 }
+
+.noCustomers {
+    display: none;
+	position: fixed;
+	top: 40%;
+	left: 25%;
+	width: 50%;
+	background-color: yellow;
+	border: solid black 4px;
+	padding: 10px;
+	z-index: 1002;
+    text-align:center;
+}
 </style>
 
 <script src="/jquery-3.1.0.min.js"></script>
@@ -131,6 +144,10 @@ li a {
     function customers(response) {
         var List = document.getElementById("customerList");
         List.innerHTML = "";
+
+        if (response.length == 0) {
+			$("#noCustomers").show();
+        }
 
         for (var i = 0; i < response.length; i++) {
             var rowC = '<li>';
@@ -254,7 +271,7 @@ li a {
             $("#successDiv").fadeOut(5000);
 
         } else {
-            detailFail(response.error);
+            detailFail(response.error.id);
         }
     }
 </script>
@@ -328,6 +345,8 @@ li a {
         <button id="closeError" class="closeError">X</button>
     </div>
     <div id="errorBG" class="errorBG"></div>
+    
+    <div id="noCustomers" class="noCustomers">No Customers Found</div>
 
 </body>
 
