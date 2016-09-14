@@ -75,6 +75,57 @@ li a {
 	font-size: large;
 }
 
+.successDiv {
+	display: none;
+	position: fixed;
+	top: 40%;
+	left: 25%;
+	width: 50%;
+	background-color: green;
+	border: solid black 4px;
+	padding: 10px;
+	z-index: 1001;
+}
+
+.errorDiv {
+	display: none;
+	position: fixed;
+	top: 40%;
+	left: 25%;
+	width: 50%;
+	background-color: yellow;
+	border: solid black 4px;
+	padding: 10px;
+	z-index: 1000;
+}
+
+.errorBG {
+	display: none;
+	position: fixed;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: red;
+	z-index: 999;
+}
+
+.closeError {
+	float: right;
+}
+
+.noAccounts {
+    display: none;
+	position: fixed;
+	top: 40%;
+	left: 25%;
+	width: 50%;
+	background-color: yellow;
+	border: solid black 4px;
+	padding: 10px;
+	z-index: 1002;
+    text-align:center;
+}
+
 </style>
 
 <script src="/jquery-3.1.0.min.js"></script>
@@ -85,11 +136,19 @@ li a {
 	$(document).ready(function() {
 		var customerID = localStorage.getItem('customerID');
 		$.getJSON("./customers/" + customerID + "/accounts", accounts);
+		
+		$("#closeError").click(function() {
+            displayList();
+        })
 	});
 
 	function accounts(response) {
 		var List = document.getElementById("accountsList");
 		List.innerHTML = "";
+		
+		if (response.length == 0) {
+			$("#noAccounts").show();
+        }
 
 		for (var i = 0; i < response.length; i++) {
 			var rowC = '<li class="accountslist">';
@@ -116,29 +175,39 @@ li a {
 	function displayList() {
 
 		location.reload(true);
-		//document.getElementById('listSection').style.display = 'block';
-		//document.getElementById('detailSection').style.display = 'none';
-		//document.getElementById('addSection').style.display = 'none';
-		//document.getElementById('editSection').style.display = 'none';
-
 	}
 
 	function displayDetail(id) {
+		$.getJSON("./customers/" + localStorage.getItem('customerID')
+				+ "/accounts/" + id, customerDetail);
+		
+		function customerDetail(response) {
+		if (response.success) {
+
+        var account = response.success;
+        
+        document.getElementById("accid").innerHTML = account.id;
+		document.getElementById("acctype").innerHTML = account.type;
+		document.getElementById("accbalance").innerHTML = account.balance;
+	
 		document.getElementById('detailSection').style.display = 'block';
 		document.getElementById('listSection').style.display = 'none';
 		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('transactionsSection').style.display = 'none';
-
-		$.getJSON("./customers/" + localStorage.getItem('customerID')
-				+ "/accounts/" + id, customerDetail);
-
-		function customerDetail(response) {
-			document.getElementById("accid").innerHTML = response.id;
-			document.getElementById("acctype").innerHTML = response.type;
-			document.getElementById("accbalance").innerHTML = response.balance;
+		document.getElementById('transactionsSection').style.display = 'none';   
+        		
+		}
+		else {
+            detailFail(id);
 		}
 
 	}
+	}
+	
+	function detailFail(id) {
+        $("#errorText").text("Account with ID: '" + id + "' does not exist");
+        $("#errorBG").show();
+        $("#errorDiv").show();
+    }
 
 	function loadAccounts() {
 		window.location.replace("./accounts/"
@@ -166,7 +235,16 @@ li a {
 	}
 
 	function toDetail(response) {
-		displayDetail(response.id);
+		var account = response.success;
+		if (response.success) {
+            displayDetail(account.id);
+            $("#successDiv").show();
+            $("#successDiv").fadeOut(5000);
+
+        } else {
+            detailFail(document.getElementById("accid").innerHTML);
+        }
+
 	}
 
 	function backToCustomers() {
@@ -187,9 +265,15 @@ li a {
 				toTransactions);
 
 		function toTransactions(response) {
-			document.getElementById("accidT").innerHTML = response.id;
-			document.getElementById("acctypeT").innerHTML = response.type;
-			document.getElementById("accbalanceT").innerHTML = response.balance;
+			var account = response.success;
+			if (response.success) {
+			document.getElementById("accidT").innerHTML = account.id;
+			document.getElementById("acctypeT").innerHTML = account.type;
+			document.getElementById("accbalanceT").innerHTML = account.balance;
+			}
+			else{
+				detailFail(document.getElementById("accidT").innerHTML);
+			}
 		}
 	}
 
@@ -242,6 +326,30 @@ li a {
 
 						}).done(toDetail);
 	}
+	
+	function deleteAccount(){
+    	$.ajax({
+            type : "DELETE",
+            url : "./customers/",
+            dataType : "json",
+            data : {
+                "id" : document.getElementById("cid").innerHTML,
+            }
+        })
+            .done(validateDelete);
+    }
+    
+    validateDelete(response){
+    	if(response == true){
+    		$("#successDiv").show();
+            $("#successDiv").fadeOut(5000, displayList);
+    	}
+    	else{
+    		detailFail("id");
+    		$("#errorText").text("Delete failed")
+    	}
+	
+	
 </script>
 
 </head>
@@ -294,6 +402,9 @@ li a {
 
 		<button id="transactions" onclick="transactions()">Transactions</button>
 		<br> <br>
+		
+		<button id="deleteAccount" onclick="deleteAccount()">Delete Account</button>
+        <br> <br>
 
 	</section>
 
@@ -330,9 +441,19 @@ li a {
 		</section>
 
 	</section>
+	
+	    <div id="successDiv" class="successDiv">Update was a success!</div>
+    <div id="errorDiv" class="errorDiv">
+        <span id="errorText"></span>
+        <button id="closeError" class="closeError">X</button>
+    </div>
+    <div id="errorBG" class="errorBG"></div>
+    
+    <div id="noAccounts" class="noAccounts">No Accounts Found</div>
 
 </body>
 
 <footer> </footer>
 
 </html>
+
