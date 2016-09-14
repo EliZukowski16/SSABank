@@ -204,7 +204,6 @@ li a {
         $.getJSON("./customers/" + document.getElementById("cid").innerHTML, customerEdit);
 
         function customerEdit(response) {
-            //todo
 
             if (response.success) {
 
@@ -274,6 +273,29 @@ li a {
             detailFail(response.error.id);
         }
     }
+    
+    function deleteCustomer(){
+    	$.ajax({
+            type : "DELETE",
+            url : "./customers/",
+            dataType : "json",
+            data : {
+                "id" : document.getElementById("cid").innerHTML,
+            }
+        })
+            .done(validateDelete);
+    }
+    
+    validateDelete(response){
+    	if(response == true){
+    		$("#successDiv").show();
+            $("#successDiv").fadeOut(5000, displayList);
+    	}
+    	else{
+    		detailFail("id");
+    		$("#errorText").text("Delete failed")
+    	}
+    }
 </script>
 
 </head>
@@ -325,6 +347,10 @@ li a {
         <button id="showAccounts" onclick="loadAccounts()">Show
             Accounts</button>
         <br> <br>
+        
+        <button id="deleteCustomer" onclick="deleteCustomer()">Show
+            Accounts</button>
+        <br> <br>
 
     </section>
 
@@ -353,4 +379,3 @@ li a {
 <footer> </footer>
 
 </html>
-
