@@ -22,7 +22,7 @@ import org.ssa.ironyard.bank.model.Customer;
 import org.ssa.ironyard.bank.service.AccountService;
 
 @RestController
-@RequestMapping("/ssa-bank/customers/{customerID}")
+@RequestMapping("/ssa-bank")
 public class AccountRestController
 {
     @Autowired
@@ -30,7 +30,7 @@ public class AccountRestController
 
     static Logger LOGGER = LogManager.getLogger(AccountRestController.class);
 
-    @RequestMapping(value = "/accounts", method = RequestMethod.GET)
+    @RequestMapping(value = "/customers/{customerID}/accounts", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Account>> allAccounts(@PathVariable String customerID)
     {
@@ -47,7 +47,7 @@ public class AccountRestController
         return ResponseEntity.ok(customersAccounts);
     }
 
-    @RequestMapping(value = "/accounts/{accountID}", method = RequestMethod.GET)
+    @RequestMapping(value = {"/customers/{customerID}/accounts/{accountID}", "/accounts/{accountID}"},  method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getCustomerAccount(@PathVariable String customerID, @PathVariable String accountID)
     {
@@ -71,7 +71,7 @@ public class AccountRestController
         return ResponseEntity.ok(accountMap);
     }
 
-    @RequestMapping(value = "/accounts", method = RequestMethod.POST)
+    @RequestMapping(value = {"/customers/{customerID}/accounts", "/accounts"}, method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addAccount(HttpServletRequest request, @PathVariable String customerID)
     {
@@ -100,7 +100,7 @@ public class AccountRestController
         return ResponseEntity.ok(accountMap);
     }
 
-    @RequestMapping(value = "/accounts/{accountID}/{transaction}", method = RequestMethod.PUT)
+    @RequestMapping(value = {"/customers/{customerID}/accounts/{accountID}/{transaction}","/accounts/{accountID}/{transaction}"}, method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<Map<String,Object>> performTransaction(HttpServletRequest request, @PathVariable String transaction,
             @PathVariable String accountID, @PathVariable String customerID)
@@ -143,7 +143,7 @@ public class AccountRestController
         return ResponseEntity.ok(accountMap);
     }
     
-    @RequestMapping(value = "/accounts/{accountID}", method = RequestMethod.DELETE)
+    @RequestMapping(value = {"/customers/{customerID}/accounts/{accountID}", "/accounts/{accountID}"}, method = RequestMethod.DELETE)
     @ResponseBody
     public boolean deleteAccount(@PathVariable String accountID)
     {
