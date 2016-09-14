@@ -75,6 +75,18 @@ li a {
 	font-size: large;
 }
 
+.successDiv {
+	display: none;
+	position: fixed;
+    top: 40%;
+    left: 25%;
+    width: 50%;
+    background-color: green;
+    border: solid black 4px;
+    padding: 10px;
+    z-index: 1001;
+}
+
 .errorDiv {
 	display: none;
 	position: fixed;
@@ -145,19 +157,10 @@ li a {
 	}
 
 	function displayDetail(id) {
-		//document.getElementById('detailSection').style.display = 'block';
-		//document.getElementById('listSection').style.display = 'none';
-		//document.getElementById('addSection').style.display = 'none';
-		//document.getElementById('editSection').style.display = 'none';
 
 		$.getJSON("./customers/" + id, customerDetail);
-		//$.getJSON("./customers/" + id, customerDetail)
-		//.fail(detailFail(id));
 
 		function customerDetail(response) {
-			//document.getElementById("cid").innerHTML = response.id;
-			//document.getElementById("cfname").innerHTML = response.firstName;
-			//document.getElementById("clname").innerHTML = response.lastName;
 			
 			if (response.success){
 				
@@ -171,6 +174,7 @@ li a {
 				document.getElementById('listSection').style.display = 'none';
 				document.getElementById('addSection').style.display = 'none';
 				document.getElementById('editSection').style.display = 'none';
+				$("#successDiv").fadeOut(5000);
 			}
 			else{
 				detailFail(id);
@@ -185,19 +189,29 @@ li a {
 	}
 	
 	function displayEdit() {
-		document.getElementById('editSection').style.display = 'block';
-		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('listSection').style.display = 'none';
-		document.getElementById('detailSection').style.display = 'none';
-
 		
 		$.getJSON("./customers/" + document.getElementById("cid").innerHTML, customerEdit);
 
 		function customerEdit(response) {
+			//todo
+			
+			if (response.success){
+				
+			var customer = response.success;
+			
 			document.getElementById("cidE").innerHTML = response.id;
-			document.getElementById("cfnameE").value = response.firstName;
-			document.getElementById("clnameE").value = response.lastName;
+			document.getElementById("cfnameE").value = customer.firstName;
+			document.getElementById("clnameE").value = customer.lastName;
+			
+			document.getElementById('editSection').style.display = 'block';
+			document.getElementById('addSection').style.display = 'none';
+			document.getElementById('listSection').style.display = 'none';
+			document.getElementById('detailSection').style.display = 'none';
+
 		}
+			else{
+				detailFail(id);
+			}
 	}
 	
 	function loadAccounts(){
@@ -303,7 +317,7 @@ li a {
 
 	</section>
 
-	
+	<div id="successDiv" class="successDiv">Update was a success!</div>
 	<div id="errorDiv" class="errorDiv"><span id="errorText"></span><button id="closeError" class="closeError">X</button></div>
 	<div id="errorBG" class="errorBG"></div>
 
@@ -312,3 +326,4 @@ li a {
 <footer> </footer>
 
 </html>
+
