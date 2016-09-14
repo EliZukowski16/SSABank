@@ -62,16 +62,16 @@ public class CustomerRestController
 
         Customer customer = customerService.read(Integer.parseInt(customerID));
 
-//        LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
-//                customer.getLastName());
-
         if (customer != null)
         {
+            LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(),
+                    customer.getFirstName(), customer.getLastName());
             customerMap.put("success", customer);
         }
         else
         {
             customerMap.put("error", "");
+            LOGGER.info("Customer with ID: {} does not exist, sending error", customerID);
         }
         return ResponseEntity.ok(customerMap);
     }
