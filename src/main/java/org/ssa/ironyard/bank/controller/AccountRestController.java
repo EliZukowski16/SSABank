@@ -118,13 +118,11 @@ public class AccountRestController
         {
         case "deposit":
             LOGGER.info("Performing Deposit");
-            updatedAccount = accountService.deposit(accID, amount);
-            LOGGER.info("Account ID: {} new Balance: {}", updatedAccount.getId(), updatedAccount.getBalance());
+            updatedAccount = accountService.deposit(accID, amount);          
             break;
         case "withdraw":
             LOGGER.info("Performing Withdrawal");
             updatedAccount = accountService.withdraw(accID, amount);
-            LOGGER.info("Account ID: {} new Balance: {}", updatedAccount.getId(), updatedAccount.getBalance());
             break;
         default:
             LOGGER.info("Did not understand transaction value of {}, no action performed", transaction);
@@ -135,6 +133,7 @@ public class AccountRestController
         if(updatedAccount != null)
         {
             accountMap.put("success", updatedAccount);
+            LOGGER.info("Account ID: {} new Balance: {}", updatedAccount.getId(), updatedAccount.getBalance());
         }
         else
         {

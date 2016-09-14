@@ -114,7 +114,7 @@ li a {
 }
 
 .noAccounts {
-    display: none;
+	display: none;
 	position: fixed;
 	top: 40%;
 	left: 25%;
@@ -123,332 +123,325 @@ li a {
 	border: solid black 4px;
 	padding: 10px;
 	z-index: 1002;
-    text-align:center;
+	text-align: center;
 }
-
 </style>
 
 <script src="/jquery-3.1.0.min.js"></script>
 
 <script type="text/javascript">
-	//get json
+//get json
 
-	$(document).ready(function() {
-		var customerID = localStorage.getItem('customerID');
-		$.getJSON("./customers/" + customerID + "/accounts", accounts);
-		
-		$("#closeError").click(function() {
+    $(document).ready(function() {
+        var customerID = localStorage.getItem('customerID');
+        $.getJSON("./customers/" + customerID + "/accounts", accounts);
+
+        $("#closeError").click(function() {
             displayList();
         })
-	});
+    });
 
-	function accounts(response) {
-		var List = document.getElementById("accountsList");
-		List.innerHTML = "";
-		
-		if (response.length == 0) {
-			$("#noAccounts").show();
+    function accounts(response) {
+        var List = document.getElementById("accountsList");
+        List.innerHTML = "";
+
+        if (response.length == 0) {
+            $("#noAccounts").show();
         }
 
-		for (var i = 0; i < response.length; i++) {
-			var rowC = '<li class="accountslist">';
-			rowC += '<a class="';
-			rowC += 'todo';
-			rowC += '" href="javascript:;"';
-			rowC += 'onclick="displayDetail(';
-			rowC += response[i].id;
-			rowC += ')">';
-			rowC += response[i].type;
-			rowC += ',&nbsp;&nbsp;&nbsp;';
-			rowC += response[i].balance;
-			rowC += '</a>';
-			rowC += '</li>';
+        for (var i = 0; i < response.length; i++) {
+            var rowC = '<li class="accountslist">';
+            rowC += '<a class="';
+            rowC += 'todo';
+            rowC += '" href="javascript:;"';
+            rowC += 'onclick="displayDetail(';
+            rowC += response[i].id;
+            rowC += ')">';
+            rowC += response[i].type;
+            rowC += ',&nbsp;&nbsp;&nbsp;';
+            rowC += response[i].balance;
+            rowC += '</a>';
+            rowC += '</li>';
 
-			$("#accountsList").append(rowC);
-		}
+            $("#accountsList").append(rowC);
+        }
 
-		//displayList();
-		document.getElementById('listSection').style.display = 'block';
+        //displayList();
+        document.getElementById('listSection').style.display = 'block';
 
-	}
+    }
 
-	function displayList() {
+    function displayList() {
+        location.reload(true);
+    }
 
-		location.reload(true);
-	}
+    function displayDetail(id) {
+        $.getJSON("./customers/" + localStorage.getItem('customerID')
+            + "/accounts/" + id, customerDetail);
 
-	function displayDetail(id) {
-		$.getJSON("./customers/" + localStorage.getItem('customerID')
-				+ "/accounts/" + id, customerDetail);
-		
-		function customerDetail(response) {
-		if (response.success) {
+        function customerDetail(response) {
+            if (response.success) {
 
-        var account = response.success;
-        
-        document.getElementById("accid").innerHTML = account.id;
-		document.getElementById("acctype").innerHTML = account.type;
-		document.getElementById("accbalance").innerHTML = account.balance;
-	
-		document.getElementById('detailSection').style.display = 'block';
-		document.getElementById('listSection').style.display = 'none';
-		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('transactionsSection').style.display = 'none';   
-        		
-		}
-		else {
-            detailFail(id);
-		}
+                var account = response.success;
+                
+                $("#errorText").text("Account with ID: '" + account.id + "' does not exist");
 
-	}
-	}
-	
-	function detailFail(id) {
-        $("#errorText").text("Account with ID: '" + id + "' does not exist");
+                document.getElementById("accid").innerHTML = account.id;
+                document.getElementById("acctype").innerHTML = account.type;
+                document.getElementById("accbalance").innerHTML = account.balance;
+
+                document.getElementById('detailSection').style.display = 'block';
+                document.getElementById('listSection').style.display = 'none';
+                document.getElementById('addSection').style.display = 'none';
+                document.getElementById('transactionsSection').style.display = 'none';
+
+            } else {
+                detailFail();
+            }
+
+        }
+    }
+
+    function detailFail() {
         $("#errorBG").show();
         $("#errorDiv").show();
     }
 
-	function loadAccounts() {
-		window.location.replace("./accounts/"
-				+ document.getElementById("cid").innerHTML);
-	}
+    function loadAccounts() {
+        window.location.replace("./accounts/"
+            + document.getElementById("cid").innerHTML);
+    }
 
-	function displayAdd() {
+    function displayAdd() {
+        document.getElementById('addSection').style.display = 'block';
+        document.getElementById('listSection').style.display = 'none';
+        document.getElementById('detailSection').style.display = 'none';
+        document.getElementById('transactionsSection').style.display = 'none';
+    }
 
-		document.getElementById('addSection').style.display = 'block';
-		document.getElementById('listSection').style.display = 'none';
-		document.getElementById('detailSection').style.display = 'none';
-		document.getElementById('transactionsSection').style.display = 'none';
-	}
+    function sendAdd() {
+        $("#errorText").text("Account Creation Failed");
+        $.ajax({
+            type : "POST",
+            url : "./customers/" + localStorage.getItem('customerID') + "/accounts/",
+            dataType : "json",
+            data : {
+                "account" : document.getElementById("acctTypeAdd").value,
+                "balance" : document.getElementById("acctBalanceAdd").value
+            }
+        }).done(toDetail);
+    }
 
-	function sendAdd() {
-		$.ajax({
-			type : "POST",
-			url : "./customers/" + localStorage.getItem('customerID') + "/accounts/",
-			dataType : "json",
-			data : {
-				"account" : document.getElementById("acctTypeAdd").value,
-				"balance" : document.getElementById("acctBalanceAdd").value
-			}
-		}).done(toDetail);
-	}
-
-	function toDetail(response) {
-		var account = response.success;
-		if (response.success) {
+    function toDetail(response) {
+        var account = response.success;
+        if (response.success) {
             displayDetail(account.id);
             $("#successDiv").show();
             $("#successDiv").fadeOut(5000);
 
         } else {
-            detailFail(document.getElementById("accid").innerHTML);
+            detailFail();
         }
 
-	}
+    }
 
-	function backToCustomers() {
-		window.location.assign("/ssa-bank/");
-	}
+    function backToCustomers() {
+        window.location.assign("/ssa-bank/");
+    }
 
-	function transactions() {
-		document.getElementById('transactionsSection').style.display = 'block';
-		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('listSection').style.display = 'none';
-		document.getElementById('detailSection').style.display = 'none';
-		document.getElementById('withdrawSection').style.display = 'none';
-		document.getElementById('depositSection').style.display = 'none';
-		document.getElementById('transactionButtons').style.display = 'block';
+    function transactions() {
+        document.getElementById('transactionsSection').style.display = 'block';
+        document.getElementById('addSection').style.display = 'none';
+        document.getElementById('listSection').style.display = 'none';
+        document.getElementById('detailSection').style.display = 'none';
+        document.getElementById('withdrawSection').style.display = 'none';
+        document.getElementById('depositSection').style.display = 'none';
+        document.getElementById('transactionButtons').style.display = 'block';
 
-		$.getJSON("./customers/" + localStorage.getItem('customerID')
-				+ "/accounts/" + document.getElementById("accid").innerHTML,
-				toTransactions);
+        $.getJSON("./customers/" + localStorage.getItem('customerID')
+        + "/accounts/" + document.getElementById("accid").innerHTML,
+            toTransactions);
 
-		function toTransactions(response) {
-			var account = response.success;
-			if (response.success) {
-			document.getElementById("accidT").innerHTML = account.id;
-			document.getElementById("acctypeT").innerHTML = account.type;
-			document.getElementById("accbalanceT").innerHTML = account.balance;
-			}
-			else{
-				detailFail(document.getElementById("accidT").innerHTML);
-			}
-		}
-	}
+        function toTransactions(response) {
+            var account = response.success;
+            if (response.success) {
+                document.getElementById("accidT").innerHTML = account.id;
+                document.getElementById("acctypeT").innerHTML = account.type;
+                document.getElementById("accbalanceT").innerHTML = account.balance;
+            } else {
+                detailFail();
+            }
+        }
+    }
 
-	function withdraw() {
-		document.getElementById('withdrawSection').style.display = 'block';
-		document.getElementById('depositSection').style.display = 'none';
-		document.getElementById('transactionButtons').style.display = 'none';
-	}
+    function withdraw() {
+        document.getElementById('withdrawSection').style.display = 'block';
+        document.getElementById('depositSection').style.display = 'none';
+        document.getElementById('transactionButtons').style.display = 'none';
+    }
 
-	function sendWithdraw() {
-		$
-				.ajax(
-						{
-							type : "PUT",
-							url : "./customers/"
-									+ localStorage.getItem('customerID')
-									+ "/accounts/"
-									+ document.getElementById("accidT").innerHTML
-									+ "/withdraw",
-							dataType : "json",
-							data : {
-								"amount" : document
-										.getElementById("withdrawValue").value
-							}
+    function sendWithdraw() {
+        $("#errorText").text("Withdrawal Failed");
+        $.ajax(
+                {
+                    type : "PUT",
+                    url : "./customers/"
+                        + localStorage.getItem('customerID')
+                        + "/accounts/"
+                        + document.getElementById("accidT").innerHTML
+                        + "/withdraw",
+                    dataType : "json",
+                    data : {
+                        "amount" : document
+                            .getElementById("withdrawValue").value
+                    }
+                }).done(toDetail);
+    }
 
-						}).done(toDetail);
-	}
+    function deposit() {
+        document.getElementById('depositSection').style.display = 'block';
+        document.getElementById('withdrawSection').style.display = 'none';
+        document.getElementById('transactionButtons').style.display = 'none';
+    }
 
-	function deposit() {
-		document.getElementById('depositSection').style.display = 'block';
-		document.getElementById('withdrawSection').style.display = 'none';
-		document.getElementById('transactionButtons').style.display = 'none';
-	}
+    function sendDeposit() {
+        $("#errorText").text("Deposit Failed");
+        $
+            .ajax(
+                {
+                    type : "PUT",
+                    url : "./customers/"
+                        + localStorage.getItem('customerID')
+                        + "/accounts/"
+                        + document.getElementById("accidT").innerHTML
+                        + "/deposit",
+                    dataType : "json",
+                    data : {
+                        "amount" : document
+                            .getElementById("depositValue").value
+                    }
+                }).done(toDetail);
+    }
 
-	function sendDeposit() {
-		$
-				.ajax(
-						{
-							type : "PUT",
-							url : "./customers/"
-									+ localStorage.getItem('customerID')
-									+ "/accounts/"
-									+ document.getElementById("accidT").innerHTML
-									+ "/deposit",
-							dataType : "json",
-							data : {
-								"amount" : document
-										.getElementById("depositValue").value
-							}
-
-						}).done(toDetail);
-	}
-	
-	function deleteAccount(){
-    	$.ajax({
+    function deleteAccount() {
+        $.ajax({
             type : "DELETE",
-            url : "./customers/",
+            url : "./customers/" + localStorage.getItem('customerID') + "/accounts/" + document.getElementById("accid").innerHTML,
             dataType : "json",
             data : {
-                "id" : document.getElementById("cid").innerHTML,
+                "id" : document.getElementById("accid").innerHTML,
             }
         })
             .done(validateDelete);
     }
-    
-    validateDelete(response){
-    	if(response == true){
-    		$("#successDiv").show();
+
+    function validateDelete(response) {
+        if (response == true) {
+            $("#successDiv").show();
             $("#successDiv").fadeOut(5000, displayList);
-    	}
-    	else{
-    		detailFail("id");
-    		$("#errorText").text("Delete failed")
-    	}
-	
-	
+        } else {
+            detailFail();
+            $("#errorText").text("Delete failed")
+        }
+    }
 </script>
 
 </head>
 
 <header>
-	<section>
-		<ul class="menu">
-			<li class="menuitem"><a href="javascript:;" title="to customers"
-				onclick="backToCustomers()">Customers</a></li>
-			<li class="menuitem"><a href="javascript:;"
-				title="Customers List" onclick="displayList()">List</a></li>
-			<li class="menuitem"><a href="javascript:;" title="Add Customer"
-				onclick="displayAdd()">Add</a></li>
-		</ul>
-		<span class="SSAhead">SSA-Bank</span>
-	</section>
+    <section>
+        <ul class="menu">
+            <li class="menuitem"><a href="javascript:;"
+                title="to customers" onclick="backToCustomers()">Customers</a></li>
+            <li class="menuitem"><a href="javascript:;"
+                title="Customers List" onclick="displayList()">List</a></li>
+            <li class="menuitem"><a href="javascript:;"
+                title="Add Customer" onclick="displayAdd()">Add</a></li>
+        </ul>
+        <span class="SSAhead">SSA-Bank</span>
+    </section>
 
 </header>
 
 <body>
 
-	<section id="listSection" style="display: none;">
+    <section id="listSection" style="display: none;">
 
-		<ul id = "accountsList" class="accountslist" >
-		</ul>
+        <ul id="accountsList" class="accountslist">
+        </ul>
 
-	</section>
+    </section>
 
-	<section id="addSection" class="add-section" style="display: none;">
-		<br> <br> Account Type: <select id="acctTypeAdd">
-			<option value="CH" selected>Checking</option>
-			<option value="SA">Savings</option>
-		</select>
-		<br> <br> Account Balance: <input id="acctBalanceAdd" type="text"
-			value=""></input><br> <br>
+    <section id="addSection" class="add-section" style="display: none;">
+        <br> <br> Account Type: <select id="acctTypeAdd">
+            <option value="CH" selected>Checking</option>
+            <option value="SA">Savings</option>
+        </select> <br> <br> Account Balance: <input id="acctBalanceAdd"
+            type="text" value=""></input><br> <br>
 
-		<button id="acctaddsubmit" onclick="sendAdd()">Submit Add</button>
-		<br> <br>
-
-
-
-	</section>
-
-	<section id="detailSection" class="detail-Section"
-		style="display: none;">
-
-		Account ID: <span id="accid"></span><br> <br> Account Type:
-		<span id="acctype"></span><br> <br> Balance: <span
-			id="accbalance"></span><br> <br>
-
-		<button id="transactions" onclick="transactions()">Transactions</button>
-		<br> <br>
-		
-		<button id="deleteAccount" onclick="deleteAccount()">Delete Account</button>
+        <button id="acctaddsubmit" onclick="sendAdd()">Submit Add</button>
         <br> <br>
 
-	</section>
 
-	<section id="transactionsSection" class="transactions-Section"
-		style="display: none;">
 
-		Account ID: <span id="accidT"></span><br> <br> Account Type:
-		<span id="acctypeT"></span><br> <br> Balance: <span
-			id="accbalanceT"></span><br> <br>
+    </section>
 
-		<section id="transactionButtons" class="transaction-buttons"
-			style="display: block;">
-			<button id="withdraw" onclick="withdraw()">Withdraw</button>
-			<br> <br>
+    <section id="detailSection" class="detail-Section" style="display: none;">
 
-			<button id="deposit" onclick="deposit()">Deposit</button>
-			<br> <br>
-		</section>
+        Account ID: <span id="accid"></span><br> <br> Account Type: <span
+            id="acctype"></span><br> <br> Balance: <span
+            id="accbalance"></span><br> <br>
 
-		<section id="withdrawSection" class="withdraw-Section"
-			style="display: none;">
-			Withdraw Amount: <input id="withdrawValue" type="text" value=""></input><br>
-			<br>
-			<button id="withdrawSubmit" onclick="sendWithdraw()">Submit
-				Withdraw</button>
-		</section>
+        <button id="transactions" onclick="transactions()">Transactions</button>
+        <br> <br>
 
-		<section id="depositSection" class="deposit-Section"
-			style="display: none;">
-			Deposit Amount: <input id="depositValue" type="text" value=""></input><br>
-			<br>
-			<button id="depositSubmit" onclick="sendDeposit()">Submit
-				Deposit</button>
-		</section>
+        <button id="deleteAccount" onclick="deleteAccount()">Delete
+            Account</button>
+        <br> <br>
 
-	</section>
-	
-	    <div id="successDiv" class="successDiv">Update was a success!</div>
+    </section>
+
+    <section id="transactionsSection" class="transactions-Section"
+        style="display: none;">
+
+        Account ID: <span id="accidT"></span><br> <br> Account Type: <span
+            id="acctypeT"></span><br> <br> Balance: <span
+            id="accbalanceT"></span><br> <br>
+
+        <section id="transactionButtons" class="transaction-buttons"
+            style="display: block;">
+            <button id="withdraw" onclick="withdraw()">Withdraw</button>
+            <br> <br>
+
+            <button id="deposit" onclick="deposit()">Deposit</button>
+            <br> <br>
+        </section>
+
+        <section id="withdrawSection" class="withdraw-Section"
+            style="display: none;">
+            Withdraw Amount: <input id="withdrawValue" type="text" value=""></input><br>
+            <br>
+            <button id="withdrawSubmit" onclick="sendWithdraw()">Submit
+                Withdraw</button>
+        </section>
+
+        <section id="depositSection" class="deposit-Section"
+            style="display: none;">
+            Deposit Amount: <input id="depositValue" type="text" value=""></input><br>
+            <br>
+            <button id="depositSubmit" onclick="sendDeposit()">Submit
+                Deposit</button>
+        </section>
+
+    </section>
+
+    <div id="successDiv" class="successDiv">Update was a success!</div>
     <div id="errorDiv" class="errorDiv">
         <span id="errorText"></span>
         <button id="closeError" class="closeError">X</button>
     </div>
     <div id="errorBG" class="errorBG"></div>
-    
+
     <div id="noAccounts" class="noAccounts">No Accounts Found</div>
 
 </body>
