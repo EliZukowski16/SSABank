@@ -75,28 +75,30 @@ li a {
 	font-size: large;
 }
 
-
-#grayout {
-   position: fixed;
-   left: 0px;
-   top: 0px;
-   height: 100%;
-   width: 100%;
-   background-color: black;
-   opacity: 0.5;
-   z-index: 10;
+.errorDiv {
+	display: none;
+	position: absolute;
+    top: 40%;
+    left: 25%;
+    width: 50%;
+    background-color: yellow;
+    border: solid black 4px;
+    padding: 10px;
+    z-index: 1000;
 }
 
-.customerNotFound {
-position: fixed;
-top: 15%;
-z-index:1000;
-background: white;
-width:30%;
-margin: 0 35%;
-height: 10%;
-text-align: center;
+.errorBG {
+	display: none;
+	position: absolute;
+	top: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    z-index: 999;
+}
 
+.closeError {
+	float: right;
 }
 
 </style>
@@ -139,19 +141,43 @@ text-align: center;
 	}
 
 	function displayDetail(id) {
-		document.getElementById('detailSection').style.display = 'block';
-		document.getElementById('listSection').style.display = 'none';
-		document.getElementById('addSection').style.display = 'none';
-		document.getElementById('editSection').style.display = 'none';
+		//document.getElementById('detailSection').style.display = 'block';
+		//document.getElementById('listSection').style.display = 'none';
+		//document.getElementById('addSection').style.display = 'none';
+		//document.getElementById('editSection').style.display = 'none';
 
 		$.getJSON("./customers/" + id, customerDetail);
+		//$.getJSON("./customers/" + id, customerDetail)
+		//.fail(detailFail(id));
 
 		function customerDetail(response) {
-			document.getElementById("cid").innerHTML = response.id;
-			document.getElementById("cfname").innerHTML = response.firstName;
-			document.getElementById("clname").innerHTML = response.lastName;
+			//document.getElementById("cid").innerHTML = response.id;
+			//document.getElementById("cfname").innerHTML = response.firstName;
+			//document.getElementById("clname").innerHTML = response.lastName;
+			
+			if (response.success){
+				
+				var customer = response.success;
+				
+				document.getElementById("cid").innerHTML = customer.id;
+				document.getElementById("cfname").innerHTML = customer.firstName;
+				document.getElementById("clname").innerHTML = customer.lastName;
+				
+				document.getElementById('detailSection').style.display = 'block';
+				document.getElementById('listSection').style.display = 'none';
+				document.getElementById('addSection').style.display = 'none';
+				document.getElementById('editSection').style.display = 'none';
+			}
+			else{
+				detailFail(id);
+			}
 		}
-
+	}
+	
+	function detailFail(id){
+		$("#errorText").text("Customer with ID: '" + id + "' does not exist");
+		$("#errorBG").show();
+		$("#errorDiv").show();
 	}
 	
 	function displayEdit() {
@@ -181,7 +207,6 @@ text-align: center;
 		    url: "./customers/" + document.getElementById("cid").innerHTML,
 		    dataType: "json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
-			//success:toDetail;
 		})
 		.done(toDetail);
 	}
@@ -208,12 +233,19 @@ text-align: center;
 		displayDetail(response.id);
 	}
 	
+	$("#errorDiv").click(function() {
+		location.reload(true);
+	})
 	
 </script>
 
 </head>
 
-<header>
+<body>
+
+	<div id="errorBG" class="errorBG">
+	
+	<header>
 	<section>
 		<ul class="menu">
 			<li class="menuitem"><a href="javascript:;"
@@ -226,9 +258,7 @@ text-align: center;
 
 </header>
 
-<body>
 
-    <div id="grayout" style="display:show"></div>
 	<section id="listSection" class="list-section" style="display: none;">
 
 		<ul id="customerList" class="customerlist">
@@ -272,11 +302,10 @@ text-align: center;
 					<button id="ceditsubmit" onclick="sendEdit()">Submit Edit</button> <br> <br>
 
 	</section>
-    
-    <section class="customerNotFound">
-        <p>Customer <span id="cid"></span> does not exist</p>
-        <button id="dismissMessage" type="button">X</button>
-    </section>
+
+	
+	<div id="errorDiv" class="errorDiv"><span id="errorText"></span><button id="closeError" class="closeError">X</button></div>
+	</div>
 
 </body>
 
