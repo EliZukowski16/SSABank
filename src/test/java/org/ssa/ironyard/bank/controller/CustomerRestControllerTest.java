@@ -107,9 +107,11 @@ public class CustomerRestControllerTest
         EasyMock.expect(cs.read(1)).andReturn(allCustomers.get(0));
         EasyMock.replay(cs);
         
-        ResponseEntity<Map<String,Object>> customer = this.controller.getCustomer("1");
+        ResponseEntity<Map<String,Object>> customerMap = this.controller.getCustomer("1");
         
-//        assertTrue(allCustomers.get(0).deeplyEquals(customer.getBody()));
+        Customer customer = (Customer) customerMap.getBody().get("success");
+        
+        assertTrue(allCustomers.get(0).deeplyEquals(customer));
     }
     
     @Test 
@@ -148,13 +150,15 @@ public class CustomerRestControllerTest
         EasyMock.expect(cs.update(testCustomerNotUpdated)).andReturn(testCustomerUpdated);
         EasyMock.replay(cs);
         
-        ResponseEntity<Customer> customer = this.controller.editCustomer("1", mock);
+        ResponseEntity<Map<String,Object>> customerMap = this.controller.editCustomer("1", mock);
         
-        assertTrue(testCustomerUpdated.deeplyEquals(customer.getBody()));
-        assertEquals(1, (int) customer.getBody().getId());
-        assertEquals("Mike", customer.getBody().getFirstName());
-        assertEquals("Jones", customer.getBody().getLastName());
-        assertEquals(true, customer.getBody().isLoaded());
+        Customer customer = (Customer) customerMap.getBody().get("success");
+        
+        assertTrue(testCustomerUpdated.deeplyEquals(customer));
+        assertEquals(1, (int) customer.getId());
+        assertEquals("Mike", customer.getFirstName());
+        assertEquals("Jones", customer.getLastName());
+        assertEquals(true, customer.isLoaded());
     }
 
 }

@@ -96,30 +96,33 @@ public class CustomerRestController
 
     @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<Customer> editCustomer(@PathVariable String customerID, HttpServletRequest request)
+    public ResponseEntity<Map<String,Object>> editCustomer(@PathVariable String customerID, HttpServletRequest request)
     {
         LOGGER.info("Editing Single Customer with ID: {}", customerID);
+        
+        Map<String, Object> customerMap = new HashMap<>();
 
         Integer id = Integer.parseInt(customerID);
 
         String lastName = request.getParameter("lastName");
         String firstName = request.getParameter("firstName");
-        Enumeration<String> parameters = request.getParameterNames();
-
-        while (parameters.hasMoreElements())
-        {
-            LOGGER.info(parameters.nextElement());
-        }
 
         LOGGER.info("Got first name: {} and last name: {}", firstName, lastName);
 
         Customer customer = customerService.update(new Customer(id, firstName, lastName));
 
-        // LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}",
-        // customer.getId().toString(), customer.getFirstName(),
-        // customer.getLastName());
-
-        return ResponseEntity.ok(customer);
+        if (customer != null)
+        {
+            LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(),
+                    customer.getFirstName(), customer.getLastName());
+            customerMap.put("success", customer);
+        }
+        else
+        {
+            customerMap.put("error", customerID);
+            LOGGER.info("Customer with ID: {} could not be updated", customerID);
+        }
+        return ResponseEntity.ok(customerMap);
     }
 
 }

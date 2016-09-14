@@ -78,248 +78,256 @@ li a {
 .successDiv {
 	display: none;
 	position: fixed;
-    top: 40%;
-    left: 25%;
-    width: 50%;
-    background-color: green;
-    border: solid black 4px;
-    padding: 10px;
-    z-index: 1001;
+	top: 40%;
+	left: 25%;
+	width: 50%;
+	background-color: green;
+	border: solid black 4px;
+	padding: 10px;
+	z-index: 1001;
 }
 
 .errorDiv {
 	display: none;
 	position: fixed;
-    top: 40%;
-    left: 25%;
-    width: 50%;
-    background-color: yellow;
-    border: solid black 4px;
-    padding: 10px;
-    z-index: 1000;
+	top: 40%;
+	left: 25%;
+	width: 50%;
+	background-color: yellow;
+	border: solid black 4px;
+	padding: 10px;
+	z-index: 1000;
 }
 
 .errorBG {
 	display: none;
 	position: fixed;
 	top: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: red;
-    z-index: 999;
+	width: 100%;
+	height: 100%;
+	background-color: red;
+	z-index: 999;
 }
 
 .closeError {
 	float: right;
 }
-
 </style>
 
 <script src="/jquery-3.1.0.min.js"></script>
 
 <script type="text/javascript">
-	//get json
+//get json
 
-	$(document).ready(function() {
-		$.getJSON("./customers", customers);
-		
-		$("#closeError").click(function() {
-			displayList();
-		})
-	});
+    $(document).ready(function() {
+        $.getJSON("./customers", customers);
 
-	function customers(response) {
-		var List = document.getElementById("customerList");
-		List.innerHTML = "";
+        $("#closeError").click(function() {
+            displayList();
+        })
+    });
 
-		for (var i = 0; i < response.length; i++) {
-			var rowC = '<li>';
-			rowC += '<a class="';
-			rowC += 'todo';
-			rowC += '" href="javascript:;"';
-			rowC += 'onclick="displayDetail(';
-			rowC += response[i].id;
-			rowC += ')">';
-			rowC += response[i].lastName;
-			rowC += ',&nbsp;&nbsp;&nbsp;';
-			rowC += response[i].firstName;
-			rowC += '</a>';
-			rowC += '</li>';
 
-			$("#customerList").append(rowC);
-		}
-		document.getElementById('listSection').style.display = 'block';
-	}
+    function customers(response) {
+        var List = document.getElementById("customerList");
+        List.innerHTML = "";
 
-	function displayList() {
+        for (var i = 0; i < response.length; i++) {
+            var rowC = '<li>';
+            rowC += '<a class="';
+            rowC += 'todo';
+            rowC += '" href="javascript:;"';
+            rowC += 'onclick="displayDetail(';
+            rowC += response[i].id;
+            rowC += ')">';
+            rowC += response[i].lastName;
+            rowC += ',&nbsp;&nbsp;&nbsp;';
+            rowC += response[i].firstName;
+            rowC += '</a>';
+            rowC += '</li>';
 
-		location.reload(true);
-	}
+            $("#customerList").append(rowC);
+        }
+        document.getElementById('listSection').style.display = 'block';
+    }
 
-	function displayDetail(id) {
+    function displayList() {
+        location.reload(true);
+    }
 
-		$.getJSON("./customers/" + id, customerDetail);
+    function displayDetail(id) {
+        $.getJSON("./customers/" + id, customerDetail);
 
-		function customerDetail(response) {
-			
-			if (response.success){
-				
-				var customer = response.success;
-				
-				document.getElementById("cid").innerHTML = customer.id;
-				document.getElementById("cfname").innerHTML = customer.firstName;
-				document.getElementById("clname").innerHTML = customer.lastName;
-				
-				document.getElementById('detailSection').style.display = 'block';
-				document.getElementById('listSection').style.display = 'none';
-				document.getElementById('addSection').style.display = 'none';
-				document.getElementById('editSection').style.display = 'none';
-				$("#successDiv").fadeOut(5000);
-			}
-			else{
-				detailFail(id);
-			}
-		}
-	}
-	
-	function detailFail(id){
-		$("#errorText").text("Customer with ID: '" + id + "' does not exist");
-		$("#errorBG").show();
-		$("#errorDiv").show();
-	}
-	
-	function displayEdit() {
-		
-		$.getJSON("./customers/" + document.getElementById("cid").innerHTML, customerEdit);
+        function customerDetail(response) {
+            if (response.success) {
 
-		function customerEdit(response) {
-			//todo
-			
-			if (response.success){
-				
-			var customer = response.success;
-			
-			document.getElementById("cidE").innerHTML = response.id;
-			document.getElementById("cfnameE").value = customer.firstName;
-			document.getElementById("clnameE").value = customer.lastName;
-			
-			document.getElementById('editSection').style.display = 'block';
-			document.getElementById('addSection').style.display = 'none';
-			document.getElementById('listSection').style.display = 'none';
-			document.getElementById('detailSection').style.display = 'none';
+                var customer = response.success;
 
-		}
-			else{
-				detailFail(id);
-			}
-	}
-	
-	function loadAccounts(){
-		localStorage.setItem('customerID', document.getElementById("cid").innerHTML);
-		window.location.assign("/ssa-bank/accounts");
-	}
-	
-	function sendEdit() {
-		$.ajax({
-		    type: "PUT",
-		    url: "./customers/" + document.getElementById("cid").innerHTML,
-		    dataType: "json",
-		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
-		})
-		.done(toDetail);
-	}
+                document.getElementById("cid").innerHTML = customer.id;
+                document.getElementById("cfname").innerHTML = customer.firstName;
+                document.getElementById("clname").innerHTML = customer.lastName;
 
-	function displayAdd() {
+                document.getElementById('detailSection').style.display = 'block';
+                document.getElementById('listSection').style.display = 'none';
+                document.getElementById('addSection').style.display = 'none';
+                document.getElementById('editSection').style.display = 'none';
+            } else {
+                detailFail(id);
+            }
+        }
+    }
 
-		document.getElementById('addSection').style.display = 'block';
-		document.getElementById('listSection').style.display = 'none';
-		document.getElementById('detailSection').style.display = 'none';
-		document.getElementById('editSection').style.display = 'none';
-	}
-	
-	function sendAdd() {
-		$.ajax({
-		    type: "POST",
-		    url: "./customers/",
-		    dataType: "json",
-		    data: {"firstName": document.getElementById("cfnameA").value, "lastName": document.getElementById("clnameA").value}
-		})
-		.done(toDetail);
-	}
-	
-	function toDetail(response){
-		displayDetail(response.id);
-	}
-	
-	
-	
+    function detailFail(id) {
+        $("#errorText").text("Customer with ID: '" + id + "' does not exist");
+        $("#errorBG").show();
+        $("#errorDiv").show();
+    }
+
+    function displayEdit() {
+        $.getJSON("./customers/" + document.getElementById("cid").innerHTML, customerEdit);
+
+        function customerEdit(response) {
+            //todo
+
+            if (response.success) {
+
+                var customer = response.success;
+
+                document.getElementById("cidE").innerHTML = customer.id;
+                document.getElementById("cfnameE").value = customer.firstName;
+                document.getElementById("clnameE").value = customer.lastName;
+
+                document.getElementById('editSection').style.display = 'block';
+                document.getElementById('addSection').style.display = 'none';
+                document.getElementById('listSection').style.display = 'none';
+                document.getElementById('detailSection').style.display = 'none';
+
+            } else {
+                detailFail(id);
+            }
+        }
+    }
+
+    function loadAccounts() {
+        localStorage.setItem('customerID', document.getElementById("cid").innerHTML);
+        window.location.assign("/ssa-bank/accounts");
+    }
+
+    function sendEdit() {
+        $.ajax({
+            type : "PUT",
+            url : "./customers/" + document.getElementById("cid").innerHTML,
+            dataType : "json",
+            data : {
+                "firstName" : document.getElementById("cfnameE").value,
+                "lastName" : document.getElementById("clnameE").value
+            }
+        })
+            .done(toDetail);
+    }
+
+    function displayAdd() {
+        document.getElementById('addSection').style.display = 'block';
+        document.getElementById('listSection').style.display = 'none';
+        document.getElementById('detailSection').style.display = 'none';
+        document.getElementById('editSection').style.display = 'none';
+    }
+
+    function sendAdd() {
+        $.ajax({
+            type : "POST",
+            url : "./customers/",
+            dataType : "json",
+            data : {
+                "firstName" : document.getElementById("cfnameA").value,
+                "lastName" : document.getElementById("clnameA").value
+            }
+        })
+            .done(toDetail);
+    }
+
+    function toDetail(response) {
+        var customer = response.success;
+        if (response.success) {
+            displayDetail(customer.id);
+            $("#successDiv").show();
+            $("#successDiv").fadeOut(5000);
+
+        } else {
+            detailFail(response.error);
+        }
+    }
 </script>
 
 </head>
 
 <body>
-	
-	<header>
-	<section>
-		<ul class="menu">
-			<li class="menuitem"><a href="javascript:;"
-				title="Customers List" onclick="displayList()">List</a></li>
-			<li class="menuitem"><a href="javascript:;" title="Add Customer"
-				onclick="displayAdd()">Add</a></li>
-		</ul>
-		<span class="SSAhead">SSA-Bank</span>
-	</section>
 
-</header>
+    <header>
+        <section>
+            <ul class="menu">
+                <li class="menuitem"><a href="javascript:;"
+                    title="Customers List" onclick="displayList()">List</a></li>
+                <li class="menuitem"><a href="javascript:;"
+                    title="Add Customer" onclick="displayAdd()">Add</a></li>
+            </ul>
+            <span class="SSAhead">SSA-Bank</span>
+        </section>
+
+    </header>
 
 
-	<section id="listSection" class="list-section" style="display: none;">
+    <section id="listSection" class="list-section" style="display: none;">
 
-		<ul id="customerList" class="customerlist">
-		</ul>
+        <ul id="customerList" class="customerlist">
+        </ul>
 
-	</section>
+    </section>
 
-	<section id="addSection" class="add-section" style="display: none;">
-		<br> <br>
-		First Name: <input id="cfnameA" type="text" value=""></input><br> <br>
-			
-		Last Name: <input id="clnameA" type="text" value=""></input><br> <br>
+    <section id="addSection" class="add-section" style="display: none;">
+        <br> <br> First Name: <input id="cfnameA" type="text" value=""></input><br>
+        <br> Last Name: <input id="clnameA" type="text" value=""></input><br>
+        <br>
 
-		<button id="caddsubmit" onclick="sendAdd()">Submit Add</button> <br> <br>
-		
-		
-		
-	</section>
+        <button id="caddsubmit" onclick="sendAdd()">Submit Add</button>
+        <br> <br>
 
-	<section id="detailSection" class="detail-Section"
-		style="display: none;">
 
-			Customer ID: <span id="cid"></span><br> <br> First Name: <span
-				id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
-					<br>
-			
-			<button id="ceditsubmit" onclick="displayEdit()">Edit Customer</button> <br> <br>
-			
-			<button id="showAccounts" onclick="loadAccounts()">Show Accounts</button> <br> <br>
 
-	</section>
+    </section>
 
-	<section id="editSection" class="edit-Section" style="display: none;">
-	
-			Customer ID: <span id="cidE"></span><br><br> 
-			
-			First Name: <input id="cfnameE" type="text" value=""></input><br> <br>
-			
-			Last Name: <input id="clnameE" type="text" value=""></input><br> <br>
+    <section id="detailSection" class="detail-Section" style="display: none;">
 
-					<button id="ceditsubmit" onclick="sendEdit()">Submit Edit</button> <br> <br>
+        Customer ID: <span id="cid"></span><br> <br> First Name: <span
+            id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
+        <br>
 
-	</section>
+        <button id="ceditsubmit" onclick="displayEdit()">Edit Customer</button>
+        <br> <br>
 
-	<div id="successDiv" class="successDiv">Update was a success!</div>
-	<div id="errorDiv" class="errorDiv"><span id="errorText"></span><button id="closeError" class="closeError">X</button></div>
-	<div id="errorBG" class="errorBG"></div>
+        <button id="showAccounts" onclick="loadAccounts()">Show
+            Accounts</button>
+        <br> <br>
+
+    </section>
+
+    <section id="editSection" class="edit-Section" style="display: none;">
+
+        Customer ID: <span id="cidE"></span><br> <br> First Name: <input
+            id="cfnameE" type="text" value=""></input><br> <br> Last
+        Name: <input id="clnameE" type="text" value=""></input><br> <br>
+
+        <button id="ceditsubmit" onclick="sendEdit()">Submit Edit</button>
+        <br> <br>
+
+    </section>
+
+    <div id="successDiv" class="successDiv">Update was a success!</div>
+    <div id="errorDiv" class="errorDiv">
+        <span id="errorText"></span>
+        <button id="closeError" class="closeError">X</button>
+    </div>
+    <div id="errorBG" class="errorBG"></div>
 
 </body>
 
