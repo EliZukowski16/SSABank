@@ -12,5 +12,6 @@ public interface AccountService {
     public Account insert(Account account);
     public Account deposit(int accountID, BigDecimal amount);
     public Account withdraw(int accountID, BigDecimal amount);
+    public boolean delete(Integer id);
 	
 }

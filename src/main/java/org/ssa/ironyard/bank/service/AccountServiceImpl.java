@@ -60,4 +60,11 @@ public class AccountServiceImpl implements AccountService {
 		return accountDao.update(a1);
 	}
 
+    @Override
+    @Transactional
+    public boolean delete(Integer id)
+    {
+        return accountDao.delete(id);
+    }
+
 }

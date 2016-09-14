@@ -1,6 +1,5 @@
 package org.ssa.ironyard.bank.controller;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,10 +77,10 @@ public class CustomerRestController
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Map<String,Object>> addCustomer(HttpServletRequest request)
+    public ResponseEntity<Map<String, Object>> addCustomer(HttpServletRequest request)
     {
         Map<String, Object> customerMap = new HashMap<>();
-        
+
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
 
@@ -106,10 +105,10 @@ public class CustomerRestController
 
     @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity<Map<String,Object>> editCustomer(@PathVariable String customerID, HttpServletRequest request)
+    public ResponseEntity<Map<String, Object>> editCustomer(@PathVariable String customerID, HttpServletRequest request)
     {
         LOGGER.info("Editing Single Customer with ID: {}", customerID);
-        
+
         Map<String, Object> customerMap = new HashMap<>();
 
         Integer id = Integer.parseInt(customerID);
@@ -134,19 +133,19 @@ public class CustomerRestController
         }
         return ResponseEntity.ok(customerMap);
     }
-    
+
     @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.DELETE)
     @ResponseBody
     public boolean deleteCustomer(@PathVariable String customerID)
     {
         LOGGER.info("Deleting Single Customer with ID: {}", customerID);
-        
+
         Integer id = Integer.parseInt(customerID);
-        
+
         boolean deleteSuccess = customerService.delete(id);
-        
-        LOGGER.info("Delete was successful: {}", customerID, deleteSuccess);
-        
+
+        LOGGER.info("Delete was successful: {}", deleteSuccess);
+
         return deleteSuccess;
     }
 
