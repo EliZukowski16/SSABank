@@ -18,7 +18,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockServletConfig;
 import org.ssa.ironyard.bank.model.Customer;
 import org.ssa.ironyard.bank.service.CustomerService;
 import org.ssa.ironyard.bank.service.CustomerServiceImpl;

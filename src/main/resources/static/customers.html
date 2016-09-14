@@ -157,6 +157,7 @@ li a {
 		    url: "./customers/" + document.getElementById("cid").innerHTML,
 		    dataType: "json",
 		    data: {"firstName": document.getElementById("cfnameE").value, "lastName": document.getElementById("clnameE").value}
+			//success:toDetail;
 		})
 		.done(toDetail);
 	}
@@ -182,7 +183,6 @@ li a {
 	function toDetail(response){
 		displayDetail(response.id);
 	}
-	
 	
 	
 </script>
