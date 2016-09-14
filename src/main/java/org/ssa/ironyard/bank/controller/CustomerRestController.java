@@ -1,7 +1,9 @@
 package org.ssa.ironyard.bank.controller;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,11 +34,11 @@ public class CustomerRestController
         this.customerService = cs;
     }
 
-
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Customer>> allCustomers()
     {
+
         LOGGER.info("Returning List of Customers");
 
         List<Customer> allCustomers = customerService.read();
@@ -52,16 +54,26 @@ public class CustomerRestController
 
     @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Customer> getCustomer(@PathVariable String customerID)
+    public ResponseEntity<Map<String, Object>> getCustomer(@PathVariable String customerID)
     {
+        Map<String, Object> customerMap = new HashMap<>();
+
         LOGGER.info("Returning Single Customer with ID: {}", customerID);
 
         Customer customer = customerService.read(Integer.parseInt(customerID));
 
-        LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
-                customer.getLastName());
+//        LOGGER.trace("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
+//                customer.getLastName());
 
-        return ResponseEntity.ok(customer);
+        if (customer != null)
+        {
+            customerMap.put("success", customer);
+        }
+        else
+        {
+            customerMap.put("error", "");
+        }
+        return ResponseEntity.ok(customerMap);
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
@@ -89,22 +101,23 @@ public class CustomerRestController
         LOGGER.info("Editing Single Customer with ID: {}", customerID);
 
         Integer id = Integer.parseInt(customerID);
-        
+
         String lastName = request.getParameter("lastName");
         String firstName = request.getParameter("firstName");
         Enumeration<String> parameters = request.getParameterNames();
-        
-        while(parameters.hasMoreElements())
+
+        while (parameters.hasMoreElements())
         {
             LOGGER.info(parameters.nextElement());
         }
-        
+
         LOGGER.info("Got first name: {} and last name: {}", firstName, lastName);
 
         Customer customer = customerService.update(new Customer(id, firstName, lastName));
 
-//        LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}", customer.getId().toString(), customer.getFirstName(),
-//                customer.getLastName());
+        // LOGGER.info("Cust ID: {}, First Name: {}, Last Name: {}",
+        // customer.getId().toString(), customer.getFirstName(),
+        // customer.getLastName());
 
         return ResponseEntity.ok(customer);
     }
