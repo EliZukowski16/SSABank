@@ -134,5 +134,20 @@ public class CustomerRestController
         }
         return ResponseEntity.ok(customerMap);
     }
+    
+    @RequestMapping(value = "/customers/{customerID}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public boolean deleteCustomer(@PathVariable String customerID)
+    {
+        LOGGER.info("Deleting Single Customer with ID: {}", customerID);
+        
+        Integer id = Integer.parseInt(customerID);
+        
+        boolean deleteSuccess = customerService.delete(id);
+        
+        LOGGER.info("Delete was successful: {}", customerID, deleteSuccess);
+        
+        return deleteSuccess;
+    }
 
 }

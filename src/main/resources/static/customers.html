@@ -277,7 +277,7 @@ li a {
     function deleteCustomer(){
     	$.ajax({
             type : "DELETE",
-            url : "./customers/",
+            url : "./customers/" + document.getElementById("cid").innerHTML,
             dataType : "json",
             data : {
                 "id" : document.getElementById("cid").innerHTML,
@@ -286,10 +286,10 @@ li a {
             .done(validateDelete);
     }
     
-    validateDelete(response){
+    function validateDelete(response){
     	if(response == true){
     		$("#successDiv").show();
-            $("#successDiv").fadeOut(5000, displayList);
+            $("#successDiv").fadeOut(2500, displayList);
     	}
     	else{
     		detailFail("id");

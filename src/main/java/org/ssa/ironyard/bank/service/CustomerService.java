@@ -10,4 +10,5 @@ public interface CustomerService {
 	public Customer read(int customerID);
 	public Customer insert(Customer customer);
     Customer update(Customer customer);
+    boolean delete(int customerID);
 }
