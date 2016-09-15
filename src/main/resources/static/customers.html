@@ -72,6 +72,11 @@ li a {
 	font-size: large;
 }
 
+li a:hover {
+    background-color: blue;
+    color: white;
+}
+
 .successDiv {
 	display: none;
 	position: fixed;
@@ -111,7 +116,10 @@ li a {
 }
 
 .filter {
-	float: right;
+	display:block;
+    text-align:right;
+    padding: 0 0 .2em 0;
+   
 }
 
 .noCustomers {
@@ -139,6 +147,7 @@ li a {
         $("#closeError").click(function() {
             displayList();
         })
+        
     });
 
 
@@ -323,10 +332,10 @@ li a {
     }
     
     function filter(){
-    	var filterBy = $("#filter").val;
-    	
+    	var filterBy = $("#filter").val();
+    	console.log(filterBy);
     	$(".todo").hide()
-    	$(".todo:contains(" + filterBy + ")").show(); 	
+    	$(".todo:contains('" + filterBy + "')").show(); 	
     	
     }
 </script>
