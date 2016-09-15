@@ -164,29 +164,6 @@ li a {
             rowC += '</li>';
 
             $("#accountsList").append(rowC);
-
-            var accountMenu = " > ";
-
-            accountMenu += '<a class="';
-            accountMenu += 'subMenu';
-            accountMenu += '" href="javascript:;"';
-            accountMenu += 'onclick="backToCustomersDetail()';
-            accountMenu += '">';
-            accountMenu += response[0].customer.lastName;
-            accountMenu += ',&nbsp;&nbsp;&nbsp;';
-            accountMenu += response[0].customer.firstName;
-            accountMenu += '</a>';
-            accountMenu += " > "
-            accountMenu += '<a class="';
-            accountMenu += 'subMenu';
-            accountMenu += '" href="javascript:;"';
-            accountMenu += 'onclick="displayList(';
-            accountMenu += ')">';
-            accountMenu += "Accounts";
-            accountMenu += '</a>';
-
-            $("#subMenu").html(accountMenu);
-
         }
 
         //displayList();
@@ -206,38 +183,7 @@ li a {
             if (response.success) {
 
                 var account = response.success;
-
-                var accountMenu = " > ";
-
-                accountMenu += '<a class="';
-                accountMenu += 'subMenu';
-                accountMenu += '" href="javascript:;"';
-                accountMenu += 'onclick="backToCustomersDetail()';
-                accountMenu += '">';
-                accountMenu += account.customer.lastName;
-                accountMenu += ',&nbsp;&nbsp;&nbsp;';
-                accountMenu += account.customer.firstName;
-                accountMenu += '</a>';
-                accountMenu += " > "
-                accountMenu += '<a class="';
-                accountMenu += 'subMenu';
-                accountMenu += '" href="javascript:;"';
-                accountMenu += 'onclick="displayList(';
-                accountMenu += ')">';
-                accountMenu += "Accounts";
-                accountMenu += '</a>';
-                accountMenu += " > "
-                accountMenu += '<a class="';
-                accountMenu += 'subMenu';
-                accountMenu += '" href="javascript:;"';
-                accountMenu += 'onclick="displayDetail(';
-                accountMenu += account.id
-                accountMenu += ')">';
-                accountMenu += account.id;
-                accountMenu += '</a>';
-
-                $("#subMenu").html(accountMenu);
-
+                
                 $("#errorText").text("Account with ID: '" + account.id + "' does not exist");
 
                 document.getElementById("accid").innerHTML = account.id;
@@ -267,7 +213,6 @@ li a {
     }
 
     function displayAdd() {
-    	$("#amountError").text("");
         document.getElementById('addSection').style.display = 'block';
         document.getElementById('listSection').style.display = 'none';
         document.getElementById('detailSection').style.display = 'none';
@@ -275,22 +220,16 @@ li a {
     }
 
     function sendAdd() {
-        if (document.getElementById("acctBalanceAdd").value <= 9999999999.99) {
-        	$("#amountError").text("");
-            $("#errorText").text("Account Creation Failed");
-            $.ajax({
-                type : "POST",
-                url : "./customers/" + localStorage.getItem('customerID') + "/accounts/",
-                dataType : "json",
-                data : {
-                    "account" : document.getElementById("acctTypeAdd").value,
-                    "balance" : document.getElementById("acctBalanceAdd").value
-                }
-            }).done(toDetail);
-        }
-        else {
-        	$("#amountError").text("Amount is out of bounds, max amount is $9,999,999,999.99")
-        }
+        $("#errorText").text("Account Creation Failed");
+        $.ajax({
+            type : "POST",
+            url : "./customers/" + localStorage.getItem('customerID') + "/accounts/",
+            dataType : "json",
+            data : {
+                "account" : document.getElementById("acctTypeAdd").value,
+                "balance" : document.getElementById("acctBalanceAdd").value
+            }
+        }).done(toDetail);
     }
 
     function toDetail(response) {
@@ -310,11 +249,6 @@ li a {
         window.location.assign("/ssa-bank/");
     }
 
-    function backToCustomersDetail() {
-        localStorage.setItem("fromAccounts", "true");
-        window.location.assign("/ssa-bank/");
-    }
-
     function transactions() {
         document.getElementById('transactionsSection').style.display = 'block';
         document.getElementById('addSection').style.display = 'none';
@@ -322,6 +256,7 @@ li a {
         document.getElementById('detailSection').style.display = 'none';
         document.getElementById('withdrawSection').style.display = 'none';
         document.getElementById('depositSection').style.display = 'none';
+        document.getElementById('transferSection').style.display = 'none';
         document.getElementById('transactionButtons').style.display = 'block';
 
         $.getJSON("./customers/" + localStorage.getItem('customerID')
@@ -341,46 +276,38 @@ li a {
     }
 
     function withdraw() {
-    	$("#withdrawError").text("");
         document.getElementById('withdrawSection').style.display = 'block';
         document.getElementById('depositSection').style.display = 'none';
         document.getElementById('transactionButtons').style.display = 'none';
+        document.getElementById('transferSection').style.display = 'none';
     }
 
     function sendWithdraw() {
-    	if(document.getElementById("withdrawValue").value <= 9999999999.99) {
-    	$("#withdrawError").text("");
         $("#errorText").text("Withdrawal Failed");
         $.ajax(
-            {
-                type : "PUT",
-                url : "./customers/"
-                    + localStorage.getItem('customerID')
-                    + "/accounts/"
-                    + document.getElementById("accidT").innerHTML
-                    + "/withdraw",
-                dataType : "json",
-                data : {
-                    "amount" : document
-                        .getElementById("withdrawValue").value
-                }
-            }).done(toDetail);
-    	}
-    	else {
-    		$("#withdrawError").text("Amount is out of bounds, max amount is $9,999,999,999.99");
-    	}
+                {
+                    type : "PUT",
+                    url : "./customers/"
+                        + localStorage.getItem('customerID')
+                        + "/accounts/"
+                        + document.getElementById("accidT").innerHTML
+                        + "/withdraw",
+                    dataType : "json",
+                    data : {
+                        "amount" : document
+                            .getElementById("withdrawValue").value
+                    }
+                }).done(toDetail);
     }
 
     function deposit() {
-    	$("#depositError").text("");
         document.getElementById('depositSection').style.display = 'block';
         document.getElementById('withdrawSection').style.display = 'none';
         document.getElementById('transactionButtons').style.display = 'none';
+        document.getElementById('transferSection').style.display = 'none';
     }
 
     function sendDeposit() {
-    	if((Number(document.getElementById("depositValue").value) + Number(document.getElementById("accbalance").innerHTML) )<= 9999999999.99) {
-        $("#depositError").text("");
         $("#errorText").text("Deposit Failed");
         $
             .ajax(
@@ -397,11 +324,57 @@ li a {
                             .getElementById("depositValue").value
                     }
                 }).done(toDetail);
-    	}
-    	else {
-    		$("#depositError").text("Amount is out of bounds, max amount is $9,999,999,999.99");
-    	}
     }
+    
+    
+    
+    function transfer() {
+    	
+    	$.getJSON("./customers/" + customerID + "/accounts", buildTransferAccounts;
+    	
+        document.getElementById('transferSection').style.display = 'block';
+        document.getElementById('depositSection').style.display = 'none';
+        document.getElementById('withdrawSection').style.display = 'none';
+        document.getElementById('transactionButtons').style.display = 'none';
+    }
+    
+    function buildTransferAccounts(response) {
+    	
+    	for (var i = 0; i < response.length; i++) {
+            var rowT = '<option value="';
+            rowT += response[i].id;
+            rowT += '">';
+            rowT += response[i].id;
+            rowT += ',&nbsp;&nbsp;&nbsp;';
+            rowT += response[i].type;
+            rowT += ',&nbsp;&nbsp;&nbsp;';
+            rowT += response[i].balance;
+            rowT += '</option>';
+
+            $("#transferAccounts").append(rowT);
+        }	
+    	
+    }
+
+    function sendTransfer() {
+        $("#errorText").text("Transfer Failed");
+        $
+            .ajax(
+                {
+                    type : "PUT",
+                    url : "./customers/"
+                        + localStorage.getItem('customerID')
+                        + "/accounts/"
+                        + document.getElementById("accidT").innerHTML
+                        + "/transfer",
+                    dataType : "json",
+                    data : {
+                        "targetID" : $("#transferAccounts option:selected").val();, "amount" : document.getElementById("transferAmount").value
+                    }
+                }).done(toDetail);
+    }
+    
+    
 
     function deleteAccount() {
         $.ajax({
@@ -427,27 +400,23 @@ li a {
 </script>
 
 </head>
+
+<header>
+    <section>
+        <ul class="menu">
+            <li class="menuitem"><a href="javascript:;"
+                title="to customers" onclick="backToCustomers()">Customers</a></li>
+            <li class="menuitem"><a href="javascript:;"
+                title="Customers List" onclick="displayList()">List</a></li>
+            <li class="menuitem"><a href="javascript:;"
+                title="Add Customer" onclick="displayAdd()">Add</a></li>
+        </ul>
+        <span class="SSAhead">SSA-Bank</span>
+    </section>
+
+</header>
+
 <body>
-    <header>
-        <section>
-            <ul class="menu">
-                <li class="menuitem"><a href="javascript:;"
-                    title="to customers" onclick="backToCustomers()">Customers</a></li>
-                <li class="menuitem"><a href="javascript:;"
-                    title="Customers List" onclick="displayList()">List</a></li>
-                <li class="menuitem"><a href="javascript:;"
-                    title="Add Customer" onclick="displayAdd()">Add</a></li>
-            </ul>
-            <span class="SSAhead">SSA-Bank</span>
-        </section>
-
-    </header>
-    <nav class="subMenu">
-        <a href="javascript:;" id="allCustomers" onclick="backToCustomers()">Customers</a>
-        <span id="subMenu"></span>
-    </nav>
-
-
 
     <section id="listSection" style="display: none;">
 
@@ -461,9 +430,7 @@ li a {
             <option value="CH" selected>Checking</option>
             <option value="SA">Savings</option>
         </select> <br> <br> Account Balance: <input id="acctBalanceAdd"
-            type="number" value="" max="9999999999.99" min="0"></input><br>
-        <br>
-        <div id="amountError"></div>
+            type="text" value=""></input><br> <br>
 
         <button id="acctaddsubmit" onclick="sendAdd()">Submit Add</button>
         <br> <br>
@@ -501,13 +468,15 @@ li a {
 
             <button id="deposit" onclick="deposit()">Deposit</button>
             <br> <br>
+            
+            <button id="transfer" onclick="transfer()">Transfer</button>
+            <br> <br>
         </section>
 
         <section id="withdrawSection" class="withdraw-Section"
             style="display: none;">
-            Withdraw Amount: <input id="withdrawValue" type="number" value="" max="9999999999.99" min="0"></input><br>
+            Withdraw Amount: <input id="withdrawValue" type="text" value=""></input><br>
             <br>
-            <div id="withdrawError"></div>
             <button id="withdrawSubmit" onclick="sendWithdraw()">Submit
                 Withdraw</button>
         </section>
@@ -516,7 +485,15 @@ li a {
             style="display: none;">
             Deposit Amount: <input id="depositValue" type="text" value=""></input><br>
             <br>
-            <div id="depositError"></div>
+            <button id="depositSubmit" onclick="sendDeposit()">Submit
+                Deposit</button>
+        </section>
+        
+        <section id="transferSection" class="transfer-Section"
+            style="display: none;">
+            Amount: <input id="transferAmount" type="text" value=""></input><br><br>
+            <select id="transferAccounts">
+			</select><br><br>
             <button id="depositSubmit" onclick="sendDeposit()">Submit
                 Deposit</button>
         </section>
@@ -537,4 +514,5 @@ li a {
 <footer> </footer>
 
 </html>
+
 
