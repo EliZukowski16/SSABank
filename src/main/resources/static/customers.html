@@ -6,7 +6,6 @@
 
 <style type="text/css">
 .menu {
-	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
@@ -14,33 +13,44 @@
 }
 
 .menuitem {
-	float: left;
+	display: inline;
+	color: white;
+	font-size: 1.3em;
+	padding: 14px 16px;
+	text-decoration: none;
 	width: 25%
 }
 
-li.menuitem a {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-
-li a:hover {
-	background-color: blue;
+.menuitem:hover {
+	background-color: #003399;
 	color: white;
 }
 
 .SSAhead {
 	display: block;
-	margin: 0;
-	padding: 0;
+	margin: 10;
 	overflow: hidden;
 	background-color: #333;
 	color: white;
 	font-size: 4em;
 	width: 100%;
 	text-align: center;
+	line-height: 1.3em;
+	border: 2px ;
+	border-radius: 10px;
+	box-shadow: 10px 10px 10px 10px #fff, 2px 1px 6px 4px
+		rgba(10, 10, 0, 0.5);
+	text-shadow: 5px 5px #003399;
+}
+
+.addBorder {
+	line-height: 1.3em;
+	border: 2px dashed;
+	padding: 5px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 1px 10px #fff, 2px 1px 6px 4px
+		rgba(10, 10, 0, 0.5);
+	text-shadow: 1px 1px #003399;
 }
 
 .customerlist {
@@ -48,6 +58,7 @@ li a:hover {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+	text-align: center;
 }
 
 .customerEntry {
@@ -73,6 +84,11 @@ li a {
 	border: solid black 1px;
 	text-decoration: none;
 	font-size: large;
+}
+
+li a:hover {
+	background-color: #003399;
+	color: white;
 }
 
 .successDiv {
@@ -113,8 +129,14 @@ li a {
 	float: right;
 }
 
+.filter {
+	display: block;
+	text-align: right;
+	padding: 0 0 .2em 0;
+}
+
 .noCustomers {
-    display: none;
+	display: none;
 	position: fixed;
 	top: 40%;
 	left: 25%;
@@ -123,32 +145,35 @@ li a {
 	border: solid black 4px;
 	padding: 10px;
 	z-index: 1002;
-    text-align:center;
+	text-align: center;
 }
 </style>
-
-<script src="/jquery-3.1.0.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"
+	integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+	crossorigin="anonymous"></script>
 <script type="text/javascript">
 //get json
 
     $(document).ready(function() {
         $.getJSON("./customers", customers);
-
         $("#closeError").click(function() {
             displayList();
         })
+        
+		//case insensitive CONTAINS
+        $.extend($.expr[":"], {
+        	"containsNC": function(elem, i, match, array) {
+        	return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+        	}
+        	});
+        
     });
-
-
     function customers(response) {
         var List = document.getElementById("customerList");
         List.innerHTML = "";
-
         if (response.length == 0) {
 			$("#noCustomers").show();
         }
-
         for (var i = 0; i < response.length; i++) {
             var rowC = '<li>';
             rowC += '<a class="';
@@ -162,28 +187,45 @@ li a {
             rowC += response[i].firstName;
             rowC += '</a>';
             rowC += '</li>';
-
             $("#customerList").append(rowC);
         }
         document.getElementById('listSection').style.display = 'block';
+        
+        //var fromAccounts = localStorage.getItem("fromAccounts")
+        
+        if(localStorage.getItem("fromAccounts") == "true") {
+        	displayDetail(localStorage.getItem("customerID"));
+        	localStorage.setItem("fromAccounts", "false");
+        }
     }
-
     function displayList() {
         location.reload(true);
     }
-
     function displayDetail(id) {
         $.getJSON("./customers/" + id, customerDetail);
-
         function customerDetail(response) {
             if (response.success) {
-
                 var customer = response.success;
-
+                
+                var customerMenu = " > ";
+                
+                customerMenu += '<a class="';
+                customerMenu += 'subMenu';
+                customerMenu += '" href="javascript:;"';
+                customerMenu += 'onclick="displayDetail(';
+                customerMenu += customer.id;
+                customerMenu += ')">';
+                customerMenu += customer.lastName;
+                customerMenu += ',&nbsp;&nbsp;&nbsp;';
+                customerMenu += customer.firstName;
+                customerMenu += '</a>';
+                
+                
+                
+                $("#subMenu").html(customerMenu);
                 document.getElementById("cid").innerHTML = customer.id;
                 document.getElementById("cfname").innerHTML = customer.firstName;
                 document.getElementById("clname").innerHTML = customer.lastName;
-
                 document.getElementById('detailSection').style.display = 'block';
                 document.getElementById('listSection').style.display = 'none';
                 document.getElementById('addSection').style.display = 'none';
@@ -193,42 +235,32 @@ li a {
             }
         }
     }
-
     function detailFail(id) {
         $("#errorText").text("Customer with ID: '" + id + "' does not exist");
         $("#errorBG").show();
         $("#errorDiv").show();
     }
-
     function displayEdit() {
         $.getJSON("./customers/" + document.getElementById("cid").innerHTML, customerEdit);
-
         function customerEdit(response) {
-
             if (response.success) {
-
                 var customer = response.success;
-
                 document.getElementById("cidE").innerHTML = customer.id;
                 document.getElementById("cfnameE").value = customer.firstName;
                 document.getElementById("clnameE").value = customer.lastName;
-
                 document.getElementById('editSection').style.display = 'block';
                 document.getElementById('addSection').style.display = 'none';
                 document.getElementById('listSection').style.display = 'none';
                 document.getElementById('detailSection').style.display = 'none';
-
             } else {
                 detailFail(id);
             }
         }
     }
-
     function loadAccounts() {
         localStorage.setItem('customerID', document.getElementById("cid").innerHTML);
         window.location.assign("/ssa-bank/accounts");
     }
-
     function sendEdit() {
         $.ajax({
             type : "PUT",
@@ -241,14 +273,12 @@ li a {
         })
             .done(toDetail);
     }
-
     function displayAdd() {
         document.getElementById('addSection').style.display = 'block';
         document.getElementById('listSection').style.display = 'none';
         document.getElementById('detailSection').style.display = 'none';
         document.getElementById('editSection').style.display = 'none';
     }
-
     function sendAdd() {
         $.ajax({
             type : "POST",
@@ -261,14 +291,12 @@ li a {
         })
             .done(toDetail);
     }
-
     function toDetail(response) {
         var customer = response.success;
         if (response.success) {
             displayDetail(customer.id);
             $("#successDiv").show();
             $("#successDiv").fadeOut(5000);
-
         } else {
             detailFail(response.error.id);
         }
@@ -296,82 +324,110 @@ li a {
     		$("#errorText").text("Delete failed")
     	}
     }
+    
+    function filter(){
+    	var filterBy = $("#filter").val();
+    	$(".todo").hide()
+    	$(".todo:containsNC('" + filterBy + "')").show(); 	
+    	
+    }
 </script>
 
 </head>
 
 <body>
 
-    <header>
-        <section>
+	<header>
+		<section>
+			<nav class="menu">
+				<a href="javascript:;" title="Customers List" class="menuitem"
+					onclick="displayList()">List</a> <a href="javascript:;"
+					title="Add Customer" class="menuitem" onclick="displayAdd()">Add</a>
+
+			</nav>
+			<!--  
             <ul class="menu">
                 <li class="menuitem"><a href="javascript:;"
                     title="Customers List" onclick="displayList()">List</a></li>
                 <li class="menuitem"><a href="javascript:;"
                     title="Add Customer" onclick="displayAdd()">Add</a></li>
             </ul>
-            <span class="SSAhead">SSA-Bank</span>
-        </section>
+            -->
+			<span class="SSAhead">SSA-Bank</span>
+		</section>
 
-    </header>
-
-
-    <section id="listSection" class="list-section" style="display: none;">
-
-        <ul id="customerList" class="customerlist">
-        </ul>
-
-    </section>
-
-    <section id="addSection" class="add-section" style="display: none;">
-        <br> <br> First Name: <input id="cfnameA" type="text" value=""></input><br>
-        <br> Last Name: <input id="clnameA" type="text" value=""></input><br>
-        <br>
-
-        <button id="caddsubmit" onclick="sendAdd()">Submit Add</button>
-        <br> <br>
+	</header>
+	<nav class="subMenu">
+		<a href="javascript:;" id="allCustomers" onclick="displayList()">Customers</a>
+		<span id="subMenu"></span>
+	</nav>
 
 
+	<section id="listSection" class="list-section" style="display: none;">
 
-    </section>
+		<div class="filter">
+			Filter Customers: <input id="filter" type="text" value="">
+			<button id="runFilter" onclick="filter()">Filter</button>
+		</div>
 
-    <section id="detailSection" class="detail-Section" style="display: none;">
 
-        Customer ID: <span id="cid"></span><br> <br> First Name: <span
-            id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
-        <br>
+		<ul id="customerList" class="customerlist">
+		</ul>
 
-        <button id="ceditsubmit" onclick="displayEdit()">Edit Customer</button>
-        <br> <br>
+	</section>
+	<div class="addBorder">
+		<section id="addSection" class="add-section" style="display: none;">
+			<br> <br> First Name: <input id="cfnameA" type="text"
+				value=""></input><br> <br> Last Name: <input id="clnameA"
+				type="text" value=""></input><br> <br>
 
-        <button id="showAccounts" onclick="loadAccounts()">Show
-            Accounts</button>
-        <br> <br>
-        
-        <button id="deleteCustomer" onclick="deleteCustomer()">Delete Customer</button>
-        <br> <br>
+			<button id="caddsubmit" onclick="sendAdd()">Submit Add</button>
+			<br> <br>
 
-    </section>
 
-    <section id="editSection" class="edit-Section" style="display: none;">
 
-        Customer ID: <span id="cidE"></span><br> <br> First Name: <input
-            id="cfnameE" type="text" value=""></input><br> <br> Last
-        Name: <input id="clnameE" type="text" value=""></input><br> <br>
+		</section>
+	</div>
+	<section id="detailSection" class="detail-Section"
+		style="display: none;">
 
-        <button id="ceditsubmit" onclick="sendEdit()">Submit Edit</button>
-        <br> <br>
+		Customer ID: <span id="cid"></span><br> <br> First Name: <span
+			id="cfname"></span><br> <br> Last Name: <span id="clname"></span><br>
+		<br>
 
-    </section>
+		<button id="ceditsubmit" onclick="displayEdit()">Edit
+			Customer</button>
+		<br> <br>
 
-    <div id="successDiv" class="successDiv">Update was a success!</div>
-    <div id="errorDiv" class="errorDiv">
-        <span id="errorText"></span>
-        <button id="closeError" class="closeError">X</button>
-    </div>
-    <div id="errorBG" class="errorBG"></div>
-    
-    <div id="noCustomers" class="noCustomers">No Customers Found</div>
+		<button id="showAccounts" onclick="loadAccounts()">Show
+			Accounts</button>
+		<br> <br>
+
+		<button id="deleteCustomer" onclick="deleteCustomer()">Delete
+			Customer</button>
+		<br> <br>
+
+	</section>
+
+	<section id="editSection" class="edit-Section" style="display: none;">
+
+		Customer ID: <span id="cidE"></span><br> <br> First Name: <input
+			id="cfnameE" type="text" value=""></input><br> <br> Last
+		Name: <input id="clnameE" type="text" value=""></input><br> <br>
+
+		<button id="ceditsubmit" onclick="sendEdit()">Submit Edit</button>
+		<br> <br>
+
+	</section>
+
+	<div id="successDiv" class="successDiv">Update was a success!</div>
+	<div id="errorDiv" class="errorDiv">
+		<span id="errorText"></span>
+		<button id="closeError" class="closeError">X</button>
+	</div>
+	<div id="errorBG" class="errorBG"></div>
+
+	<div id="noCustomers" class="noCustomers">No Customers Found</div>
 
 </body>
 
