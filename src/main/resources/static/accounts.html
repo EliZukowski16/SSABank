@@ -164,9 +164,9 @@ li a {
             rowC += '</li>';
 
             $("#accountsList").append(rowC);
-            
+
             var accountMenu = " > ";
-            
+
             accountMenu += '<a class="';
             accountMenu += 'subMenu';
             accountMenu += '" href="javascript:;"';
@@ -184,9 +184,9 @@ li a {
             accountMenu += ')">';
             accountMenu += "Accounts";
             accountMenu += '</a>';
-            
+
             $("#subMenu").html(accountMenu);
-            
+
         }
 
         //displayList();
@@ -206,9 +206,9 @@ li a {
             if (response.success) {
 
                 var account = response.success;
-                
+
                 var accountMenu = " > ";
-                
+
                 accountMenu += '<a class="';
                 accountMenu += 'subMenu';
                 accountMenu += '" href="javascript:;"';
@@ -267,6 +267,7 @@ li a {
     }
 
     function displayAdd() {
+    	$("#amountError").text("");
         document.getElementById('addSection').style.display = 'block';
         document.getElementById('listSection').style.display = 'none';
         document.getElementById('detailSection').style.display = 'none';
@@ -274,16 +275,22 @@ li a {
     }
 
     function sendAdd() {
-        $("#errorText").text("Account Creation Failed");
-        $.ajax({
-            type : "POST",
-            url : "./customers/" + localStorage.getItem('customerID') + "/accounts/",
-            dataType : "json",
-            data : {
-                "account" : document.getElementById("acctTypeAdd").value,
-                "balance" : document.getElementById("acctBalanceAdd").value
-            }
-        }).done(toDetail);
+        if (document.getElementById("acctBalanceAdd").value <= 9999999999.99) {
+        	$("#amountError").text("");
+            $("#errorText").text("Account Creation Failed");
+            $.ajax({
+                type : "POST",
+                url : "./customers/" + localStorage.getItem('customerID') + "/accounts/",
+                dataType : "json",
+                data : {
+                    "account" : document.getElementById("acctTypeAdd").value,
+                    "balance" : document.getElementById("acctBalanceAdd").value
+                }
+            }).done(toDetail);
+        }
+        else {
+        	$("#amountError").text("Amount is out of bounds, max amount is $9,999,999,999.99")
+        }
     }
 
     function toDetail(response) {
@@ -302,9 +309,9 @@ li a {
     function backToCustomers() {
         window.location.assign("/ssa-bank/");
     }
-    
+
     function backToCustomersDetail() {
-    	localStorage.setItem("fromAccounts", "true");
+        localStorage.setItem("fromAccounts", "true");
         window.location.assign("/ssa-bank/");
     }
 
@@ -334,12 +341,15 @@ li a {
     }
 
     function withdraw() {
+    	$("#withdrawError").text("");
         document.getElementById('withdrawSection').style.display = 'block';
         document.getElementById('depositSection').style.display = 'none';
         document.getElementById('transactionButtons').style.display = 'none';
     }
 
     function sendWithdraw() {
+    	if(document.getElementById("withdrawValue").value <= 9999999999.99) {
+    	$("#withdrawError").text("");
         $("#errorText").text("Withdrawal Failed");
         $.ajax(
             {
@@ -355,15 +365,22 @@ li a {
                         .getElementById("withdrawValue").value
                 }
             }).done(toDetail);
+    	}
+    	else {
+    		$("#withdrawError").text("Amount is out of bounds, max amount is $9,999,999,999.99");
+    	}
     }
 
     function deposit() {
+    	$("#depositError").text("");
         document.getElementById('depositSection').style.display = 'block';
         document.getElementById('withdrawSection').style.display = 'none';
         document.getElementById('transactionButtons').style.display = 'none';
     }
 
     function sendDeposit() {
+    	if((Number(document.getElementById("depositValue").value) + Number(document.getElementById("accbalance").innerHTML) )<= 9999999999.99) {
+        $("#depositError").text("");
         $("#errorText").text("Deposit Failed");
         $
             .ajax(
@@ -380,6 +397,10 @@ li a {
                             .getElementById("depositValue").value
                     }
                 }).done(toDetail);
+    	}
+    	else {
+    		$("#depositError").text("Amount is out of bounds, max amount is $9,999,999,999.99");
+    	}
     }
 
     function deleteAccount() {
@@ -440,7 +461,9 @@ li a {
             <option value="CH" selected>Checking</option>
             <option value="SA">Savings</option>
         </select> <br> <br> Account Balance: <input id="acctBalanceAdd"
-            type="text" value=""></input><br> <br>
+            type="number" value="" max="9999999999.99" min="0"></input><br>
+        <br>
+        <div id="amountError"></div>
 
         <button id="acctaddsubmit" onclick="sendAdd()">Submit Add</button>
         <br> <br>
@@ -482,8 +505,9 @@ li a {
 
         <section id="withdrawSection" class="withdraw-Section"
             style="display: none;">
-            Withdraw Amount: <input id="withdrawValue" type="text" value=""></input><br>
+            Withdraw Amount: <input id="withdrawValue" type="number" value="" max="9999999999.99" min="0"></input><br>
             <br>
+            <div id="withdrawError"></div>
             <button id="withdrawSubmit" onclick="sendWithdraw()">Submit
                 Withdraw</button>
         </section>
@@ -492,6 +516,7 @@ li a {
             style="display: none;">
             Deposit Amount: <input id="depositValue" type="text" value=""></input><br>
             <br>
+            <div id="depositError"></div>
             <button id="depositSubmit" onclick="sendDeposit()">Submit
                 Deposit</button>
         </section>
