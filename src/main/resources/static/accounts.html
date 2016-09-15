@@ -206,6 +206,37 @@ li a {
             if (response.success) {
 
                 var account = response.success;
+                
+                var accountMenu = " > ";
+                
+                accountMenu += '<a class="';
+                accountMenu += 'subMenu';
+                accountMenu += '" href="javascript:;"';
+                accountMenu += 'onclick="backToCustomersDetail()';
+                accountMenu += '">';
+                accountMenu += account.customer.lastName;
+                accountMenu += ',&nbsp;&nbsp;&nbsp;';
+                accountMenu += account.customer.firstName;
+                accountMenu += '</a>';
+                accountMenu += " > "
+                accountMenu += '<a class="';
+                accountMenu += 'subMenu';
+                accountMenu += '" href="javascript:;"';
+                accountMenu += 'onclick="displayList(';
+                accountMenu += ')">';
+                accountMenu += "Accounts";
+                accountMenu += '</a>';
+                accountMenu += " > "
+                accountMenu += '<a class="';
+                accountMenu += 'subMenu';
+                accountMenu += '" href="javascript:;"';
+                accountMenu += 'onclick="displayDetail(';
+                accountMenu += account.id
+                accountMenu += ')">';
+                accountMenu += account.id;
+                accountMenu += '</a>';
+
+                $("#subMenu").html(accountMenu);
 
                 $("#errorText").text("Account with ID: '" + account.id + "' does not exist");
 
