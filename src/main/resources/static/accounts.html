@@ -164,6 +164,28 @@ li a {
             rowC += '</li>';
 
             $("#accountsList").append(rowC);
+
+            var accountMenu = " > ";
+
+            accountMenu += '<a class="';
+            accountMenu += 'subMenu';
+            accountMenu += '" href="javascript:;"';
+            accountMenu += 'onclick="backToCustomersDetail()';
+            accountMenu += '">';
+            accountMenu += response[0].customer.lastName;
+            accountMenu += ',&nbsp;&nbsp;&nbsp;';
+            accountMenu += response[0].customer.firstName;
+            accountMenu += '</a>';
+            accountMenu += " > "
+            accountMenu += '<a class="';
+            accountMenu += 'subMenu';
+            accountMenu += '" href="javascript:;"';
+            accountMenu += 'onclick="displayList(';
+            accountMenu += ')">';
+            accountMenu += "Accounts";
+            accountMenu += '</a>';
+
+            $("#subMenu").html(accountMenu);
         }
 
         //displayList();
@@ -183,7 +205,38 @@ li a {
             if (response.success) {
 
                 var account = response.success;
-                
+
+                var accountMenu = " > ";
+
+                accountMenu += '<a class="';
+                accountMenu += 'subMenu';
+                accountMenu += '" href="javascript:;"';
+                accountMenu += 'onclick="backToCustomersDetail()';
+                accountMenu += '">';
+                accountMenu += account.customer.lastName;
+                accountMenu += ',&nbsp;&nbsp;&nbsp;';
+                accountMenu += account.customer.firstName;
+                accountMenu += '</a>';
+                accountMenu += " > "
+                accountMenu += '<a class="';
+                accountMenu += 'subMenu';
+                accountMenu += '" href="javascript:;"';
+                accountMenu += 'onclick="displayList(';
+                accountMenu += ')">';
+                accountMenu += "Accounts";
+                accountMenu += '</a>';
+                accountMenu += " > "
+                accountMenu += '<a class="';
+                accountMenu += 'subMenu';
+                accountMenu += '" href="javascript:;"';
+                accountMenu += 'onclick="displayDetail(';
+                accountMenu += account.id
+                accountMenu += ')">';
+                accountMenu += account.id;
+                accountMenu += '</a>';
+
+                $("#subMenu").html(accountMenu);
+
                 $("#errorText").text("Account with ID: '" + account.id + "' does not exist");
 
                 document.getElementById("accid").innerHTML = account.id;
@@ -285,19 +338,19 @@ li a {
     function sendWithdraw() {
         $("#errorText").text("Withdrawal Failed");
         $.ajax(
-                {
-                    type : "PUT",
-                    url : "./customers/"
-                        + localStorage.getItem('customerID')
-                        + "/accounts/"
-                        + document.getElementById("accidT").innerHTML
-                        + "/withdraw",
-                    dataType : "json",
-                    data : {
-                        "amount" : document
-                            .getElementById("withdrawValue").value
-                    }
-                }).done(toDetail);
+            {
+                type : "PUT",
+                url : "./customers/"
+                    + localStorage.getItem('customerID')
+                    + "/accounts/"
+                    + document.getElementById("accidT").innerHTML
+                    + "/withdraw",
+                dataType : "json",
+                data : {
+                    "amount" : document
+                        .getElementById("withdrawValue").value
+                }
+            }).done(toDetail);
     }
 
     function deposit() {
@@ -325,22 +378,20 @@ li a {
                     }
                 }).done(toDetail);
     }
-    
-    
-    
+
+
+
     function transfer() {
-    	
-    	$.getJSON("./customers/" + localStorage.getItem("customerID") + "/accounts", buildTransferAccounts);
-    	
+        $.getJSON("./customers/" + localStorage.getItem("customerID") + "/accounts", buildTransferAccounts);
+
         document.getElementById('transferSection').style.display = 'block';
         document.getElementById('depositSection').style.display = 'none';
         document.getElementById('withdrawSection').style.display = 'none';
         document.getElementById('transactionButtons').style.display = 'none';
     }
-    
+
     function buildTransferAccounts(response) {
-    	
-    	for (var i = 0; i < response.length; i++) {
+        for (var i = 0; i < response.length; i++) {
             var rowT = '<option value="';
             rowT += response[i].id;
             rowT += '">';
@@ -352,8 +403,8 @@ li a {
             rowT += '</option>';
 
             $("#transferAccounts").append(rowT);
-        }	
-    	
+        }
+
     }
 
     function sendTransfer() {
@@ -369,13 +420,13 @@ li a {
                         + "/transfer",
                     dataType : "json",
                     data : {
-                        "targetID" : $("#transferAccounts option:selected").val(), 
+                        "targetID" : $("#transferAccounts option:selected").val(),
                         "amount" : document.getElementById("transferAmount").value
                     }
                 }).done(toDetail);
     }
-    
-    
+
+
 
     function deleteAccount() {
         $.ajax({
@@ -402,22 +453,29 @@ li a {
 
 </head>
 
-<header>
-    <section>
-        <ul class="menu">
-            <li class="menuitem"><a href="javascript:;"
-                title="to customers" onclick="backToCustomers()">Customers</a></li>
-            <li class="menuitem"><a href="javascript:;"
-                title="Customers List" onclick="displayList()">List</a></li>
-            <li class="menuitem"><a href="javascript:;"
-                title="Add Customer" onclick="displayAdd()">Add</a></li>
-        </ul>
-        <span class="SSAhead">SSA-Bank</span>
-    </section>
-
-</header>
 
 <body>
+    <header>
+        <section>
+            <ul class="menu">
+                <li class="menuitem"><a href="javascript:;"
+                    title="to customers" onclick="backToCustomers()">Customers</a></li>
+                <li class="menuitem"><a href="javascript:;"
+                    title="Customers List" onclick="displayList()">List</a></li>
+                <li class="menuitem"><a href="javascript:;"
+                    title="Add Customer" onclick="displayAdd()">Add</a></li>
+            </ul>
+            <span class="SSAhead">SSA-Bank</span>
+        </section>
+
+    </header>
+
+    <nav class="subMenu">
+        <a href="javascript:;" id="allCustomers" onclick="backToCustomers()">Customers</a>
+        <span id="subMenu"></span>
+    </nav>
+
+
 
     <section id="listSection" style="display: none;">
 
@@ -469,7 +527,7 @@ li a {
 
             <button id="deposit" onclick="deposit()">Deposit</button>
             <br> <br>
-            
+
             <button id="transfer" onclick="transfer()">Transfer</button>
             <br> <br>
         </section>
@@ -489,12 +547,13 @@ li a {
             <button id="depositSubmit" onclick="sendDeposit()">Submit
                 Deposit</button>
         </section>
-        
+
         <section id="transferSection" class="transfer-Section"
             style="display: none;">
-            Amount: <input id="transferAmount" type="text" value=""></input><br><br>
-            <select id="transferAccounts">
-			</select><br><br>
+            Amount: <input id="transferAmount" type="text" value=""></input><br>
+            <br> <select id="transferAccounts">
+            </select><br>
+            <br>
             <button id="transferSubmit" onclick="sendTransfer()">Submit
                 Transfer</button>
         </section>
