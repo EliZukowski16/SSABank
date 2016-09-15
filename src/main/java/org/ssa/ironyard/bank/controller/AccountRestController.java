@@ -129,6 +129,7 @@ public class AccountRestController
             Integer targetID = Integer.parseInt(request.getParameter("targetID"));
             Integer custID = Integer.parseInt(customerID);
             updatedAccount = accountService.transfer(custID, accID, targetID, amount).get("target");
+            break;
         default:
             LOGGER.info("Did not understand transaction value of {}, no action performed", transaction);
             updatedAccount = null;

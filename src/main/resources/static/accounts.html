@@ -330,7 +330,7 @@ li a {
     
     function transfer() {
     	
-    	$.getJSON("./customers/" + customerID + "/accounts", buildTransferAccounts;
+    	$.getJSON("./customers/" + localStorage.getItem("customerID") + "/accounts", buildTransferAccounts);
     	
         document.getElementById('transferSection').style.display = 'block';
         document.getElementById('depositSection').style.display = 'none';
@@ -369,7 +369,8 @@ li a {
                         + "/transfer",
                     dataType : "json",
                     data : {
-                        "targetID" : $("#transferAccounts option:selected").val();, "amount" : document.getElementById("transferAmount").value
+                        "targetID" : $("#transferAccounts option:selected").val(), 
+                        "amount" : document.getElementById("transferAmount").value
                     }
                 }).done(toDetail);
     }
@@ -494,8 +495,8 @@ li a {
             Amount: <input id="transferAmount" type="text" value=""></input><br><br>
             <select id="transferAccounts">
 			</select><br><br>
-            <button id="depositSubmit" onclick="sendDeposit()">Submit
-                Deposit</button>
+            <button id="transferSubmit" onclick="sendTransfer()">Submit
+                Transfer</button>
         </section>
 
     </section>
