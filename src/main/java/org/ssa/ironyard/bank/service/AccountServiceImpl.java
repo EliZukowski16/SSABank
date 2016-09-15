@@ -2,7 +2,9 @@ package org.ssa.ironyard.bank.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -65,6 +67,33 @@ public class AccountServiceImpl implements AccountService {
     public boolean delete(Integer id)
     {
         return accountDao.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public Map<String, Account> transfer(Integer customerID, Integer sourceAccountID, Integer targetAccountID,
+            BigDecimal amount) {
+        List<Account> customerAccounts = accountDao.readUser(customerID);
+        Account sourceAccount = null, targetAccount = null;
+        
+        Map<String, Account> transferAccounts = new HashMap<>();
+        
+        for(Account a : customerAccounts) {
+            if(a.getId() == sourceAccountID)
+                sourceAccount = a;
+            if(a.getId() == targetAccountID)
+                targetAccount = a;
+            if((sourceAccount != null) && (targetAccount != null))
+                break;
+        }
+        
+        sourceAccount.adjustBalance("withdraw", amount);
+        targetAccount.adjustBalance("deposit", amount);
+        
+        transferAccounts.put("source", accountDao.update(sourceAccount));
+        transferAccounts.put("target", accountDao.update(targetAccount));
+        
+        return transferAccounts;
     }
 
 }
