@@ -325,9 +325,9 @@ li a {
     function filter(){
     	var filterBy = $("#filter").val;
     	
-    	$('.todo').hide()
-    	.filter(':contains(' + filterBy  + ')')
-    	.show();
+    	$(".todo").hide()
+    	$(".todo:contains(" + filterBy + ")").show(); 	
+    	
     }
 </script>
 
