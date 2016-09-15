@@ -164,6 +164,29 @@ li a {
             rowC += '</li>';
 
             $("#accountsList").append(rowC);
+            
+            var accountMenu = " > ";
+            
+            accountMenu += '<a class="';
+            accountMenu += 'subMenu';
+            accountMenu += '" href="javascript:;"';
+            accountMenu += 'onclick="backToCustomersDetail()';
+            accountMenu += '">';
+            accountMenu += response[0].customer.lastName;
+            accountMenu += ',&nbsp;&nbsp;&nbsp;';
+            accountMenu += response[0].customer.firstName;
+            accountMenu += '</a>';
+            accountMenu += " > "
+            accountMenu += '<a class="';
+            accountMenu += 'subMenu';
+            accountMenu += '" href="javascript:;"';
+            accountMenu += 'onclick="displayList(';
+            accountMenu += ')">';
+            accountMenu += "Accounts";
+            accountMenu += '</a>';
+            
+            $("#subMenu").html(accountMenu);
+            
         }
 
         //displayList();
@@ -183,7 +206,7 @@ li a {
             if (response.success) {
 
                 var account = response.success;
-                
+
                 $("#errorText").text("Account with ID: '" + account.id + "' does not exist");
 
                 document.getElementById("accid").innerHTML = account.id;
@@ -248,6 +271,11 @@ li a {
     function backToCustomers() {
         window.location.assign("/ssa-bank/");
     }
+    
+    function backToCustomersDetail() {
+    	localStorage.setItem("fromAccounts", "true");
+        window.location.assign("/ssa-bank/");
+    }
 
     function transactions() {
         document.getElementById('transactionsSection').style.display = 'block';
@@ -283,19 +311,19 @@ li a {
     function sendWithdraw() {
         $("#errorText").text("Withdrawal Failed");
         $.ajax(
-                {
-                    type : "PUT",
-                    url : "./customers/"
-                        + localStorage.getItem('customerID')
-                        + "/accounts/"
-                        + document.getElementById("accidT").innerHTML
-                        + "/withdraw",
-                    dataType : "json",
-                    data : {
-                        "amount" : document
-                            .getElementById("withdrawValue").value
-                    }
-                }).done(toDetail);
+            {
+                type : "PUT",
+                url : "./customers/"
+                    + localStorage.getItem('customerID')
+                    + "/accounts/"
+                    + document.getElementById("accidT").innerHTML
+                    + "/withdraw",
+                dataType : "json",
+                data : {
+                    "amount" : document
+                        .getElementById("withdrawValue").value
+                }
+            }).done(toDetail);
     }
 
     function deposit() {
@@ -347,23 +375,27 @@ li a {
 </script>
 
 </head>
-
-<header>
-    <section>
-        <ul class="menu">
-            <li class="menuitem"><a href="javascript:;"
-                title="to customers" onclick="backToCustomers()">Customers</a></li>
-            <li class="menuitem"><a href="javascript:;"
-                title="Customers List" onclick="displayList()">List</a></li>
-            <li class="menuitem"><a href="javascript:;"
-                title="Add Customer" onclick="displayAdd()">Add</a></li>
-        </ul>
-        <span class="SSAhead">SSA-Bank</span>
-    </section>
-
-</header>
-
 <body>
+    <header>
+        <section>
+            <ul class="menu">
+                <li class="menuitem"><a href="javascript:;"
+                    title="to customers" onclick="backToCustomers()">Customers</a></li>
+                <li class="menuitem"><a href="javascript:;"
+                    title="Customers List" onclick="displayList()">List</a></li>
+                <li class="menuitem"><a href="javascript:;"
+                    title="Add Customer" onclick="displayAdd()">Add</a></li>
+            </ul>
+            <span class="SSAhead">SSA-Bank</span>
+        </section>
+
+    </header>
+    <nav class="subMenu">
+        <a href="javascript:;" id="allCustomers" onclick="backToCustomers()">Customers</a>
+        <span id="subMenu"></span>
+    </nav>
+
+
 
     <section id="listSection" style="display: none;">
 

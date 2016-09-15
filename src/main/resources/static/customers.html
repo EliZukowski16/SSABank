@@ -5,8 +5,9 @@
 <title>SSA-Bank</title>
 
 <style type="text/css">
+
+
 .menu {
-	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
@@ -14,19 +15,15 @@
 }
 
 .menuitem {
-	float: left;
+    display:inline;
+    color: white;
+    font-size: 1.3em;
+    padding: 14px 16px;
+    text-decoration: none;
 	width: 25%
 }
 
-li.menuitem a {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-}
-
-li a:hover {
+.menuitem:hover {
 	background-color: blue;
 	color: white;
 }
@@ -166,6 +163,13 @@ li a {
             $("#customerList").append(rowC);
         }
         document.getElementById('listSection').style.display = 'block';
+        
+        //var fromAccounts = localStorage.getItem("fromAccounts")
+        
+        if(localStorage.getItem("fromAccounts") == "true") {
+        	displayDetail(localStorage.getItem("customerID"));
+        	localStorage.setItem("fromAccounts", "false");
+        }
     }
 
     function displayList() {
@@ -179,6 +183,23 @@ li a {
             if (response.success) {
 
                 var customer = response.success;
+                
+                var customerMenu = " > ";
+                
+                customerMenu += '<a class="';
+                customerMenu += 'subMenu';
+                customerMenu += '" href="javascript:;"';
+                customerMenu += 'onclick="displayDetail(';
+                customerMenu += customer.id;
+                customerMenu += ')">';
+                customerMenu += customer.lastName;
+                customerMenu += ',&nbsp;&nbsp;&nbsp;';
+                customerMenu += customer.firstName;
+                customerMenu += '</a>';
+                
+                
+                
+                $("#subMenu").html(customerMenu);
 
                 document.getElementById("cid").innerHTML = customer.id;
                 document.getElementById("cfname").innerHTML = customer.firstName;
@@ -304,16 +325,29 @@ li a {
 
     <header>
         <section>
+        <nav class="menu">
+            <a href="javascript:;"
+                    title="Customers List" class="menuitem" onclick="displayList()">List</a>
+                    <a href="javascript:;"
+                    title="Add Customer" class="menuitem" onclick="displayAdd()">Add</a>
+        
+        </nav>
+        <!--  
             <ul class="menu">
                 <li class="menuitem"><a href="javascript:;"
                     title="Customers List" onclick="displayList()">List</a></li>
                 <li class="menuitem"><a href="javascript:;"
                     title="Add Customer" onclick="displayAdd()">Add</a></li>
             </ul>
+            -->
             <span class="SSAhead">SSA-Bank</span>
         </section>
 
     </header>
+    <nav class="subMenu">
+        <a href="javascript:;" id="allCustomers" onclick="displayList()">Customers</a>
+        <span id="subMenu"></span>
+    </nav>
 
 
     <section id="listSection" class="list-section" style="display: none;">
