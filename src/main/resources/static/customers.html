@@ -6,12 +6,23 @@
 
 <style type="text/css">
 
-
+body{
+	background:url('/ddby.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100%;
+	
+}
 .menu {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	background-color: #333;
+	background-color: #E8ADAA;
+	border: 2px ;
+	border-radius: 10px;
+	box-shadow: 10px 10px 10px 10px #808080, 2px 1px 6px 4px
+		rgba(10, 10, 0, 0.5);
+	text-shadow: 5px 5px #003399;
 }
 
 .menuitem {
@@ -22,6 +33,7 @@
 	padding: 14px 16px;
 	text-decoration: none;
 	width: 25%;
+	
 }
 
 
@@ -35,7 +47,7 @@
 	display: block;
 	margin: 10;
 	overflow: hidden;
-	background-color: #333;
+	background-color: #E8ADAA;
 	color: white;
 	font-size: 4em;
 	width: 100%;
@@ -57,11 +69,11 @@
 }
 
 .customerlist li:nth-of-type(even){
- background: silver;
+ background: #E8ADAA;
 }
 
 .customerlist li:nth-of-type(odd){
- background: #003399;
+ background: #FDD7E4;
 }
 
 
@@ -163,7 +175,6 @@ li a:hover {
     box-sizing: border-box;
 	background-color: #c2d6d6;
 	padding: 5px;
-	text-shadow: 1px 1px #003399;
 }
 
 .subMenu {
@@ -360,8 +371,8 @@ li a:hover {
 
 </head>
 
-<body style="background-color:#CD853F;">
-
+<body>
+	
 	<header>
 		<section>
 			<nav class="menu">
@@ -385,7 +396,7 @@ li a:hover {
 
     <section id="listSection" class="list-section" style="display: none;">
     
-    	<div class="filter">Filter Customers: <input id="filter" type="text" value="" style = "background: #003399 "><button id="runFilter" onclick="filter()">Filter</button></div>
+    	<div class="filter">Filter Customers: <input id="filter" type="text" value="" style = "background: #FFFFC2"><button id="runFilter" onclick="filter()">Filter</button></div>
    
 		<ul id="customerList" class="customerlist">
 		</ul>
