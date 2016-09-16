@@ -97,6 +97,8 @@ public class CustomerRestControllerTest
             }
 
         }
+        
+        EasyMock.verify(cs);
 
         assertEquals(allCustomers, customers.getBody());
     }

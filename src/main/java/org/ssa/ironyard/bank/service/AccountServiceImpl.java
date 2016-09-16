@@ -94,9 +94,11 @@ public class AccountServiceImpl implements AccountService
             if ((sourceAccount != null) && (targetAccount != null))
                 break;
         }
+        
+        LOGGER.info("Source Account: {}, Target Account: {}, Ammount: {}", sourceAccount.getId(), targetAccount.getId(), amount);
 
         if (sourceAccount.getBalance().subtract(amount).compareTo(BigDecimal.valueOf(-9999999999.99)) < 0
-                || targetAccount.getBalance().add(amount).compareTo(BigDecimal.valueOf(-9999999999.99)) > 0)
+                || targetAccount.getBalance().add(amount).compareTo(BigDecimal.valueOf(9999999999.99)) > 0)
         {
             transferAccounts.put("source", null);
             transferAccounts.put("target", null);

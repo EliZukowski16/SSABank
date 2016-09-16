@@ -41,6 +41,12 @@ li a:hover {
 	font-size: 4em;
 	width: 100%;
 	text-align: center;
+	line-height: 1.3em;
+	border: 2px ;
+	border-radius: 10px;
+	box-shadow: 10px 10px 10px 10px #808080, 2px 1px 6px 4px
+		rgba(10, 10, 0, 0.5);
+	text-shadow: 5px 5px #003399;
 }
 
 .accountslist {
@@ -124,6 +130,18 @@ li a {
 	padding: 10px;
 	z-index: 1002;
 	text-align: center;
+}
+
+.add-section {
+	line-height: 1.3em;
+	border: 2px dashed;
+	padding: 5px;
+	border-radius: 10px;
+	text-shadow: 1px 1px #003399;
+}
+
+.subMenu {
+	color: white;
 }
 </style>
 
@@ -459,7 +477,7 @@ li a {
 </head>
 
 
-<body>
+<body style="background-color:#808080;">
     <header>
         <section>
             <ul class="menu">
@@ -475,8 +493,8 @@ li a {
 
     </header>
 
-    <nav class="subMenu">
-        <a href="javascript:;" id="allCustomers" onclick="backToCustomers()">Customers</a>
+    <nav >
+        <a href="javascript:;" id="allCustomers" onclick="backToCustomers()" class="subMenu">Customers</a>
         <span id="subMenu"></span>
     </nav>
 

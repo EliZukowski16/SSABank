@@ -149,6 +149,7 @@ public class AccountRestController
         else
         {
             accountMap.put("error", new Account(accID, new Customer(Integer.parseInt(customerID), null, null), null, null));
+            LOGGER.info("Transaction did not complete successfully");
         }
 
         return ResponseEntity.ok(accountMap);
@@ -158,7 +159,7 @@ public class AccountRestController
     @ResponseBody
     public boolean deleteAccount(@PathVariable String accountID)
     {
-        LOGGER.info("Deleting Single Accountr with ID: {}", accountID);
+        LOGGER.info("Deleting Single Account with ID: {}", accountID);
 
         Integer id = Integer.parseInt(accountID);
 
