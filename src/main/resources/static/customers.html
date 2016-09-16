@@ -21,8 +21,9 @@
 	font-size: 1.3em;
 	padding: 14px 16px;
 	text-decoration: none;
-	width: 25%
+	width: 25%;
 }
+
 
 .menuitem:hover {
 
@@ -54,6 +55,16 @@
 	overflow: hidden;
 	text-align: center;
 }
+
+.customerlist li:nth-of-type(even){
+ background: silver;
+}
+
+.customerlist li:nth-of-type(odd){
+ background: #003399;
+}
+
+
 
 .customerEntry {
 	display: block;
@@ -146,10 +157,12 @@ li a:hover {
 	text-align: center;
 }
 .add-section {
-	line-height: 1.3em;
-	border: 2px dashed;
+
+	width: 300px;
+    border: 5px transparent;
+    box-sizing: border-box;
+	background-color: #c2d6d6;
 	padding: 5px;
-	border-radius: 10px;
 	text-shadow: 1px 1px #003399;
 }
 
@@ -347,7 +360,7 @@ li a:hover {
 
 </head>
 
-<body style="background-color:#808080;">
+<body style="background-color:#CD853F;">
 
 	<header>
 		<section>
@@ -372,7 +385,7 @@ li a:hover {
 
     <section id="listSection" class="list-section" style="display: none;">
     
-    	<div class="filter">Filter Customers: <input id="filter" type="text" value=""><button id="runFilter" onclick="filter()">Filter</button></div>
+    	<div class="filter">Filter Customers: <input id="filter" type="text" value="" style = "background: #003399 "><button id="runFilter" onclick="filter()">Filter</button></div>
    
 		<ul id="customerList" class="customerlist">
 		</ul>
