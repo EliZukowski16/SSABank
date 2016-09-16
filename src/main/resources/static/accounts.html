@@ -301,6 +301,11 @@ li a {
     function backToCustomers() {
         window.location.assign("/ssa-bank/");
     }
+    
+    function backToCustomersDetail() {
+        localStorage.setItem("fromAccounts", "true");
+        window.location.assign("/ssa-bank/");
+    }
 
     function transactions() {
         document.getElementById('transactionsSection').style.display = 'block';

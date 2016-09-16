@@ -30,6 +30,11 @@ public class AccountRestController
 
     static Logger LOGGER = LogManager.getLogger(AccountRestController.class);
 
+    public AccountRestController(AccountService as)
+    {
+        this.accountService = as;
+    }
+
     @RequestMapping(value = "/customers/{customerID}/accounts", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Account>> allAccounts(@PathVariable String customerID)
