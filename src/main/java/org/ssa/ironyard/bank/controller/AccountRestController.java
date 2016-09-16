@@ -112,7 +112,7 @@ public class AccountRestController
 
         LOGGER.info("Performing Transaction on Account ID: {} with Amount: {}", accountID, amount);
 
-        Account updatedAccount;
+        Account updatedAccount;        
 
         switch (transaction.toLowerCase())
         {
@@ -123,6 +123,12 @@ public class AccountRestController
         case "withdraw":
             LOGGER.info("Performing Withdrawal");
             updatedAccount = accountService.withdraw(accID, amount);
+            break;
+        case "transfer":
+            LOGGER.info("Peforming Transfer");
+            Integer targetID = Integer.parseInt(request.getParameter("targetID"));
+            Integer custID = Integer.parseInt(customerID);
+            updatedAccount = accountService.transfer(custID, accID, targetID, amount).get("target");
             break;
         default:
             LOGGER.info("Did not understand transaction value of {}, no action performed", transaction);
