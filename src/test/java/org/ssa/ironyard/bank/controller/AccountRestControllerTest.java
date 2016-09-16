@@ -11,6 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -186,14 +187,21 @@ public class AccountRestControllerTest
     @Test
     public void addAccountTest()
     {
+        List<String> accountTypes = new ArrayList<>();
+        accountTypes.add("CH");
+        accountTypes.add("SA");
+
         for (int i = 0; i < allCustomers.size(); i++)
         {
-            Account returnedAccount = new Account(1, allCustomers.get(i), AccountType.CHECKING,
-                    BigDecimal.valueOf(100.00), true);
+            Integer randomAccount = (int) (Math.random() * 2);
+            Double randomBalance = Math.random() * 1000;
+
+            Account returnedAccount = new Account(i, allCustomers.get(i),
+                    AccountType.getInstance(accountTypes.get(randomAccount)), BigDecimal.valueOf(randomBalance), true);
 
             MockHttpServletRequest mockRequest = new MockHttpServletRequest();
-            mockRequest.addParameter("account", "checking");
-            mockRequest.addParameter("balance", "100.00");
+            mockRequest.addParameter("account", accountTypes.get(randomAccount));
+            mockRequest.addParameter("balance", randomBalance.toString());
 
             Capture<Account> capturedAccount = Capture.<Account>newInstance();
 
@@ -202,70 +210,205 @@ public class AccountRestControllerTest
 
             ResponseEntity<Map<String, Object>> accountMap = this.controller.addAccount(mockRequest,
                     allCustomers.get(i).getId().toString());
-            
+
             Account account = (Account) accountMap.getBody().get("success");
-            
+
             assertTrue(accountMap.getBody().containsKey("success"));
             assertFalse(accountMap.getBody().containsKey("false"));
-            assertEquals(1, (int) account.getId());
-            assertEquals(AccountType.CHECKING, account.getType());
-            assertEquals(BigDecimal.valueOf(100.00), account.getBalance());
-            assertEquals(allCustomers.get(i), account.getCustomer());
-            assertTrue(account.isLoaded());       
-            
+            assertEquals(i, (int) account.getId());
+            assertEquals(capturedAccount.getValue().getType(), account.getType());
+            assertEquals(capturedAccount.getValue().getBalance(), account.getBalance());
+            assertEquals(capturedAccount.getValue().getCustomer(), account.getCustomer());
+            assertTrue(account.isLoaded());
+
             EasyMock.verify(as);
             EasyMock.reset(as);
 
         }
 
     }
-    
+
     @Test
     public void performDepositToAccount()
     {
-        
+        List<String> accountTypes = new ArrayList<>();
+        accountTypes.add("CH");
+        accountTypes.add("SA");
+
+        for (int i = 0; i < allCustomers.size(); i++)
+        {
+            Integer randomAccount = (int) (Math.random() * 2);
+            Double randomBalance = Math.random() * 1000;
+            Double randomDeposit = Math.random() * 1000;
+
+            Account originalAccount = new Account(i, allCustomers.get(i),
+                    AccountType.getInstance(accountTypes.get(randomAccount)), BigDecimal.valueOf(randomBalance), true);
+
+            Account returnedAccount = originalAccount.clone();
+            returnedAccount.adjustBalance("deposit", BigDecimal.valueOf(randomDeposit));
+
+            MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+            mockRequest.addParameter("amount", randomDeposit.toString());
+
+            EasyMock.expect(as.deposit(i, BigDecimal.valueOf(randomDeposit))).andReturn(returnedAccount);
+            EasyMock.replay(as);
+
+            ResponseEntity<Map<String, Object>> accountMap = this.controller.performTransaction(mockRequest, "deposit",
+                    originalAccount.getId().toString(), allCustomers.get(i).getId().toString());
+
+            Account account = (Account) accountMap.getBody().get("success");
+
+            assertTrue(accountMap.getBody().containsKey("success"));
+            assertFalse(accountMap.getBody().containsKey("false"));
+            assertEquals(i, (int) account.getId());
+            assertEquals(returnedAccount.getType(), account.getType());
+            assertEquals(returnedAccount.getBalance(), account.getBalance());
+            assertEquals(returnedAccount.getCustomer(), account.getCustomer());
+            assertTrue(account.isLoaded());
+
+            EasyMock.verify(as);
+            EasyMock.reset(as);
+        }
     }
-    
+
     @Test
     public void performWithdrawFromAccount()
     {
-        
+        List<String> accountTypes = new ArrayList<>();
+        accountTypes.add("CH");
+        accountTypes.add("SA");
+
+        for (int i = 0; i < allCustomers.size(); i++)
+        {
+            Integer randomAccount = (int) (Math.random() * 2);
+            Double randomBalance = Math.random() * 1000;
+            Double randomWithdrawal = Math.random() * 1000;
+
+            Account originalAccount = new Account(i, allCustomers.get(i),
+                    AccountType.getInstance(accountTypes.get(randomAccount)), BigDecimal.valueOf(randomBalance), true);
+
+            Account returnedAccount = originalAccount.clone();
+            returnedAccount.adjustBalance("withdraw", BigDecimal.valueOf(randomWithdrawal));
+
+            MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+            mockRequest.addParameter("amount", randomWithdrawal.toString());
+
+            EasyMock.expect(as.withdraw(i, BigDecimal.valueOf(randomWithdrawal))).andReturn(returnedAccount);
+            EasyMock.replay(as);
+
+            ResponseEntity<Map<String, Object>> accountMap = this.controller.performTransaction(mockRequest, "withdraw",
+                    originalAccount.getId().toString(), allCustomers.get(i).getId().toString());
+
+            Account account = (Account) accountMap.getBody().get("success");
+
+            assertTrue(accountMap.getBody().containsKey("success"));
+            assertFalse(accountMap.getBody().containsKey("false"));
+            assertEquals(i, (int) account.getId());
+            assertEquals(returnedAccount.getType(), account.getType());
+            assertEquals(returnedAccount.getBalance(), account.getBalance());
+            assertEquals(returnedAccount.getCustomer(), account.getCustomer());
+            assertTrue(account.isLoaded());
+
+            EasyMock.verify(as);
+            EasyMock.reset(as);
+        }
     }
-    
+
     @Test
     public void performTransfer()
     {
-        
+        List<String> accountTypes = new ArrayList<>();
+        accountTypes.add("CH");
+        accountTypes.add("SA");
+
+        for (int i = 0; i < allCustomers.size(); i++)
+        {
+            Map<String, Account> transferReturn = new HashMap<>();
+
+            Integer randomSourceAccount = (int) (Math.random() * 2);
+            Integer randomTargetAccount = (int) (Math.random() * 2);
+            Double randomSourceBalance = Math.random() * 1000;
+            Double randomTargetBalance = Math.random() * 1000;
+            Double randomTransferAmount = Math.random() * 1000;
+
+            Account sourceAccount = new Account(i, allCustomers.get(i),
+                    AccountType.getInstance(accountTypes.get(randomSourceAccount)),
+                    BigDecimal.valueOf(randomSourceBalance), true);
+
+            Account targetAccount = new Account((i * 2), allCustomers.get(i),
+                    AccountType.getInstance(accountTypes.get(randomTargetAccount)),
+                    BigDecimal.valueOf(randomTargetBalance), true);
+
+            if ((randomSourceBalance - randomTransferAmount) < 0)
+            {
+                transferReturn.put("source", null);
+                transferReturn.put("target", null);
+            }
+            else
+            {
+                Account returnedSourceAccount = sourceAccount.clone();
+                Account returnedTargetAccount = targetAccount.clone();
+
+                returnedSourceAccount.adjustBalance("withdraw", BigDecimal.valueOf(randomTransferAmount));
+                returnedTargetAccount.adjustBalance("deposit", BigDecimal.valueOf(randomTransferAmount));
+
+                transferReturn.put("source", returnedSourceAccount);
+                transferReturn.put("target", returnedTargetAccount);
+            }
+
+            MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+            mockRequest.addParameter("amount", randomTransferAmount.toString());
+
+//            EasyMock.expect(as.withdraw(i, BigDecimal.valueOf(randomWithdrawal))).andReturn(returnedAccount);
+//            EasyMock.replay(as);
+//
+//            ResponseEntity<Map<String, Object>> accountMap = this.controller.performTransaction(mockRequest, "withdraw",
+//                    originalAccount.getId().toString(), allCustomers.get(i).getId().toString());
+//
+//            Account account = (Account) accountMap.getBody().get("success");
+//
+//            assertTrue(accountMap.getBody().containsKey("success"));
+//            assertFalse(accountMap.getBody().containsKey("false"));
+//            assertEquals(i, (int) account.getId());
+//            assertEquals(returnedAccount.getType(), account.getType());
+//            assertEquals(returnedAccount.getBalance(), account.getBalance());
+//            assertEquals(returnedAccount.getCustomer(), account.getCustomer());
+//            assertTrue(account.isLoaded());
+
+            EasyMock.verify(as);
+            EasyMock.reset(as);
+        }
+
     }
-    
+
     @Test
     public void getInvalidSingleAccountTest()
     {
-        
+
     }
-    
+
     @Test
     public void failAddAccountTest()
     {
-        
+
     }
-    
+
     @Test
     public void failPerformingDepositToAccount()
     {
-        
+
     }
-    
+
     @Test
     public void failPerformingWithdrawFromAccount()
     {
-        
+
     }
-    
+
     @Test
     public void failPerformingTransfer()
     {
-        
+
     }
 
 }
