@@ -2,6 +2,7 @@ package org.ssa.ironyard.bank.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
@@ -40,7 +41,7 @@ public class CustomerRestControllerTest
         try
         {
             reader = Files.newBufferedReader(
-                    Paths.get("C:\\Users\\admin\\workspace\\DatabaseApp\\resources\\MOCK_CUSTOMER_DATA.csv"),
+                    Paths.get(".\\src\\test\\resources\\MOCK_CUSTOMER_DATA.csv"),
                     Charset.defaultCharset());
 
             String line;
@@ -97,7 +98,7 @@ public class CustomerRestControllerTest
             }
 
         }
-        
+
         EasyMock.verify(cs);
 
         assertEquals(allCustomers, customers.getBody());
@@ -109,17 +110,18 @@ public class CustomerRestControllerTest
         for (int i = 0; i < allCustomers.size(); i++)
         {
 
-            EasyMock.expect(cs.read(i+1)).andReturn(allCustomers.get(i));
+            EasyMock.expect(cs.read(i + 1)).andReturn(allCustomers.get(i));
             EasyMock.replay(cs);
-            
+
             Integer j = i + 1;
 
             ResponseEntity<Map<String, Object>> customerMap = this.controller.getCustomer(j.toString());
 
             Customer customer = (Customer) customerMap.getBody().get("success");
-
+            assertTrue(customerMap.getBody().containsKey("success"));
+            assertFalse(customerMap.getBody().containsKey("error"));
             assertTrue(allCustomers.get(i).deeplyEquals(customer));
-            
+
             EasyMock.reset(cs);
         }
     }
@@ -131,50 +133,164 @@ public class CustomerRestControllerTest
         mockRequest.addParameter("firstName", "John");
         mockRequest.addParameter("lastName", "Smith");
 
-        Customer testCustomerLoaded = new Customer(1, "John", mockRequest.getParameter("lastName"), true);
-        Customer testCustomerNotLoaded = new Customer("John", "Smith");
+        Customer testCustomerLoaded = new Customer(1, mockRequest.getParameter("firstName"),
+                mockRequest.getParameter("lastName"), true);
 
         Capture<Customer> capturedCustomer = Capture.<Customer>newInstance();
 
-        EasyMock.expect(cs.insert(testCustomerNotLoaded)).andReturn(testCustomerLoaded);
+        EasyMock.expect(cs.insert(EasyMock.capture(capturedCustomer))).andReturn(testCustomerLoaded);
         EasyMock.replay(cs);
 
         ResponseEntity<Map<String, Object>> customerMap = this.controller.addCustomer(mockRequest);
 
         Customer customer = (Customer) customerMap.getBody().get("success");
 
+        Customer parameters = capturedCustomer.getValue();
+        
+        assertTrue(customerMap.getBody().containsKey("success"));
+        assertFalse(customerMap.getBody().containsKey("error"));
         assertTrue(testCustomerLoaded.deeplyEquals(customer));
+        assertFalse(testCustomerLoaded.deeplyEquals(parameters));
         assertEquals(1, (int) customer.getId());
-        assertEquals("John", customer.getFirstName());
-        assertEquals("Smith", customer.getLastName());
-        assertEquals(true, customer.isLoaded());
+        assertNotEquals(parameters.getId(), customer.getId());
+        assertEquals(parameters.getFirstName(), customer.getFirstName());
+        assertEquals(parameters.getLastName(), customer.getLastName());
+        assertTrue(customer.isLoaded());
+        assertFalse(parameters.isLoaded());
 
     }
 
     @Test
-    public void updatingCustomerTest()
+    public void updatingValidCustomerTest()
     {
-        MockHttpServletRequest mock = new MockHttpServletRequest();
-        mock.addParameter("firstName", "Mike");
-        mock.addParameter("lastName", "Jones");
+        MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+        mockRequest.addParameter("firstName", "Mike");
+        mockRequest.addParameter("lastName", "Jones");
 
-        Customer testCustomerNotUpdated = new Customer(1, mock.getParameter("firstName"),
-                mock.getParameter("lastName"));
-        Customer testCustomerUpdated = new Customer(1, mock.getParameter("firstName"), mock.getParameter("lastName"),
-                true);
+        Customer testCustomerUpdated = new Customer(1, mockRequest.getParameter("firstName"),
+                mockRequest.getParameter("lastName"), true);
 
-        EasyMock.expect(cs.update(testCustomerNotUpdated)).andReturn(testCustomerUpdated);
+        Capture<Customer> capturedCustomer = Capture.<Customer>newInstance();
+
+        EasyMock.expect(cs.update(EasyMock.capture(capturedCustomer))).andReturn(testCustomerUpdated);
         EasyMock.replay(cs);
 
-        ResponseEntity<Map<String, Object>> customerMap = this.controller.editCustomer("1", mock);
+        ResponseEntity<Map<String, Object>> customerMap = this.controller.editCustomer("1", mockRequest);
 
         Customer customer = (Customer) customerMap.getBody().get("success");
-
+        Customer parameters = capturedCustomer.getValue();
+        
+        assertTrue(customerMap.getBody().containsKey("success"));
+        assertFalse(customerMap.getBody().containsKey("error"));
         assertTrue(testCustomerUpdated.deeplyEquals(customer));
-        assertEquals(1, (int) customer.getId());
-        assertEquals("Mike", customer.getFirstName());
-        assertEquals("Jones", customer.getLastName());
-        assertEquals(true, customer.isLoaded());
+        assertFalse(customer.deeplyEquals(parameters));
+        assertEquals(parameters.getId(), customer.getId());
+        assertEquals(parameters.getFirstName(), customer.getFirstName());
+        assertEquals(parameters.getLastName(), customer.getLastName());
+        assertTrue(customer.isLoaded());
+        assertFalse(parameters.isLoaded());
+
+        EasyMock.verify(cs);
     }
+
+    @Test
+    public void deletingValidCustomer()
+    {
+        EasyMock.expect(cs.delete(1)).andReturn(true);
+        EasyMock.replay(cs);
+
+        assertTrue(this.controller.deleteCustomer("1"));
+
+        EasyMock.verify(cs);
+    }
+
+    @Test
+    public void addingInvalidCustomerTest()
+    {
+        MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+        mockRequest.addParameter("firstName", "null");
+        mockRequest.addParameter("lastName", "null");
+
+        Customer invalidCustomer = null;
+
+        Capture<Customer> capturedCustomer = Capture.<Customer>newInstance();
+
+        EasyMock.expect(cs.insert(EasyMock.capture(capturedCustomer))).andReturn(invalidCustomer);
+        EasyMock.replay(cs);
+
+        ResponseEntity<Map<String, Object>> customerMap = this.controller.addCustomer(mockRequest);
+
+        Customer customer = (Customer) customerMap.getBody().get("error");
+        
+        assertFalse(customerMap.getBody().containsKey("success"));
+        assertTrue(customerMap.getBody().containsKey("error"));
+        assertTrue(capturedCustomer.getValue().deeplyEquals(customer));
+        assertEquals(capturedCustomer.getValue().getId(), customer.getId());
+        assertEquals(capturedCustomer.getValue().getFirstName(), customer.getFirstName());
+        assertEquals(capturedCustomer.getValue().getLastName(), customer.getLastName());
+        assertFalse(capturedCustomer.getValue().isLoaded());
+        assertFalse(customer.isLoaded());
+        
+        EasyMock.verify(cs);
+    }
+
+    @Test
+    public void updatingInvalidCustomerTest()
+    {
+        MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+        mockRequest.addParameter("firstName", "null");
+        mockRequest.addParameter("lastName", "null");
+
+        Customer invalidCustomer = null;
+
+        Capture<Customer> capturedCustomer = Capture.<Customer>newInstance();
+
+        EasyMock.expect(cs.update(EasyMock.capture(capturedCustomer))).andReturn(invalidCustomer);
+        EasyMock.replay(cs);
+
+        ResponseEntity<Map<String, Object>> customerMap = this.controller.editCustomer("0", mockRequest);
+        
+        Customer customer = (Customer) customerMap.getBody().get("error");
+        
+        assertFalse(customerMap.getBody().containsKey("success"));
+        assertTrue(customerMap.getBody().containsKey("error"));
+        assertTrue(capturedCustomer.getValue().deeplyEquals(customer));
+        assertEquals(capturedCustomer.getValue().getId(), customer.getId());
+        assertEquals(capturedCustomer.getValue().getFirstName(), customer.getFirstName());
+        assertEquals(capturedCustomer.getValue().getLastName(), customer.getLastName());
+        assertFalse(capturedCustomer.getValue().isLoaded());
+        assertFalse(customer.isLoaded());
+        
+        EasyMock.verify(cs);
+    }
+    
+    @Test
+    public void getSingleCustomerThatDoesNotExist()
+    {
+        EasyMock.expect(cs.read(0)).andReturn(null);
+        EasyMock.replay(cs);
+
+
+        ResponseEntity<Map<String, Object>> customerMap = this.controller.getCustomer("0");
+
+        assertFalse(customerMap.getBody().containsKey("success"));
+        assertTrue(customerMap.getBody().containsKey("error"));
+        assertEquals("", customerMap.getBody().get("error"));
+        
+        EasyMock.verify(cs);
+    }
+    
+    @Test
+    public void deleteInvalidCustomerTest()
+    {
+        EasyMock.expect(cs.delete(0)).andReturn(false);
+        EasyMock.replay(cs);
+
+        assertFalse(this.controller.deleteCustomer("0"));
+
+        EasyMock.verify(cs);
+    }
+    
+    
 
 }
